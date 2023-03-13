@@ -1,0 +1,146 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/TestLevel/BaseTestLevel.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/TestLevel/APIClient.gd" type="Script" id=2]
+
+[node name="BaseTestLevel" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+good_word_color = Color( 0.364706, 1, 0.447059, 1 )
+bad_word_color = Color( 1, 0.45098, 0.45098, 1 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 32
+custom_constants/margin_top = 32
+custom_constants/margin_left = 32
+custom_constants/margin_bottom = 32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer"]
+margin_left = 32.0
+margin_top = 32.0
+margin_right = 992.0
+margin_bottom = 568.0
+custom_constants/separation = 64
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/HBoxContainer"]
+margin_right = 200.0
+margin_bottom = 536.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_vertical = 3
+custom_constants/separation = 32
+
+[node name="FeedSheepButton" type="Button" parent="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_right = 200.0
+margin_bottom = 20.0
+text = "Feed Sheep Grass"
+
+[node name="PoisonSheepButton" type="Button" parent="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_top = 52.0
+margin_right = 200.0
+margin_bottom = 72.0
+text = "Feed Sheep Poison"
+
+[node name="BuildSheepButton" type="Button" parent="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_top = 104.0
+margin_right = 200.0
+margin_bottom = 124.0
+text = "Build Sheep"
+
+[node name="EndDayButton" type="Button" parent="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_top = 156.0
+margin_right = 200.0
+margin_bottom = 176.0
+text = "End Day"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/HBoxContainer"]
+margin_left = 264.0
+margin_right = 580.0
+margin_bottom = 536.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SheepCountLabel" type="Label" parent="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+margin_right = 316.0
+margin_bottom = 14.0
+text = "Current Sheep: 0"
+
+[node name="HungerCountLabel" type="Label" parent="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+margin_top = 18.0
+margin_right = 316.0
+margin_bottom = 32.0
+text = "Hungry Sheep: 0"
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2"]
+margin_top = 36.0
+margin_right = 316.0
+margin_bottom = 50.0
+text = "Level Events:"
+
+[node name="LevelEventsLabel" type="RichTextLabel" parent="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+margin_top = 54.0
+margin_right = 316.0
+margin_bottom = 536.0
+size_flags_vertical = 3
+bbcode_enabled = true
+scroll_following = true
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/HBoxContainer"]
+margin_left = 644.0
+margin_right = 960.0
+margin_bottom = 536.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer3"]
+margin_right = 316.0
+margin_bottom = 14.0
+text = "Android Dreams:"
+
+[node name="DreamsLabel" type="RichTextLabel" parent="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer3"]
+unique_name_in_owner = true
+margin_top = 18.0
+margin_right = 316.0
+margin_bottom = 500.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+
+[node name="GoodWordsCountLabel" type="Label" parent="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer3"]
+unique_name_in_owner = true
+margin_top = 504.0
+margin_right = 316.0
+margin_bottom = 518.0
+
+[node name="BadWordsCountLabel" type="Label" parent="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer3"]
+unique_name_in_owner = true
+margin_top = 522.0
+margin_right = 316.0
+margin_bottom = 536.0
+
+[node name="APIClient" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/FeedSheepButton" to="." method="_on_FeedSheepButton_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/PoisonSheepButton" to="." method="_on_PoisonSheepButton_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/BuildSheepButton" to="." method="_on_BuildSheepButton_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/EndDayButton" to="." method="_on_EndDayButton_pressed"]
+[connection signal="dream_recollected" from="APIClient" to="." method="_on_APIClient_dream_recollected"]
