@@ -2,6 +2,7 @@ extends Control
 
 
 export(String, FILE, "*.tscn") var game_scene : String
+export(String, FILE, "*.tscn") var test_scene : String
 export(String) var version_name = '0.0.0'
 
 var animation_state_machine : AnimationNodeStateMachinePlayback
@@ -13,6 +14,9 @@ func load_scene(scene_path : String):
 func play_game():
 	GameLog.game_started()
 	SceneLoader.load_scene(game_scene)
+
+func test_chatgpt():
+	SceneLoader.load_scene(test_scene)
 
 func _open_sub_menu(menu : Control):
 	menu.visible = true
@@ -30,8 +34,8 @@ func _close_sub_menu():
 func _on_PlayButton_pressed():
 	play_game()
 
-func _on_TutorialButton_pressed():
-	pass
+func _on_TestButton_pressed():
+	test_chatgpt()
 
 func _on_OptionsButton_pressed():
 	_open_sub_menu($MasterOptionsMenu)
@@ -69,3 +73,4 @@ func _ready():
 
 func _on_Credits_end_reached():
 	_close_sub_menu()
+

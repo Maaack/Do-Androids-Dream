@@ -22,28 +22,28 @@ custom_constants/separation = 16
 [node name="PlayButton" parent="ButtonsContainer" instance=ExtResource( 2 )]
 margin_right = 192.0
 margin_bottom = 40.0
-text = "play"
+text = "Play"
 
-[node name="TutorialButton" parent="ButtonsContainer" instance=ExtResource( 2 )]
+[node name="TestButton" parent="ButtonsContainer" instance=ExtResource( 2 )]
 margin_top = 56.0
 margin_right = 192.0
 margin_bottom = 96.0
-text = "tutorial"
+text = "Test Dream"
 
 [node name="OptionsButton" parent="ButtonsContainer" instance=ExtResource( 2 )]
 margin_top = 112.0
 margin_right = 192.0
 margin_bottom = 152.0
-text = "options"
+text = "Options"
 
 [node name="CreditsButton" parent="ButtonsContainer" instance=ExtResource( 2 )]
 margin_top = 168.0
 margin_right = 192.0
 margin_bottom = 208.0
-text = "credits"
+text = "Credits"
 
 [node name="ExitButton" parent="ButtonsContainer" instance=ExtResource( 2 )]
 margin_top = 224.0
 margin_right = 192.0
 margin_bottom = 264.0
-text = "exit"
+text = "Exit"

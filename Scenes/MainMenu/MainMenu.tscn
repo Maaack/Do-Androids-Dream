@@ -290,7 +290,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 4 )
 script = ExtResource( 1 )
-game_scene = "res://Scenes/TestLevel/BaseTestLevel.tscn"
+game_scene = "res://Scenes/World/World.tscn"
+test_scene = "res://Scenes/TestLevel/BaseTestLevel.tscn"
+version_name = "0.1.0"
 
 [node name="Panel" type="Panel" parent="."]
 anchor_right = 1.0
@@ -367,21 +369,6 @@ custom_constants/margin_bottom = 128
 
 [node name="MainMenuButtons" parent="MenuContainer" instance=ExtResource( 2 )]
 
-[node name="TutorialButton" parent="MenuContainer/MainMenuButtons/ButtonsContainer" index="1"]
-visible = false
-
-[node name="OptionsButton" parent="MenuContainer/MainMenuButtons/ButtonsContainer" index="2"]
-margin_top = 56.0
-margin_bottom = 96.0
-
-[node name="CreditsButton" parent="MenuContainer/MainMenuButtons/ButtonsContainer" index="3"]
-margin_top = 112.0
-margin_bottom = 152.0
-
-[node name="ExitButton" parent="MenuContainer/MainMenuButtons/ButtonsContainer" index="4"]
-margin_top = 168.0
-margin_bottom = 208.0
-
 [node name="MasterOptionsMenu" parent="." instance=ExtResource( 3 )]
 visible = false
 anchor_left = 0.5
@@ -434,7 +421,7 @@ margin_right = 62.0
 text = "Back"
 
 [connection signal="pressed" from="MenuContainer/MainMenuButtons/ButtonsContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
-[connection signal="pressed" from="MenuContainer/MainMenuButtons/ButtonsContainer/TutorialButton" to="." method="_on_TutorialButton_pressed"]
+[connection signal="pressed" from="MenuContainer/MainMenuButtons/ButtonsContainer/TestButton" to="." method="_on_TestButton_pressed"]
 [connection signal="pressed" from="MenuContainer/MainMenuButtons/ButtonsContainer/OptionsButton" to="." method="_on_OptionsButton_pressed"]
 [connection signal="pressed" from="MenuContainer/MainMenuButtons/ButtonsContainer/CreditsButton" to="." method="_on_CreditsButton_pressed"]
 [connection signal="pressed" from="MenuContainer/MainMenuButtons/ButtonsContainer/ExitButton" to="." method="_on_ExitButton_pressed"]
