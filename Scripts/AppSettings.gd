@@ -17,9 +17,7 @@ const INPUT_MAP_2D : Dictionary = {
 	"move_down" : "Down",
 	"move_left" : "Left",
 	"move_right" : "Right",
-	"run" : "Run",
-	"interact" : "Interact",
-	"skip_turn" : "Skip Turn",
+	"interact" : "Magnetize",
 }
 
 const INPUT_MAP_3D : Dictionary = {
@@ -31,7 +29,8 @@ const INPUT_MAP_3D : Dictionary = {
 	"jump" : "Jump",
 	"interact" : "Interact",
 }
-const INPUT_MAP = INPUT_MAP_3D
+
+const INPUT_MAP = INPUT_MAP_2D
 # Input
 
 static func get_action_scancode(action_name : String, default = null) -> int:
