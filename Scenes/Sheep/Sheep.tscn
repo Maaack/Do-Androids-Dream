@@ -1,8 +1,16 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Assets/Sourced/Sprites/goat.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Sheep/Sheep.gd" type="Script" id=2]
 
-[node name="Sheep" type="Node2D"]
+[sub_resource type="CircleShape2D" id=1]
+radius = 19.0263
+
+[node name="Sheep" type="KinematicBody2D" groups=["sheeps"]]
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.25, 0.25 )
