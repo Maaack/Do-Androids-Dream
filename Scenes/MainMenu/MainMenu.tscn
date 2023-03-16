@@ -291,7 +291,7 @@ anchor_bottom = 1.0
 theme = ExtResource( 4 )
 script = ExtResource( 1 )
 game_scene = "res://Scenes/BaseLevelUI/BaseLevelUI.tscn"
-test_scene = "res://Scenes/TestLevel/BaseTestLevel.tscn"
+test_scene = "res://Scenes/TestLevel/TestScoring.tscn"
 version_name = "0.1.0"
 
 [node name="Panel" type="Panel" parent="."]
@@ -371,6 +371,9 @@ custom_constants/margin_bottom = 128
 
 [node name="PlayButton" parent="MenuContainer/MainMenuButtons/ButtonsContainer" index="0"]
 text = "Test World"
+
+[node name="TestButton" parent="MenuContainer/MainMenuButtons/ButtonsContainer" index="1"]
+text = "Test Scoring"
 
 [node name="MasterOptionsMenu" parent="." instance=ExtResource( 3 )]
 visible = false
