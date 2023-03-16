@@ -181,4 +181,4 @@ position = Vector2( 10, 122 )
 position = Vector2( 21, 200 )
 
 [node name="Sheep10" parent="." instance=ExtResource( 3 )]
-position = Vector2( 83, 142 )
+position = Vector2( 65, 203 )
