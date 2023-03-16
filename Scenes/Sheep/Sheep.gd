@@ -1,16 +1,34 @@
 extends KinematicBody2D
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+var walk_speed = 10
+var direction = Vector2.ZERO
+var nearby_sheep = []
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+func _physics_process(delta):
+	move_and_slide(direction * walk_speed)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+# will return a vector for the sheep to go to the center of mass of the group of nearby sheeps
+func calc_direction_to_center_of_mass_nearby():
+	var center = Vector2.ZERO
+	for sheep in nearby_sheep:
+		center += sheep.position
+	center /= nearby_sheep.size()
+	
+	return position.direction_to(center)
+
+
+func _on_DetectionArea_body_entered(body):
+	if body.is_in_group("sheeps"):
+		nearby_sheep.append(body)
+
+
+func _on_DetectionArea_body_exited(body):
+	if body.is_in_group("sheeps"):
+		nearby_sheep.erase(body)
+
+
+func _on_UpdateMovementTimer_timeout():
+	direction = calc_direction_to_center_of_mass_nearby()

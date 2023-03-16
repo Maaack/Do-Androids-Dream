@@ -173,3 +173,12 @@ position = Vector2( 679, 203 )
 
 [node name="Sheep7" parent="." instance=ExtResource( 3 )]
 position = Vector2( 297, 184 )
+
+[node name="Sheep8" parent="." instance=ExtResource( 3 )]
+position = Vector2( 10, 122 )
+
+[node name="Sheep9" parent="." instance=ExtResource( 3 )]
+position = Vector2( 21, 200 )
+
+[node name="Sheep10" parent="." instance=ExtResource( 3 )]
+position = Vector2( 83, 142 )
