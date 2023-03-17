@@ -1,9 +1,92 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scenes/TestLevel/TestScoring.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/TestLevel/APIClient.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/TestLevel/TestAPIClient.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Clock/Clock.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Managers/SentenceBuilder/SentenceBuilder.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Animation" id=3]
+resource_name = "HideTimer"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/CenterContainer/Clock:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/CenterContainer/Clock:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/CenterContainer/Clock:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/CenterContainer/Clock:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "ShowTimer"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/CenterContainer/Clock:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/CenterContainer/Clock:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [node name="BaseTestLevel" type="Control"]
 anchor_right = 1.0
@@ -165,6 +248,11 @@ margin_bottom = 536.0
 script = ExtResource( 2 )
 
 [node name="SentenceBuilder" parent="." instance=ExtResource( 4 )]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/HideTimer = SubResource( 3 )
+anims/RESET = SubResource( 1 )
+anims/ShowTimer = SubResource( 2 )
 
 [connection signal="pressed" from="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/FeedSheepButton" to="." method="_on_FeedSheepButton_pressed"]
 [connection signal="pressed" from="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/PoisonSheepButton" to="." method="_on_PoisonSheepButton_pressed"]

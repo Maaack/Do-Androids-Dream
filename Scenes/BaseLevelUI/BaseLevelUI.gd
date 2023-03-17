@@ -97,7 +97,7 @@ func _on_BuildSheepButton_pressed():
 
 func show_scoring_screen():
 	$ScoringScreen.show()
-	$ScoringScreen.events_array = game_events
+	$ScoringScreen.start_dream_request(starting_sheep_count, current_sheep_names.size(), game_events)
 
 func hide_scoring_screen():
 	$ScoringScreen.hide()

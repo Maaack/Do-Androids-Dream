@@ -1,7 +1,232 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/ScoringScreen/ScoringScreen.gd" type="Script" id=1]
 [ext_resource path="res://Managers/SentenceBuilder/SentenceBuilder.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Clock/Clock.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/APIClient/APIClient.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Managers/TextHighlighter.gd" type="Script" id=5]
+
+[sub_resource type="Animation" id=5]
+resource_name = "DreamComplete"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Panel/MarginContainer/DreamContainer/DoneButton:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "DreamReady"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer/NextButton:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer/CenterContainer/Clock:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Panel/MarginContainer/EventsContainer/NextButton:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Panel/MarginContainer/DreamContainer/DoneButton:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Panel/MarginContainer/EventsContainer:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Panel/MarginContainer/DreamContainer:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Panel/MarginContainer/EventsContainer/RichTextLabel:percent_visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Panel/MarginContainer/DreamContainer/RichTextLabel:percent_visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "ReadEvents"
+length = 8.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer/RichTextLabel:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "ShowDream"
+length = 8.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Panel/MarginContainer/DreamContainer:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Panel/MarginContainer/DreamContainer/RichTextLabel:percent_visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "HideClock"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer/CenterContainer/Clock:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=9]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer/CenterContainer/Clock:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "ShowClock"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer/CenterContainer/Clock:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="ScoringScreen" type="Control"]
 anchor_right = 1.0
@@ -26,25 +251,92 @@ custom_constants/margin_top = 16
 custom_constants/margin_left = 16
 custom_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+[node name="EventsContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
 margin_left = 16.0
 margin_top = 16.0
 margin_right = 604.0
 margin_bottom = 494.0
+custom_constants/separation = 16
 alignment = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/MarginContainer/EventsContainer"]
 margin_right = 588.0
-margin_bottom = 454.0
+margin_bottom = 366.0
 size_flags_vertical = 3
+visible_characters = 0
+percent_visible = 0.0
 scroll_following = true
 
-[node name="DoneButton" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="Panel/MarginContainer/EventsContainer"]
+margin_top = 382.0
+margin_right = 588.0
+margin_bottom = 442.0
+rect_min_size = Vector2( 0, 60 )
+
+[node name="Clock" parent="Panel/MarginContainer/EventsContainer/CenterContainer" instance=ExtResource( 3 )]
+unique_name_in_owner = true
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 264.0
+margin_right = 324.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 60, 60 )
+shadow_color = Color( 0, 0, 0, 0 )
+wait_time = 20.0
+
+[node name="NextButton" type="Button" parent="Panel/MarginContainer/EventsContainer"]
 margin_top = 458.0
 margin_right = 588.0
 margin_bottom = 478.0
+disabled = true
+text = "Next"
+
+[node name="DreamContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+visible = false
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 604.0
+margin_bottom = 494.0
+custom_constants/separation = 16
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/MarginContainer/DreamContainer"]
+margin_right = 588.0
+margin_bottom = 442.0
+size_flags_vertical = 3
+bbcode_enabled = true
+visible_characters = 0
+percent_visible = 0.0
+scroll_following = true
+
+[node name="DoneButton" type="Button" parent="Panel/MarginContainer/DreamContainer"]
+margin_top = 458.0
+margin_right = 588.0
+margin_bottom = 478.0
+disabled = true
 text = "Done"
 
 [node name="SentenceBuilder" parent="." instance=ExtResource( 2 )]
 
-[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/DoneButton" to="." method="_on_DoneButton_pressed"]
+[node name="TextHighlighter" type="Node" parent="."]
+script = ExtResource( 5 )
+good_word_color = Color( 0.364706, 1, 0.447059, 1 )
+bad_word_color = Color( 1, 0.45098, 0.45098, 1 )
+entity_name_color = Color( 0.556863, 0.564706, 1, 1 )
+
+[node name="APIClient" parent="." instance=ExtResource( 4 )]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/DreamComplete = SubResource( 5 )
+anims/DreamReady = SubResource( 4 )
+anims/RESET = SubResource( 1 )
+anims/ReadEvents = SubResource( 7 )
+anims/ShowDream = SubResource( 6 )
+
+[node name="ClockAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/HideClock = SubResource( 8 )
+anims/RESET = SubResource( 9 )
+anims/ShowClock = SubResource( 10 )
+
+[connection signal="pressed" from="Panel/MarginContainer/EventsContainer/NextButton" to="." method="_on_NextButton_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/DreamContainer/DoneButton" to="." method="_on_DoneButton_pressed"]
+[connection signal="dream_recollected" from="APIClient" to="." method="_on_APIClient_dream_recollected"]
