@@ -2,11 +2,12 @@ extends KinematicBody2D
 
 export var walk_speed = 10 # speed of the sheep when walking
 export var min_distance_with_nearby = 50 # minimum distance the sheep will try to keep with the others
-export var center_factor = 1 # used to control the priority of the move to center direction
-export var avoid_factor = 1 # used to control the priority of the move to avoid direction
-export var avg_dir_factor = 1 # used to control the priority of the common direction
-export var grass_factor = 10 # used to control the priority of the direction to targeted grass patch
-export var shepherd_factor = 3 # used to control the priority of the direction to shepherd
+export var center_factor = 1 # priority of the move to center direction
+export var avoid_factor = 1 # priority of the move to avoid direction
+export var avg_dir_factor = 1 # priority of the common direction
+export var grass_factor = 10 # priority of the direction to targeted grass patch
+export var shepherd_factor = 3 # priority of the direction to shepherd
+export var shepherd_avoid_factor = 5 # priority of the direction to avoid getting to close to the shepherd
 var hunger = 2 # number of grass patches the sheep need to eat -> 0 means it's full and does not need to eat anymore
 var direction = Vector2.ZERO # direction to move to
 var nearby_sheep = [] # list of sheeps which are in the detection area
@@ -63,6 +64,13 @@ func calc_direction_to_shepherd():
 		return Vector2.ZERO
 
 
+func calc_direction_to_avoid_colliding_shepherd():
+	if shepherd and position.distance_to(shepherd.position) <= min_distance_with_nearby:
+		return -position.direction_to(shepherd.position) * shepherd_avoid_factor
+	else:
+		return Vector2.ZERO
+
+
 # will target the nearest grass patch in range if none is targeted and sheep is hungry
 # return true if there is already a targeted patch or if the function targeted a new one otherwise flase
 func target_grass():
@@ -108,7 +116,8 @@ func _on_UpdateMovementTimer_timeout():
 		calc_direction_to_avoid_colliding_nearby() +
 		calc_velocity_nearby() +
 		calc_direction_to_nearest_grass() +
-		calc_direction_to_shepherd()
+		calc_direction_to_shepherd() + 
+		calc_direction_to_avoid_colliding_shepherd()
 	).normalized()
 
 
