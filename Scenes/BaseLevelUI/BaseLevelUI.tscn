@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/BaseLevelUI/BaseLevelUI.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/World/World.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/ScoringScreen/ScoringScreen.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Original/Music/Godot_55_-_Do_Androids_Dream_-_Music_2_-_Demo_1.mp3" type="AudioStream" id=4]
 
 [node name="BaseLevelUI" type="Control"]
 anchor_right = 1.0
@@ -71,6 +72,11 @@ text = "Build Sheep"
 
 [node name="ScoringScreen" parent="." instance=ExtResource( 3 )]
 visible = false
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+autoplay = true
+bus = "Music"
 
 [connection signal="pressed" from="MarginContainer/Control/EndDayButton" to="." method="_on_EndDayButton_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/FeedSheepButton" to="." method="_on_FeedSheepButton_pressed"]
