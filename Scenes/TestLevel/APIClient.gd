@@ -36,8 +36,7 @@ func get_api_user() -> String:
 func get_api_method() -> int:
 	return HTTPClient.METHOD_POST
 
-func _build_request_body(starting_sheep_count : int, ending_sheep_count : int, events : Array) -> String:
-	var events_string : String = " ".join(events)
+func _build_request_body(starting_sheep_count : int, ending_sheep_count : int, events_string : String) -> String:
 	var messages : Array = [
 		{
 			"role": "system",
@@ -73,17 +72,17 @@ func _build_request_body(starting_sheep_count : int, ending_sheep_count : int, e
 	}
 	return JSON.print(body_dict)
 
-func mock_request_dream(starting_sheep_count : int, ending_sheep_count : int, events : Array):
-	var body : String = _build_request_body(starting_sheep_count, ending_sheep_count, events)
+func mock_request_dream(starting_sheep_count : int, ending_sheep_count : int, events_string : String):
+	var body : String = _build_request_body(starting_sheep_count, ending_sheep_count, events_string)
 	yield(get_tree().create_timer(5.0),"timeout")
-	var dream_string : String = "Yeah I dreamed things about starting with %d sheep and ending with %d! Also, %s" \
-		% [starting_sheep_count, ending_sheep_count, events.pop_back()]
+	var dream_string : String = "Yeah I dreamed things about starting with %d sheep and ending with %d! Before the dream, %s" \
+		% [starting_sheep_count, ending_sheep_count, events_string]
 	on_request_completed(HTTPRequest.RESULT_SUCCESS, "200", [], dream_string)
 
 
-func request_dream(starting_sheep_count : int, ending_sheep_count : int, events : Array):
+func request_dream(starting_sheep_count : int, ending_sheep_count : int, events_string : String):
 	var local_http_request : HTTPRequest = get_http_request()
-	var body : String = _build_request_body(starting_sheep_count, ending_sheep_count, events)
+	var body : String = _build_request_body(starting_sheep_count, ending_sheep_count, events_string)
 		# Set URL of the ChatGPT API proxy endpoint and the method to POST 
 	var user : String = get_api_user()
 	var key : String = get_api_key()
@@ -101,8 +100,11 @@ func request_dream(starting_sheep_count : int, ending_sheep_count : int, events 
 
 func on_request_completed(result, response_code, headers, body):
 	if result == HTTPRequest.RESULT_SUCCESS:
-		var response = parse_json(body.get_string_from_utf8())
-		emit_signal("dream_recollected", str(response['body']))
+		if body is PoolByteArray:
+			var response = parse_json(body.get_string_from_utf8())
+			emit_signal("dream_recollected", str(response['body']))
+		else:
+			emit_signal("dream_recollected", body)
 	else:
 		print("Error:", result)
 
