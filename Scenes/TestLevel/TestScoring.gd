@@ -164,13 +164,15 @@ func reset_level() -> void:
 	starting_sheep_count = current_sheep_names.size()
 	day_ended = false
 
-func add_event(event : String, add_to_events : bool = true) -> void:
+func update_events():
 	var level_events_label = get_node_or_null("%LevelEventsLabel")
 	if level_events_label == null:
 		return
-	if add_to_events:
-		level_events.append(event)
-	level_events_label.bbcode_text += "\n" + event
+	level_events_label.bbcode_text = $SentenceBuilder.get_event_sentences(level_events)
+
+func add_event(event_type : int, subject_sheep : String) -> void:
+	level_events.append(EventData.new(event_type, subject_sheep))
+	update_events()
 
 func _highlight_word_with_color(haystack : String, needle : String, highlight : Color) -> String:
 	var replace_text : String = "[color=#%s]%s[/color]" % [highlight.to_html(false), needle]
@@ -220,7 +222,7 @@ func _on_FeedSheepButton_pressed():
 		return
 	hungry_sheep.shuffle()
 	var random_sheep = hungry_sheep.pop_back()
-	add_event("The robot sheep %s grazed on electric grass." % random_sheep)
+	add_event(EventData.EVENT_TYPES.EAT_NORMAL_GRASS, random_sheep)
 	_update_counters()
 
 func _on_PoisonSheepButton_pressed():
@@ -228,8 +230,9 @@ func _on_PoisonSheepButton_pressed():
 		return
 	hungry_sheep.shuffle()
 	var random_sheep = hungry_sheep.pop_back()
-	add_event("The robot sheep %s grazed on volatile grass." % random_sheep)
-	add_event("The robot sheep %s experienced rapid uncontrolled disassembly." % random_sheep)
+	add_event(EventData.EVENT_TYPES.EAT_VOLATILE_GRASS, random_sheep)
+	yield(get_tree().create_timer(3), "timeout")
+	add_event(EventData.EVENT_TYPES.EXPLODE, random_sheep)
 	_kill_sheep(random_sheep)
 	_update_counters()
 
@@ -239,7 +242,7 @@ func _on_BuildSheepButton_pressed():
 	extra_sheep_names.shuffle()
 	var random_sheep = extra_sheep_names.pop_back()
 	current_sheep_names.append(random_sheep)
-	add_event("You assembled a new robot sheep and welcomed %s into the world." % random_sheep)
+	add_event(EventData.EVENT_TYPES.BUILD, random_sheep)
 	_update_counters()
 
 func _start_clock():
@@ -260,11 +263,10 @@ func _on_EndDayButton_pressed():
 	day_ended = true
 	if hungry_sheep.size() > 0:
 		for starved_sheep in hungry_sheep:
-			add_event("The robot sheep %s broke down on the way home." % starved_sheep)
+			add_event(EventData.EVENT_TYPES.STARVE, starved_sheep)
 			_kill_sheep(starved_sheep)
 		_update_counters()
-	add_event("The android went to sleep and probably dreamed of electric sheep...", false)
-	$APIClient.request_dream(starting_sheep_count, current_sheep_names.size(), level_events)
+	$APIClient.request_dream(starting_sheep_count, current_sheep_names.size(), $SentenceBuilder.get_event_sentences(level_events))
 	_start_clock()
 
 func _on_APIClient_dream_recollected(dream_text):

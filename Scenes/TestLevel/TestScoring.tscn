@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/TestLevel/TestScoring.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/TestLevel/APIClient.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Clock/Clock.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Managers/SentenceBuilder/SentenceBuilder.tscn" type="PackedScene" id=4]
 
 [node name="BaseTestLevel" type="Control"]
 anchor_right = 1.0
@@ -162,6 +163,8 @@ margin_bottom = 536.0
 
 [node name="APIClient" type="Node" parent="."]
 script = ExtResource( 2 )
+
+[node name="SentenceBuilder" parent="." instance=ExtResource( 4 )]
 
 [connection signal="pressed" from="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/FeedSheepButton" to="." method="_on_FeedSheepButton_pressed"]
 [connection signal="pressed" from="MarginContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/PoisonSheepButton" to="." method="_on_PoisonSheepButton_pressed"]
