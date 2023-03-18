@@ -91,9 +91,13 @@ func target_grass():
 func eat_grass():
 	# play animation
 	# wait a certain amount of time
+	if targeted_grass.is_volatile():
+		pass # BOOM
+	else:
+		hunger -= 1
+	
 	targeted_grass.queue_free()
 	targeted_grass = null
-	hunger -= 1
 
 
 func _on_DetectionArea_body_entered(body):
