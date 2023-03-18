@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Scenes/MainMenu/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/MainMenu/MainMenuButtons.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Themes/MainMenuTheme.tres" type="Theme" id=4]
 [ext_resource path="res://Scenes/UI/SoundButton/SoundButton.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Original/Music/Godot_55_-_Do_Androids_Dream_-_Music_3_-_Demo_1.mp3" type="AudioStream" id=6]
+[ext_resource path="res://Scenes/World/MainMenuWorld.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Credits/Credits.tscn" type="PackedScene" id=8]
 
 [sub_resource type="Animation" id=5]
@@ -295,9 +296,24 @@ game_scene = "res://Scenes/BaseLevelUI/BaseLevelUI.tscn"
 test_scene = "res://Scenes/TestLevel/TestScoring.tscn"
 version_name = "0.1.0"
 
-[node name="Panel" type="Panel" parent="."]
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+stretch = true
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 1024, 600 )
+audio_listener_enable_2d = true
+
+[node name="World" parent="ViewportContainer/Viewport" instance=ExtResource( 7 )]
+
+[node name="Panel" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -200.0
+margin_top = 14.0
+margin_right = 200.0
+margin_bottom = 165.0
 
 [node name="MenuAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/CloseSubMenu = SubResource( 5 )
@@ -393,6 +409,10 @@ anchor_bottom = 1.0
 mouse_filter = 2
 custom_constants/margin_top = 128
 custom_constants/margin_bottom = 32
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="Credits" parent="CreditsContainer" instance=ExtResource( 8 )]
 visible = false
@@ -411,6 +431,10 @@ custom_constants/margin_right = 16
 custom_constants/margin_top = 16
 custom_constants/margin_left = 16
 custom_constants/margin_bottom = 16
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="FlowControl" type="Control" parent="FlowControlContainer"]
 margin_left = 16.0
