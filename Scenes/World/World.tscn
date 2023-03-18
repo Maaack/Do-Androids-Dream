@@ -156,6 +156,23 @@ tile_data = PoolIntArray( -65523, 0, 0, -65520, 0, 0, 7, 2, 0, 10, 2, 0, 12, 3, 
 [node name="Grass2" parent="." instance=ExtResource( 5 )]
 position = Vector2( 146, 547 )
 
+[node name="Grass10" parent="." instance=ExtResource( 5 )]
+position = Vector2( 292, 353 )
+
+[node name="Grass11" parent="." instance=ExtResource( 5 )]
+position = Vector2( 388, 470 )
+
+[node name="Grass12" parent="." instance=ExtResource( 5 )]
+position = Vector2( 480, 286 )
+
+[node name="Grass13" parent="." instance=ExtResource( 5 )]
+position = Vector2( 965, 554 )
+is_volatile = true
+
+[node name="Grass14" parent="." instance=ExtResource( 5 )]
+position = Vector2( 913, 665 )
+is_volatile = true
+
 [node name="Grass4" parent="." instance=ExtResource( 5 )]
 position = Vector2( 108, 560 )
 

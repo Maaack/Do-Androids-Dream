@@ -57,9 +57,10 @@ func calc_direction_to_nearest_grass():
 		return Vector2.ZERO
 
 
+# calculate direction to the shepherd (player), the shepherd.magnet_factor will cahnge depending iif the player is using the magnet or not
 func calc_direction_to_shepherd():
 	if shepherd:
-		return position.direction_to(shepherd.position) * shepherd_factor
+		return position.direction_to(shepherd.position) * shepherd_factor * shepherd.magnet_factor
 	else:
 		return Vector2.ZERO
 
@@ -89,11 +90,15 @@ func target_grass():
 
 
 func eat_grass():
-	# play animation
+	# play eating animation
 	# wait a certain amount of time
+	if targeted_grass.is_volatile:
+		queue_free() # BOOM
+	else:
+		hunger -= 1
+	
 	targeted_grass.queue_free()
 	targeted_grass = null
-	hunger -= 1
 
 
 func _on_DetectionArea_body_entered(body):
