@@ -130,12 +130,12 @@ const ALL_SHEEP_NAMES : Array = [
 
 export(Color) var good_word_color : Color
 export(Color) var bad_word_color : Color
-export(Color) var entity_name_color : Color
+export(Color) var dream_entity_color : Color
 export(Color) var fear_manifestation_color : Color
 
 var good_word_count : int = 0
 var bad_word_count : int = 0
-var entity_encounter_count : int = 0
+var dream_entity_count : int = 0
 var fear_manifestation_count : int = 0
 
 func _highlight_word_with_color(haystack : String, needle : String, highlight : Color) -> String:
@@ -157,8 +157,8 @@ func highlight_dream(dream : String) -> String:
 		highlighted_text = _highlight_word_with_color(highlighted_text, word, bad_word_color)
 		highlighted_text = _highlight_word_with_color(highlighted_text, word.capitalize(), bad_word_color)
 	for name in ENTITY_NAMES_ARRAY:
-		entity_encounter_count += int(name in highlighted_text)
-		highlighted_text = _highlight_word_with_colorn(highlighted_text, name, entity_name_color)
+		dream_entity_count += int(name in highlighted_text)
+		highlighted_text = _highlight_word_with_colorn(highlighted_text, name, dream_entity_color)
 	for name in MANIFESTATIONS_OF_FEAR_ARRAY:
 		fear_manifestation_count += int(name in highlighted_text)
 		highlighted_text = _highlight_word_with_colorn(highlighted_text, name, fear_manifestation_color)

@@ -1,42 +1,10 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scenes/ScoringScreen/ScoringScreen.gd" type="Script" id=1]
 [ext_resource path="res://Managers/SentenceBuilder/SentenceBuilder.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Clock/Clock.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/APIClient/APIClient.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Managers/TextHighlighter.gd" type="Script" id=5]
-
-[sub_resource type="Animation" id=5]
-resource_name = "DreamComplete"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("Panel/MarginContainer/DreamContainer/DoneButton:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-
-[sub_resource type="Animation" id=4]
-resource_name = "DreamReady"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer/NextButton:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -53,7 +21,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Panel/MarginContainer/EventsContainer/NextButton:disabled")
+tracks/1/path = NodePath("Panel/MarginContainer/EventsContainer:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -65,7 +33,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Panel/MarginContainer/DreamContainer/DoneButton:disabled")
+tracks/2/path = NodePath("Panel/MarginContainer/DreamContainer:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -74,10 +42,10 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ true ]
+"values": [ false ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Panel/MarginContainer/EventsContainer:visible")
+tracks/3/path = NodePath("Panel/MarginContainer/EventsContainer/RichTextLabel:percent_visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -86,39 +54,15 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ true ]
+"values": [ 0.0 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Panel/MarginContainer/DreamContainer:visible")
+tracks/4/path = NodePath("Panel/MarginContainer/DreamContainer/RichTextLabel:percent_visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ false ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Panel/MarginContainer/EventsContainer/RichTextLabel:percent_visible")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("Panel/MarginContainer/DreamContainer/RichTextLabel:percent_visible")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
@@ -179,6 +123,65 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "DreamComplete"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Panel/MarginContainer/DreamContainer/DoneButton:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "DreamReady"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer/NextButton:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=13]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer/NextButton:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Panel/MarginContainer/DreamContainer/DoneButton:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
 }
 
 [sub_resource type="Animation" id=8]
@@ -265,6 +268,7 @@ margin_bottom = 366.0
 size_flags_vertical = 3
 visible_characters = 0
 percent_visible = 0.0
+meta_underlined = false
 scroll_following = true
 
 [node name="CenterContainer" type="CenterContainer" parent="Panel/MarginContainer/EventsContainer"]
@@ -301,7 +305,7 @@ alignment = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Panel/MarginContainer/DreamContainer"]
 margin_right = 588.0
-margin_bottom = 306.0
+margin_bottom = 260.0
 size_flags_vertical = 3
 bbcode_enabled = true
 visible_characters = 0
@@ -309,40 +313,123 @@ percent_visible = 0.0
 scroll_following = true
 
 [node name="GridContainer" type="GridContainer" parent="Panel/MarginContainer/DreamContainer"]
-margin_top = 322.0
+margin_top = 276.0
 margin_right = 588.0
-margin_bottom = 442.0
-rect_min_size = Vector2( 0, 120 )
+margin_bottom = 376.0
+rect_min_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
+custom_constants/hseparation = 48
 columns = 2
 
-[node name="GoodWordCount" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer"]
-margin_right = 292.0
-margin_bottom = 14.0
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/DreamContainer/GridContainer"]
+margin_right = 270.0
+margin_bottom = 48.0
 size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GoodWordLabel" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer"]
+margin_top = 17.0
+margin_right = 134.0
+margin_bottom = 31.0
 text = "Good Dream Words: "
 
-[node name="GoodWordCount2" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer"]
-margin_left = 296.0
+[node name="GoodWordCount" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer"]
+unique_name_in_owner = true
+margin_left = 138.0
+margin_top = 17.0
+margin_right = 270.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+align = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/MarginContainer/DreamContainer/GridContainer"]
+margin_left = 318.0
 margin_right = 588.0
-margin_bottom = 14.0
+margin_bottom = 48.0
 size_flags_horizontal = 3
-text = "Good Dream Words: "
+size_flags_vertical = 3
 
-[node name="GoodWordCount3" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer"]
+[node name="BadWordLabel" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer2"]
+margin_top = 17.0
+margin_right = 124.0
+margin_bottom = 31.0
+text = "Bad Dream Words: "
+
+[node name="BadWordCount" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer2"]
+unique_name_in_owner = true
+margin_left = 128.0
+margin_top = 17.0
+margin_right = 270.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+align = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/MarginContainer/DreamContainer/GridContainer"]
+margin_top = 52.0
+margin_right = 270.0
+margin_bottom = 100.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="DreamEntitiesLabel" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer3"]
+margin_top = 17.0
+margin_right = 162.0
+margin_bottom = 31.0
+text = "Dream Entity Encounters:"
+
+[node name="DreamEntitiesCount" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer3"]
+unique_name_in_owner = true
+margin_left = 166.0
+margin_top = 17.0
+margin_right = 270.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+align = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Panel/MarginContainer/DreamContainer/GridContainer"]
+margin_left = 318.0
+margin_top = 52.0
+margin_right = 588.0
+margin_bottom = 100.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="FearManifestationsLabel" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer4"]
+margin_top = 17.0
+margin_right = 145.0
+margin_bottom = 31.0
+text = "Manifestations of Fear:"
+
+[node name="FearManifestationsCount" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer4"]
+unique_name_in_owner = true
+margin_left = 149.0
+margin_top = 17.0
+margin_right = 270.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+align = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/DreamContainer"]
+margin_top = 392.0
+margin_right = 588.0
+margin_bottom = 442.0
+rect_min_size = Vector2( 0, 50 )
+size_flags_horizontal = 3
+
+[node name="GradeLabel" type="Label" parent="Panel/MarginContainer/DreamContainer/HBoxContainer"]
 margin_top = 18.0
-margin_right = 292.0
+margin_right = 42.0
+margin_bottom = 32.0
+text = "Grade:"
+
+[node name="GradeResult" type="Label" parent="Panel/MarginContainer/DreamContainer/HBoxContainer"]
+unique_name_in_owner = true
+margin_left = 46.0
+margin_top = 18.0
+margin_right = 588.0
 margin_bottom = 32.0
 size_flags_horizontal = 3
-text = "Good Dream Words: "
-
-[node name="GoodWordCount4" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer"]
-margin_left = 296.0
-margin_top = 18.0
-margin_right = 588.0
-margin_bottom = 32.0
-size_flags_horizontal = 3
-text = "Good Dream Words: "
+align = 2
 
 [node name="DoneButton" type="Button" parent="Panel/MarginContainer/DreamContainer"]
 margin_top = 458.0
@@ -357,17 +444,20 @@ text = "Done"
 script = ExtResource( 5 )
 good_word_color = Color( 0.364706, 1, 0.447059, 1 )
 bad_word_color = Color( 1, 0.45098, 0.45098, 1 )
-entity_name_color = Color( 0.556863, 0.564706, 1, 1 )
-fear_manifestation_color = Color( 1, 0.837286, 0.556863, 1 )
+dream_entity_color = Color( 0.556863, 0.564706, 1, 1 )
+fear_manifestation_color = Color( 1, 0.839216, 0.556863, 1 )
 
 [node name="APIClient" parent="." instance=ExtResource( 4 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/DreamComplete = SubResource( 5 )
-anims/DreamReady = SubResource( 4 )
 anims/RESET = SubResource( 1 )
 anims/ReadEvents = SubResource( 7 )
 anims/ShowDream = SubResource( 6 )
+
+[node name="ButtonAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/DreamComplete = SubResource( 11 )
+anims/DreamReady = SubResource( 12 )
+anims/RESET = SubResource( 13 )
 
 [node name="ClockAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/HideClock = SubResource( 8 )
