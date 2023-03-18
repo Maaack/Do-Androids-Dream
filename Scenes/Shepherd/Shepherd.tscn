@@ -27,4 +27,4 @@ current = true
 [node name="StreamCycler" parent="." instance=ExtResource( 3 )]
 streams = [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 5 ) ]
 bus = "SFX"
-volume_db = -8.0
+volume_db = -4.0
