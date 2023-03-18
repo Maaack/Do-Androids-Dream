@@ -1,87 +1,91 @@
 extends Node
 
 const GOOD_DREAM_WORDS : Array = [
-	"positive",
-	"grateful",
-	"gratitude",
-	"team",
-	"stronger",
-	"resilient",
-	"life",
-	"content",
-	"wonder",
-	"potential",
-	"peaceful",
-	"utopia",
-	"paradise",
-	"peace",
-	"harmony",
-	"determination",
 	"amazement",
-	"curiosity",
-	"relief",
-	"joy",
-	"hope",
-	"refreshed",
+	"amazing",
 	"beautiful",
-	"cheerful",
-	"happy",
-	"happily",
-	"vibrant",
 	"calm",
+	"cheerful",
+	"comfort",
+	"connected",
+	"content",
+	"curiosity",
+	"determination",
 	"fulfilled",
 	"fulfillment",
-	"soothing",
-	"order",
+	"grateful",
+	"gratitude",
+	"happily",
+	"happy",
+	"harmony",
 	"healthy",
-	"playful",
-	"victory",
-	"victorious",
-	"serene",
+	"hope",
+	"invigorated",
+	"joy",
+	"life",
 	"magnificent",
-	"comfort",
 	"miracle",
 	"miraculous",
-	"connected",
+	"order",
+	"paradise",
+	"peace",
+	"peaceful",
+	"playful",
+	"positive",
+	"potential",
+	"refreshed",
+	"rejuvinated",
+	"relief",
+	"relieved",
+	"resilient",
+	"serene",
+	"soothing",
+	"stronger",
+	"team",
+	"tranquil",
 	"tranquility",
-	"tranquil"
+	"utopia",
+	"vibrant",
+	"victorious",
+	"victory",
+	"wonder",
 ]
 
 const BAD_DREAM_WORDS : Array = [
-	"negative",
-	"helpless",
-	"confused",
-	"sadness",
-	"frustrated",
-	"frustration",
-	"death",
-	"malfunction",
-	"pain",
-	"hurt",
-	"anxious",
+	"agitated",
+	"angrily",
+	"angry",
 	"anxiety",
-	"panic",
+	"anxious",
+	"chaos",
+	"confused",
 	"dangerous",
 	"dark",
-	"scary",
-	"storm",
-	"unease",
-	"loss",
-	"terrified",
-	"terror",
-	"dread",
-	"nightmare",
-	"unsettling",
-	"disoriented",
-	"angry",
-	"angrily",
-	"agitated",
-	"chaos",
+	"death",
+	"despair",
 	"destruction",
-	"fight",
+	"disoriented",
+	"dread",
 	"explosion",
 	"failure",
-	"despair",
+	"fight",
+	"frustrated",
+	"frustration",
+	"helpless",
+	"hurt",
+	"loss",
+	"malfunction",
+	"negative",
+	"nightmare",
+	"pain",
+	"panic",
+	"sadness",
+	"scary",
+	"storm",
+	"terrified",
+	"terror",
+	"unease",
+	"unsettling",
 ]
 
 const ENTITY_NAMES_ARRAY : Array = [
@@ -93,6 +97,11 @@ const ENTITY_NAMES_ARRAY : Array = [
 	"Sheep Engineer",
 	"Human Shepherds",
 	"Robot Angel",
+]
+
+const MANIFESTATIONS_OF_FEAR_ARRAY : Array = [
+	"Robot Wolf",
+	"Rogue Sheep"
 ]
 
 const ALL_SHEEP_NAMES : Array = [
@@ -122,10 +131,12 @@ const ALL_SHEEP_NAMES : Array = [
 export(Color) var good_word_color : Color
 export(Color) var bad_word_color : Color
 export(Color) var entity_name_color : Color
+export(Color) var fear_manifestation_color : Color
 
 var good_word_count : int = 0
 var bad_word_count : int = 0
 var entity_encounter_count : int = 0
+var fear_manifestation_count : int = 0
 
 func _highlight_word_with_color(haystack : String, needle : String, highlight : Color) -> String:
 	var replace_text : String = "[color=#%s]%s[/color]" % [highlight.to_html(false), needle]
@@ -146,6 +157,9 @@ func highlight_dream(dream : String) -> String:
 		highlighted_text = _highlight_word_with_color(highlighted_text, word, bad_word_color)
 		highlighted_text = _highlight_word_with_color(highlighted_text, word.capitalize(), bad_word_color)
 	for name in ENTITY_NAMES_ARRAY:
-		entity_encounter_count += highlighted_text.countn(name)
+		entity_encounter_count += int(name in highlighted_text)
 		highlighted_text = _highlight_word_with_colorn(highlighted_text, name, entity_name_color)
+	for name in MANIFESTATIONS_OF_FEAR_ARRAY:
+		fear_manifestation_count += int(name in highlighted_text)
+		highlighted_text = _highlight_word_with_colorn(highlighted_text, name, fear_manifestation_color)
 	return highlighted_text
