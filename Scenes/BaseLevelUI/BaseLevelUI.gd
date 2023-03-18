@@ -38,6 +38,9 @@ func reset_level() -> void:
 	game_events.clear()
 	hungry_sheep = current_sheep_names.duplicate()
 	starting_sheep_count = current_sheep_names.size()
+	$"%World".reset_world()
+	for sheep in current_sheep_names:
+		$"%World".add_sheep(sheep)
 	day_ended = false
 
 func _ready():

@@ -14,7 +14,7 @@ var nearby_sheep = [] # list of sheeps which are in the detection area
 var nearby_grass = [] # list of grass patches which are in the detection area
 var targeted_grass # the grass patch the sheep is targetting and going to
 var shepherd # the shepherd (if in range)
-
+var sheep_name : String 
 
 func _physics_process(_delta):
 	move_and_slide(direction * walk_speed)
