@@ -248,14 +248,14 @@ func _on_BuildSheepButton_pressed():
 func _start_clock():
 	var clock_node = get_node_or_null("%Clock")
 	if clock_node != null:
-		clock_node.show()
 		clock_node.start()
+		$AnimationPlayer.play("ShowTimer")
 
 func _stop_clock():
 	var clock_node = get_node_or_null("%Clock")
 	if clock_node != null:
 		clock_node.stop()
-		clock_node.hide()
+		$AnimationPlayer.play("HideTimer")
 
 func _on_EndDayButton_pressed():
 	if day_ended:
