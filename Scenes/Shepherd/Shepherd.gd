@@ -1,12 +1,18 @@
 extends KinematicBody2D
 
+# the magnet_factor to apply whent the magnet is on or off
+const MAGNET_OFF = 1
+const MAGNET_ON = 5
+
 export var ACCELERATION = 600
 export var MAX_SPEED = 125
 export var FRICTION = 600
 
 var velocity = Vector2.ZERO
+var magnet_factor = 1 # this factor will be multiplied in the sheep logic to decide if it should prioritize to follow the shepherd
 
 func _physics_process(delta):
+	magnet_factor = MAGNET_ON if Input.is_action_pressed("interact") else MAGNET_OFF
 	move_state(delta)
 	
 func move_state(delta):
