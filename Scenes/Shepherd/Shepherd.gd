@@ -22,4 +22,8 @@ func move_state(delta):
 	move()
 
 func move():
+	if velocity.length() > 30:
+		$StreamCycler.play()
+	else:
+		$StreamCycler.stop()
 	velocity = move_and_slide(velocity)
