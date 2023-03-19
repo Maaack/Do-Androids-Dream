@@ -144,7 +144,7 @@ func _explode():
 	yield(get_tree().create_timer(0.5), "timeout")
 	$ExplosionStreamCycler2D.play()
 	yield(get_tree().create_timer(0.5), "timeout")
-	$Sprite.hide()
+	$ExplosionAnimationPlayer.play("Explode")
 	emit_signal("exploded")
 	yield(get_tree().create_timer(4), "timeout")
 	queue_free() # BOOM
