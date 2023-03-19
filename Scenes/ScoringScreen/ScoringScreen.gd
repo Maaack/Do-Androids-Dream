@@ -2,6 +2,7 @@ extends Control
 
 
 signal done_pressed
+signal restart_pressed
 
 const REVEAL_PERCENT_PER_SECOND = 0.30
 
@@ -62,10 +63,10 @@ func _dream_ready(dream_text : String):
 	$ButtonAnimationPlayer.play("DreamReady")
 
 func _on_DoneButton_pressed():
-	$AnimationPlayer.play("RESET")
-	$ButtonAnimationPlayer.play("RESET")
-	$ClockAnimationPlayer.play("RESET")
 	emit_signal("done_pressed")
+
+func _on_RestartButton_pressed():
+	emit_signal("restart_pressed")
 
 func _on_NextButton_pressed():
 	_show_dream()

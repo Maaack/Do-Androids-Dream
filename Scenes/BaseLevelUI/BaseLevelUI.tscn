@@ -96,3 +96,4 @@ bus = "Music"
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/PoisonSheepButton" to="." method="_on_PoisonSheepButton_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/BuildSheepButton" to="." method="_on_BuildSheepButton_pressed"]
 [connection signal="done_pressed" from="ScoringScreen" to="." method="_on_ScoringScreen_done_pressed"]
+[connection signal="restart_pressed" from="ScoringScreen" to="." method="_on_ScoringScreen_restart_pressed"]

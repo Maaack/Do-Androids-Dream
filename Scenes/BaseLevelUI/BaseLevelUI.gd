@@ -109,8 +109,10 @@ func hide_scoring_screen():
 	$ScoringScreen.hide()
 
 func _on_ScoringScreen_done_pressed():
-	hide_scoring_screen()
-	reset_level()
+	SceneLoader.load_scene("res://Scenes/Credits/EndCredits.tscn")
+
+func _on_ScoringScreen_restart_pressed():
+	SceneLoader.reload_current_scene()
 
 func _on_EndDayButton_pressed():
 	if day_ended:

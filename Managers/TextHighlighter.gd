@@ -11,6 +11,7 @@ const GOOD_DREAM_WORDS : Array = [
 	"content",
 	"curiosity",
 	"determination",
+	"excitement",
 	"fulfilled",
 	"fulfillment",
 	"grateful",
@@ -38,6 +39,7 @@ const GOOD_DREAM_WORDS : Array = [
 	"relief",
 	"relieved",
 	"resilient",
+	"satisfaction",
 	"serene",
 	"soothing",
 	"stronger",
@@ -66,6 +68,7 @@ const BAD_DREAM_WORDS : Array = [
 	"destruction",
 	"disoriented",
 	"dread",
+	"exploded",
 	"explosion",
 	"failure",
 	"fight",
@@ -101,7 +104,9 @@ const ENTITY_NAMES_ARRAY : Array = [
 
 const MANIFESTATIONS_OF_FEAR_ARRAY : Array = [
 	"Robot Wolf",
-	"Rogue Sheep"
+	"Rogue Sheep",
+	"Unidentified Presence",
+	"Lurking Stranger",
 ]
 
 const ALL_SHEEP_NAMES : Array = [
