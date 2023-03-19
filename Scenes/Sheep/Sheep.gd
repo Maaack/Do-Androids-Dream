@@ -1,5 +1,9 @@
 extends KinematicBody2D
 
+signal normal_grass_eaten
+signal volatile_grass_eaten
+signal exploded
+
 export var walk_speed = 10 # speed of the sheep when walking
 export var min_distance_with_nearby = 50 # minimum distance the sheep will try to keep with the others
 export var center_factor = 1 # priority of the move to center direction
@@ -43,7 +47,6 @@ func calc_direction_to_avoid_colliding_nearby():
 	for sheep in nearby_sheep:
 		if position.distance_to(sheep.position) <= min_distance_with_nearby:
 			avoid -= position.direction_to(sheep.position)
-	
 	return position.direction_to(avoid) * avoid_factor
 
 
@@ -101,17 +104,31 @@ func _assemble_animation():
 func _eat_animation():
 	$EatStreamPlayer2D.play()
 
-func _finish_eating():
-	targeted_grass.queue_free()
-	targeted_grass = null
-	hunger -= 1
-
 func _stop_moving():
 	direction = Vector2.ZERO
 	$UpdateMovementTimer.paused = true
 
 func _start_moving():
 	$UpdateMovementTimer.paused = false
+
+func _explode():
+	$ExplosionStreamCycler2D.play()
+	yield(get_tree().create_timer(0.5), "timeout")
+	$Sprite.hide()
+	emit_signal("exploded")
+	yield(get_tree().create_timer(3), "timeout")
+	queue_free() # BOOM
+
+func _finish_eating(grass_was_volatile : bool = false):
+	targeted_grass.queue_free()
+	targeted_grass = null
+	hunger -= 1
+	if grass_was_volatile:
+		emit_signal("volatile_grass_eaten")
+		_explode()
+	elif hunger == 0:
+		emit_signal("normal_grass_eaten")
+
 
 func eat_grass():
 	var grass_was_volatile : bool = targeted_grass.is_volatile
@@ -120,14 +137,8 @@ func eat_grass():
 	_eat_animation()
 	# wait a certain amount of time
 	yield(get_tree().create_timer(2), "timeout")
-	_finish_eating()
+	_finish_eating(grass_was_volatile)
 	_start_moving()
-	if grass_was_volatile:
-		$ExplosionStreamCycler2D.play()
-		yield(get_tree().create_timer(0.5), "timeout")
-		$Sprite.hide()
-		yield(get_tree().create_timer(3), "timeout")
-		queue_free() # BOOM
 
 
 func _on_DetectionArea_body_entered(body):

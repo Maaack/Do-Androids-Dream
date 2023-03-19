@@ -7,9 +7,11 @@
 [ext_resource path="res://Scripts/PauseMenuController.gd" type="Script" id=5]
 
 [node name="BaseLevelUI" type="Control"]
+pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+starting_sheep_count = 8
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
@@ -23,6 +25,7 @@ render_target_update_mode = 3
 audio_listener_enable_2d = true
 
 [node name="World" parent="ViewportContainer/Viewport" instance=ExtResource( 2 )]
+pause_mode = 1
 unique_name_in_owner = true
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -85,6 +88,9 @@ stream = ExtResource( 4 )
 autoplay = true
 bus = "Music"
 
+[connection signal="sheep_ate_normal_grass" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_ate_normal_grass"]
+[connection signal="sheep_ate_volatile_grass" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_ate_volatile_grass"]
+[connection signal="sheep_exploded" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_exploded"]
 [connection signal="pressed" from="MarginContainer/Control/EndDayButton" to="." method="_on_EndDayButton_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/FeedSheepButton" to="." method="_on_FeedSheepButton_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/PoisonSheepButton" to="." method="_on_PoisonSheepButton_pressed"]
