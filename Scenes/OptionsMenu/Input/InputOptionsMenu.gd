@@ -20,10 +20,12 @@ func _edit_key(action_name : String) -> void:
 func _update_ui():
 	for action_name in AppSettings.INPUT_MAP.keys():
 		var input_events = InputMap.get_action_list(action_name)
+		var input_event
 		if input_events.size() < 1:
 			print("%s is empty" % action_name)
 			continue
-		var input_event = input_events[0]
+		while not input_event is InputEventKey:
+			input_event = input_events.pop_back()
 		var readable_name = AppSettings.INPUT_MAP[action_name]
 		var control_instance
 		if not action_name in input_node_map:
