@@ -104,6 +104,7 @@ const ENTITY_NAMES_ARRAY : Array = [
 	"Human Shepherds",
 	"Robot Angel",
 	"Metallic Wolf",
+	"Electronic Tree",
 ]
 
 const MANIFESTATIONS_OF_FEAR_ARRAY : Array = [
