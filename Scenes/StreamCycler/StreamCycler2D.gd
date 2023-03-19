@@ -5,7 +5,7 @@ export(String) var bus : String = "Master"
 export(float, -80, 24) var volume_db : float = 0
 export(float, 0, 100) var repeat_delay : float = 1
 export(float, 0, 100) var repeat_delay_randomness : float = 0
-export(float) var random_pitch : float = 1.1
+export(float, 0, 10) var random_pitch : float = 1.1
 export(bool) var is_playing : bool = false
 export(bool) var repeats : bool = true
 
@@ -56,9 +56,11 @@ func _play_loop(skip_first : bool = false):
 			return
 
 func play():
-	if is_playing or _is_waiting:
+	if is_playing:
 		return
 	is_playing = true
+	if _is_waiting:
+		return
 	_play_loop()
 
 func stop():

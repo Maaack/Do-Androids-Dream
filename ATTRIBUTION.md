@@ -14,6 +14,9 @@ Michael Estie
 ### Music and SFX
 Mike
 
+### Dream Text
+ChatGPT 3.5 Turbo  
+
 ## Sourced / Unaffiliated
 ### Font
 #### Title and Special (Bitfantasy)  

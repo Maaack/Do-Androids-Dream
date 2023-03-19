@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Assets/Original/Sprites/volatile_grass.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Original/Sprites/healthy_grass.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/TutorialScreen/TutorialScreen.tscn" type="PackedScene" id=3]
+
+[node name="Intro1Screen" instance=ExtResource( 3 )]
+
+[node name="NinePatchRect" parent="Control" index="0"]
+margin_left = 145.0
+margin_right = 450.0
+
+[node name="TutorialText" parent="Control/NinePatchRect/MarginContainer/PanelContainer" index="0"]
+text = "Welcome to the green pastures.
+Herd your sheep to graze on the patches of electric grass.
+
+
+
+Be wary of the volatile grass.
+
+"
+
+[node name="NormalSprite" type="TextureRect" parent="Control/NinePatchRect/MarginContainer/PanelContainer/TutorialText" index="0"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -49.5
+margin_top = -24.0
+margin_right = -1.5
+margin_bottom = -8.0
+rect_scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+
+[node name="VolatileSprite" type="TextureRect" parent="Control/NinePatchRect/MarginContainer/PanelContainer/TutorialText" index="1"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -49.5
+margin_top = 56.0
+margin_right = -1.49997
+margin_bottom = 72.0
+rect_scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )

@@ -1,51 +1,6 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Assets/Original/Sprites/shepard_master.png" type="Texture" id=1]
-[ext_resource path="res://Scenes/Shepherd/Shepherd.gd" type="Script" id=2]
-[ext_resource path="res://Scenes/StreamCycler/StreamCycler2D.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Assets/Original/SFX/SFX_PlayerStep_1.ogg" type="AudioStream" id=4]
-[ext_resource path="res://Assets/Original/SFX/SFX_PlayerStep_4.ogg" type="AudioStream" id=5]
-[ext_resource path="res://Assets/Original/SFX/SFX_PlayerStep_2.ogg" type="AudioStream" id=6]
-[ext_resource path="res://Assets/Original/SFX/SFX_PlayerStep_3.ogg" type="AudioStream" id=7]
-[ext_resource path="res://Assets/Original/SFX/SFX_MagnetCycle_3.ogg" type="AudioStream" id=8]
-[ext_resource path="res://Assets/Original/SFX/SFX_MagnetCycle_4.ogg" type="AudioStream" id=9]
-[ext_resource path="res://Assets/Original/SFX/SFX_MagnetCycle_2.ogg" type="AudioStream" id=10]
-[ext_resource path="res://Assets/Original/SFX/SFX_MagnetCycle_1.ogg" type="AudioStream" id=11]
-
-[sub_resource type="CapsuleShape2D" id=1]
-radius = 7.0
-height = 12.0
-
-[sub_resource type="Animation" id=25]
-resource_name = "LoadCamera"
-length = 3.0
-tracks/0/type = "value"
-tracks/0/path = NodePath("Camera2D:zoom")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0.063, 0.063 ), Vector2( 0.063, 0.063 ), Vector2( 0.5, 0.5 ) ]
-}
-
-[sub_resource type="Animation" id=26]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("Camera2D:zoom")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0.5, 0.5 ) ]
-}
 
 [sub_resource type="Animation" id=2]
 resource_name = "IdleDown"
@@ -378,38 +333,12 @@ start_node = "Idle"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=24]
 
-[node name="Shepherd" type="KinematicBody2D" groups=["shepherds"]]
-script = ExtResource( 2 )
-magnetized_color = Color( 0.345098, 1, 0.756863, 1 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -1 )
-shape = SubResource( 1 )
+[node name="ShepherdDummy" type="Node2D"]
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 hframes = 6
 vframes = 6
-
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-zoom = Vector2( 0.5, 0.5 )
-
-[node name="StreamCycler2D" parent="." instance=ExtResource( 3 )]
-streams = [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 5 ) ]
-bus = "SFX"
-volume_db = -4.0
-repeat_delay = 0.6
-
-[node name="MagnetStreamCycler2D" parent="." instance=ExtResource( 3 )]
-streams = [ ExtResource( 11 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 9 ) ]
-bus = "SFX"
-repeat_delay = 1.33
-
-[node name="CameraAnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "LoadCamera"
-anims/LoadCamera = SubResource( 25 )
-anims/RESET = SubResource( 26 )
 
 [node name="CharacterAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/IdleDown = SubResource( 2 )

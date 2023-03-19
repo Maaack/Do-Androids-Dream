@@ -64,6 +64,24 @@ func _dream_ready(dream_text : String):
 	$"%BadWordCount".text = "%d" % $TextHighlighter.bad_word_count
 	$"%DreamEntitiesCount".text = "%d" % $TextHighlighter.dream_entity_count
 	$"%FearManifestationsCount".text = "%d" % $TextHighlighter.fear_manifestation_count
+	var total_score = (($TextHighlighter.dream_entity_count * 6) \
+		+ $TextHighlighter.good_word_count) \
+		- (($TextHighlighter.fear_manifestation_count * 2) \
+		+ $TextHighlighter.bad_word_count)
+	if total_score > 12:
+		$"%GradeResult".text = "SS"
+	elif total_score > 9:
+		$"%GradeResult".text = "S"
+	elif total_score > 5:
+		$"%GradeResult".text = "A"
+	elif total_score > 2:
+		$"%GradeResult".text = "B"
+	elif total_score > -2:
+		$"%GradeResult".text = "C"
+	elif total_score > -5:
+		$"%GradeResult".text = "D"
+	else:
+		$"%GradeResult".text = "F"
 	$ButtonAnimationPlayer.play("DreamReady")
 
 func _on_DoneButton_pressed():

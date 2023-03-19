@@ -293,9 +293,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 4 )
 script = ExtResource( 1 )
-game_scene = "res://Scenes/BaseLevelUI/BaseLevelUI.tscn"
+game_scene = "res://Scenes/BaseLevelUI/Levels/Level1.tscn"
 test_scene = "res://Scenes/TestLevel/TestScoring.tscn"
-version_name = "0.2.0"
+version_name = "1.0.0"
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
