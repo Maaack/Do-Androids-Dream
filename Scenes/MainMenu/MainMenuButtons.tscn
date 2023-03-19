@@ -18,6 +18,7 @@ margin_top = -128.0
 margin_right = 96.0
 margin_bottom = 128.0
 custom_constants/separation = 16
+alignment = 1
 
 [node name="PlayButton" parent="ButtonsContainer" instance=ExtResource( 2 )]
 margin_right = 192.0
