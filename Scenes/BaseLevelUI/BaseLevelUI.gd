@@ -24,7 +24,7 @@ const ALL_SHEEP_NAMES : Array = [
 	"Sweetie",
 	"Tammy",
 	"Zelda",
-]]
+]
 
 export(int) var starting_sheep_count : int = 6
 
