@@ -26,17 +26,31 @@ var nearby_grass = [] # list of grass patches which are in the detection area
 var targeted_grass # the grass patch the sheep is targetting and going to
 var shepherd # the shepherd (if in range)
 var sheep_name : String 
+var is_moving : bool = true
+
+func _set_blend_positions(input_vector : Vector2):
+	animation_tree.set("parameters/Idle/blend_position", input_vector)
+	animation_tree.set("parameters/Walk/blend_position", input_vector)
+	animation_tree.set("parameters/Run/blend_position", input_vector)
+	animation_tree.set("parameters/Explode/blend_position", input_vector)
+	animation_tree.set("parameters/Eat/blend_position", input_vector)
 
 func _walk(delta):
+	if not is_moving:
+		return
+	var walk_mod = 1.0
 	if direction.length() < laziness:
 		$WalkingStreamCycler2D.stop()
 		animation_state.travel("Idle")
 		return
+	elif direction.length() > 2.5 * laziness:
+		animation_state.travel("Run")
+		walk_mod *= 2
+	else:
+		animation_state.travel("Walk")
 	var input_vector = direction.normalized()
-	animation_tree.set("parameters/Idle/blend_position", input_vector)
-	animation_tree.set("parameters/Walk/blend_position", input_vector)
-	animation_state.travel("Walk")
-	move_and_slide(input_vector * walk_speed * delta)
+	_set_blend_positions(input_vector)
+	move_and_slide(input_vector * walk_speed * walk_mod * delta)
 	$WalkingStreamCycler2D.play()
 
 func _physics_process(delta):
@@ -114,20 +128,25 @@ func _assemble_animation():
 
 func _eat_animation():
 	$EatStreamPlayer2D.play()
+	animation_state.travel("Eat")
 
 func _stop_moving():
-	direction = Vector2.ZERO
+	is_moving = false
 	$UpdateMovementTimer.paused = true
 
 func _start_moving():
+	is_moving = true
 	$UpdateMovementTimer.paused = false
 
 func _explode():
+	_stop_moving()
+	animation_state.travel("Explode")
+	yield(get_tree().create_timer(0.5), "timeout")
 	$ExplosionStreamCycler2D.play()
 	yield(get_tree().create_timer(0.5), "timeout")
 	$Sprite.hide()
 	emit_signal("exploded")
-	yield(get_tree().create_timer(3), "timeout")
+	yield(get_tree().create_timer(4), "timeout")
 	queue_free() # BOOM
 
 func _finish_eating(grass_was_volatile : bool = false):
@@ -148,8 +167,8 @@ func eat_grass():
 	_eat_animation()
 	# wait a certain amount of time
 	yield(get_tree().create_timer(2), "timeout")
-	_finish_eating(grass_was_volatile)
 	_start_moving()
+	_finish_eating(grass_was_volatile)
 
 
 func _on_DetectionArea_body_entered(body):
