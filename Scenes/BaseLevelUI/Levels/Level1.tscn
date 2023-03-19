@@ -29,6 +29,7 @@ tracks/0/keys = {
 
 [node name="Level1" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+starting_sheep_count = 12
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6"]
 pause_mode = 1
