@@ -95,6 +95,9 @@ func target_grass():
 	return targeted_grass != null
 		
 
+func _assemble_animation():
+	$AssemblyStreamPlayer2D.play()
+
 func _eat_animation():
 	$EatStreamPlayer2D.play()
 	
