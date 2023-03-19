@@ -4,6 +4,9 @@ extends KinematicBody2D
 const MAGNET_OFF = 1
 const MAGNET_ON = 5
 
+onready var animation_tree = $AnimationTree
+onready var animation_state = animation_tree.get("parameters/playback")
+
 export var acceleration = 600
 export var max_speed = 125
 export var friction = 600
@@ -22,8 +25,12 @@ func move_state(delta):
 	input_vector = input_vector.normalized()
 	
 	if input_vector != Vector2.ZERO:
+		animation_tree.set("parameters/Idle/blend_position", input_vector)
+		animation_tree.set("parameters/Walk/blend_position", input_vector)
+		animation_state.travel("Walk")
 		velocity = velocity.move_toward(input_vector * max_speed, acceleration * delta)
 	else:
+		animation_state.travel("Idle")
 		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
 	move()
 
