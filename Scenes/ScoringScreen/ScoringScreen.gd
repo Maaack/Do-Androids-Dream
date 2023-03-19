@@ -5,6 +5,9 @@ signal done_pressed
 signal restart_pressed
 
 const REVEAL_PERCENT_PER_SECOND = 0.30
+const DAY_EVENTS_STRING = "The android shepherd ventured out in the morning with its flock of %d sheep to graze on the electric pastures. While tending the flock...\n\n" \
+	+ "%s\n" \
+	+ "At the end of the day, the android shepherd safely returned home with %d robot sheep."
 
 var showing_clock : bool = false
 var dream_returned : bool = false
@@ -25,8 +28,9 @@ func _hide_clock():
 	$ClockAnimationPlayer.play("HideClock")
 	showing_clock = false
 
-func _read_events(events_string : String):
-	$Panel/MarginContainer/EventsContainer/RichTextLabel.text = events_string
+func _read_events(starting_sheep_count : int, ending_sheep_count : int, events_string : String):
+	var full_string = DAY_EVENTS_STRING % [starting_sheep_count, events_string, ending_sheep_count]
+	$Panel/MarginContainer/EventsContainer/RichTextLabel.text = full_string
 	$AnimationPlayer.play("ReadEvents")
 	yield($AnimationPlayer, "animation_finished")
 	_show_clock()
@@ -34,7 +38,7 @@ func _read_events(events_string : String):
 func start_dream_request(starting_sheep_count : int, ending_sheep_count : int, events_array : Array):
 	var events_string = $SentenceBuilder.get_event_sentences(events_array)
 	_request_dream(starting_sheep_count, ending_sheep_count, events_string)
-	_read_events(events_string)
+	_read_events(starting_sheep_count, ending_sheep_count, events_string)
 
 func _start_clock():
 	var clock_node = get_node_or_null("%Clock")
