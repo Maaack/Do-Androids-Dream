@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/BaseLevelUI/BaseLevelUI.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/World/World.tscn" type="PackedScene" id=2]
@@ -7,11 +7,13 @@
 [ext_resource path="res://Scripts/PauseMenuController.gd" type="Script" id=5]
 [ext_resource path="res://Assets/Original/Music/Godot_55_-_Do_Androids_Dream_-_Music_4_-_Demo_1.mp3" type="AudioStream" id=6]
 [ext_resource path="res://Scenes/Clock/Clock.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Themes/GameTheme.tres" type="Theme" id=8]
 
 [node name="BaseLevelUI" type="Control"]
 pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 8 )
 script = ExtResource( 1 )
 starting_sheep_count = 8
 
@@ -85,15 +87,15 @@ custom_constants/separation = 16
 [node name="Clock" parent="MarginContainer/Control/VBoxContainer2" instance=ExtResource( 7 )]
 pause_mode = 1
 unique_name_in_owner = true
-margin_right = 65.0
+margin_right = 71.0
 margin_bottom = 65.0
 rect_min_size = Vector2( 0, 65 )
 wait_time = 180.0
 
 [node name="EndDayButton" type="Button" parent="MarginContainer/Control/VBoxContainer2"]
 margin_top = 81.0
-margin_right = 65.0
-margin_bottom = 101.0
+margin_right = 71.0
+margin_bottom = 103.0
 text = "End Day"
 
 [node name="ScoringScreen" parent="." instance=ExtResource( 3 )]
