@@ -18,7 +18,7 @@
 [ext_resource path="res://Assets/Original/Sprites/explosion.png" type="Texture" id=16]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 2.0
+radius = 9.0
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 300.0
@@ -894,6 +894,7 @@ wait_time = 2.0
 wait_time_randomness = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -910,6 +911,7 @@ hframes = 6
 [node name="DetectionArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+visible = false
 shape = SubResource( 2 )
 
 [node name="UpdateMovementTimer" type="Timer" parent="."]
