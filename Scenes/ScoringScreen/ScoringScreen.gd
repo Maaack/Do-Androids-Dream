@@ -107,5 +107,7 @@ func _ready():
 
 
 func _on_Clock_timeout():
-	yield(get_tree().create_time(5), "timeout")
+	if dream_returned:
+		return
+	yield(get_tree().create_timer(5), "timeout")
 	_dream_ready(OOPS_STRING)

@@ -101,6 +101,7 @@ tracks/2/keys = {
 [node name="OpeningScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 script = ExtResource( 1 )
 next_scene = "res://Scenes/MainMenu/MainMenu.tscn"
 
@@ -112,6 +113,7 @@ anims/RESET = SubResource( 2 )
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 custom_constants/margin_right = 64
 custom_constants/margin_top = 64
 custom_constants/margin_left = 64
