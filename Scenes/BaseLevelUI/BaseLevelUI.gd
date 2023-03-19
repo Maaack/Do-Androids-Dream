@@ -80,7 +80,8 @@ func add_feed_sheep_event(sheep_name):
 	_check_level_end()
 
 func add_poison_sheep_event(sheep_name):
-	add_event(EventData.EVENT_TYPES.EAT_VOLATILE_GRASS, sheep_name)
+	pass
+	# add_event(EventData.EVENT_TYPES.EAT_VOLATILE_GRASS, sheep_name)
 
 func add_explode_sheep_event(sheep_name):
 	add_event(EventData.EVENT_TYPES.EXPLODE, sheep_name)
