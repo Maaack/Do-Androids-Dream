@@ -48,11 +48,27 @@ func reset_level() -> void:
 
 func _ready():
 	reset_level()
-	
+
+func _end_day():
+	if day_ended:
+		return
+	day_ended = true
+	get_tree().paused = true
+	if hungry_sheep.size() > 0:
+		var starved_sheep = hungry_sheep.duplicate()
+		for sheep_name in starved_sheep:
+			add_sheep_starved_event(sheep_name)
+	show_scoring_screen()
+
+func _check_level_end():
+	if hungry_sheep.size() == 0:
+		_end_day()
+
 func _kill_sheep(sheep_name : String):
 	current_sheep_names.erase(sheep_name)
 	extra_sheep_names.append(sheep_name)
 	hungry_sheep.erase(sheep_name)
+	_check_level_end()
 
 func add_event(event_type : int, subject_sheep : String) -> void:
 	game_events.append(EventData.new(event_type, subject_sheep))
@@ -60,10 +76,10 @@ func add_event(event_type : int, subject_sheep : String) -> void:
 func add_feed_sheep_event(sheep_name):
 	add_event(EventData.EVENT_TYPES.EAT_NORMAL_GRASS, sheep_name)
 	hungry_sheep.erase(sheep_name)
+	_check_level_end()
 
 func add_poison_sheep_event(sheep_name):
 	add_event(EventData.EVENT_TYPES.EAT_VOLATILE_GRASS, sheep_name)
-	hungry_sheep.erase(sheep_name)
 
 func add_explode_sheep_event(sheep_name):
 	add_event(EventData.EVENT_TYPES.EXPLODE, sheep_name)
@@ -115,14 +131,7 @@ func _on_ScoringScreen_restart_pressed():
 	SceneLoader.reload_current_scene()
 
 func _on_EndDayButton_pressed():
-	if day_ended:
-		return
-	day_ended = true
-	get_tree().paused = true
-	if hungry_sheep.size() > 0:
-		var starved_sheep = hungry_sheep.duplicate()
-		for sheep_name in starved_sheep:
-			add_sheep_starved_event(sheep_name)
+	_end_day()
 	show_scoring_screen()
 
 func _on_World_sheep_ate_normal_grass(sheep_name):
