@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://Assets/Original/Sprites/shepard_master.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Shepherd/Shepherd.gd" type="Script" id=2]
@@ -7,6 +7,10 @@
 [ext_resource path="res://Assets/Original/SFX/SFX_PlayerStep_4.ogg" type="AudioStream" id=5]
 [ext_resource path="res://Assets/Original/SFX/SFX_PlayerStep_2.ogg" type="AudioStream" id=6]
 [ext_resource path="res://Assets/Original/SFX/SFX_PlayerStep_3.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Assets/Original/SFX/SFX_MagnetCycle_3.ogg" type="AudioStream" id=8]
+[ext_resource path="res://Assets/Original/SFX/SFX_MagnetCycle_4.ogg" type="AudioStream" id=9]
+[ext_resource path="res://Assets/Original/SFX/SFX_MagnetCycle_2.ogg" type="AudioStream" id=10]
+[ext_resource path="res://Assets/Original/SFX/SFX_MagnetCycle_1.ogg" type="AudioStream" id=11]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 7.0
@@ -376,6 +380,7 @@ start_node = "Idle"
 
 [node name="Shepherd" type="KinematicBody2D" groups=["shepherds"]]
 script = ExtResource( 2 )
+magnetized_color = Color( 0.345098, 1, 0.756863, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -1 )
@@ -395,6 +400,11 @@ streams = [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 5
 bus = "SFX"
 volume_db = -4.0
 repeat_delay = 0.6
+
+[node name="MagnetStreamCycler2D" parent="." instance=ExtResource( 3 )]
+streams = [ ExtResource( 11 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 9 ) ]
+bus = "SFX"
+repeat_delay = 1.33
 
 [node name="CameraAnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "LoadCamera"
