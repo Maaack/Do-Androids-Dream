@@ -8,6 +8,7 @@ const REVEAL_PERCENT_PER_SECOND = 0.30
 const DAY_EVENTS_STRING = "The android shepherd ventured out in the morning with its flock of %d sheep to graze on the electric pastures. While tending the flock...\n\n" \
 	+ "%s\n" \
 	+ "At the end of the day, the android shepherd safely returned home with %d robot sheep."
+const OOPS_STRING = "Oops... Something went wrong. We didn't get a response from the android shepherd (ChatGPT API) for way too long. Must be dead."
 
 var showing_clock : bool = false
 var dream_returned : bool = false
@@ -56,6 +57,8 @@ func _show_dream():
 	$ButtonAnimationPlayer.play("DreamComplete")
 
 func _dream_ready(dream_text : String):
+	if dream_returned:
+		return
 	dream_returned = true
 	_hide_clock()
 	var highlighted_dream_text = $TextHighlighter.highlight_dream(dream_text)
@@ -101,3 +104,8 @@ func _ready():
 	$"%BadWordCount".modulate = $TextHighlighter.bad_word_color
 	$"%DreamEntitiesCount".modulate = $TextHighlighter.dream_entity_color
 	$"%FearManifestationsCount".modulate = $TextHighlighter.fear_manifestation_color
+
+
+func _on_Clock_timeout():
+	yield(get_tree().create_time(5), "timeout")
+	_dream_ready(OOPS_STRING)
