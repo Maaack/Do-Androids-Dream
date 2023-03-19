@@ -100,20 +100,28 @@ func _assemble_animation():
 
 func _eat_animation():
 	$EatStreamPlayer2D.play()
-	
+
+func _finish_eating():
+	targeted_grass.queue_free()
+	targeted_grass = null
+	hunger -= 1
+
+func _stop_moving():
+	direction = Vector2.ZERO
+	$UpdateMovementTimer.paused = true
+
+func _start_moving():
+	$UpdateMovementTimer.paused = false
 
 func eat_grass():
 	var grass_was_volatile : bool = targeted_grass.is_volatile
 	# play eating animation
-	direction = Vector2.ZERO
-	$UpdateMovementTimer.paused = true
+	_stop_moving()
 	_eat_animation()
 	# wait a certain amount of time
 	yield(get_tree().create_timer(2), "timeout")
-	$UpdateMovementTimer.paused = false
-	targeted_grass.queue_free()
-	targeted_grass = null
-	hunger -= 1
+	_finish_eating()
+	_start_moving()
 	if grass_was_volatile:
 		$ExplosionStreamCycler2D.play()
 		yield(get_tree().create_timer(0.5), "timeout")
