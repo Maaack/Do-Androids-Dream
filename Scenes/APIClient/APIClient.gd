@@ -3,7 +3,9 @@ extends Node
 signal dream_recollected(dream_text)
 
 const PROXY_API_URL = "https://dk7cqkgzlc.execute-api.us-east-1.amazonaws.com/prod/chat-completions"
-
+const FAILED_DREAM_MESSAGE : String = "That night the android shepherd was restless. In the morning, it could not remember any of its dreams.\n\n" \
+	+ "(There was a problem getting your dream. Please try again later. We apologize that this is a dissappointing outcome, but ChatGPT shouldn't be this slow.\n\n" \
+	+ "ChatGPT might actually be down: [url]https://platform.openai.com/[/url] )"
 onready var _http_request = $HTTPRequest
 
 func get_http_request():
@@ -93,7 +95,12 @@ func on_request_completed(result, response_code, headers, body):
 	if result == HTTPRequest.RESULT_SUCCESS:
 		if body is PoolByteArray:
 			var response = parse_json(body.get_string_from_utf8())
-			emit_signal("dream_recollected", str(response['body']))
+			if response.has("body"):
+				emit_signal("dream_recollected", str(response["body"]))
+			elif response.has("errorMessage"):
+				emit_signal("dream_recollected", FAILED_DREAM_MESSAGE)
+			else:
+				emit_signal("dream_recollected", FAILED_DREAM_MESSAGE)
 		else:
 			emit_signal("dream_recollected", body)
 	else:

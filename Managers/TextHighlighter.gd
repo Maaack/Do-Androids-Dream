@@ -11,6 +11,7 @@ const GOOD_DREAM_WORDS : Array = [
 	"content",
 	"curiosity",
 	"determination",
+	"excitement",
 	"fulfilled",
 	"fulfillment",
 	"grateful",
@@ -33,11 +34,13 @@ const GOOD_DREAM_WORDS : Array = [
 	"playful",
 	"positive",
 	"potential",
+	"recharged",
 	"refreshed",
 	"rejuvinated",
 	"relief",
 	"relieved",
 	"resilient",
+	"satisfaction",
 	"serene",
 	"soothing",
 	"stronger",
@@ -66,6 +69,7 @@ const BAD_DREAM_WORDS : Array = [
 	"destruction",
 	"disoriented",
 	"dread",
+	"exploded",
 	"explosion",
 	"failure",
 	"fight",
@@ -101,7 +105,10 @@ const ENTITY_NAMES_ARRAY : Array = [
 
 const MANIFESTATIONS_OF_FEAR_ARRAY : Array = [
 	"Robot Wolf",
-	"Rogue Sheep"
+	"Robot Wolves",
+	"Rogue Sheep",
+	"Unidentified Presence",
+	"Lurking Stranger",
 ]
 
 const ALL_SHEEP_NAMES : Array = [
@@ -146,6 +153,10 @@ func _highlight_word_with_colorn(haystack : String, needle : String, highlight :
 	var replace_text : String = "[color=#%s]%s[/color]" % [highlight.to_html(false), needle]
 	return haystack.replacen(needle, replace_text)
 
+func _bold_word(haystack : String, needle : String) -> String:
+	var replace_text : String = "[b]%s[/b]" % needle
+	return haystack.replace(needle, replace_text)
+
 func highlight_dream(dream : String) -> String:
 	var highlighted_text : String = dream
 	for word in GOOD_DREAM_WORDS:
@@ -156,10 +167,12 @@ func highlight_dream(dream : String) -> String:
 		bad_word_count += highlighted_text.count(word)
 		highlighted_text = _highlight_word_with_color(highlighted_text, word, bad_word_color)
 		highlighted_text = _highlight_word_with_color(highlighted_text, word.capitalize(), bad_word_color)
-	for name in ENTITY_NAMES_ARRAY:
-		dream_entity_count += int(name in highlighted_text)
-		highlighted_text = _highlight_word_with_colorn(highlighted_text, name, dream_entity_color)
-	for name in MANIFESTATIONS_OF_FEAR_ARRAY:
-		fear_manifestation_count += int(name in highlighted_text)
-		highlighted_text = _highlight_word_with_colorn(highlighted_text, name, fear_manifestation_color)
+	for word in ENTITY_NAMES_ARRAY:
+		dream_entity_count += int(word in highlighted_text)
+		highlighted_text = _highlight_word_with_colorn(highlighted_text, word, dream_entity_color)
+	for word in MANIFESTATIONS_OF_FEAR_ARRAY:
+		fear_manifestation_count += int(word in highlighted_text)
+		highlighted_text = _highlight_word_with_colorn(highlighted_text, word, fear_manifestation_color)
+	for sheep_name in ALL_SHEEP_NAMES:
+		highlighted_text = _bold_word(highlighted_text, sheep_name)
 	return highlighted_text
