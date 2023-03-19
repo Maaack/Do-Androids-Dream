@@ -8,17 +8,24 @@ export var avg_dir_factor = 1 # priority of the common direction
 export var grass_factor = 10 # priority of the direction to targeted grass patch
 export var shepherd_factor = 3 # priority of the direction to shepherd
 export var shepherd_avoid_factor = 5 # priority of the direction to avoid getting to close to the shepherd
+export var laziness = 3
+export var wait_time : float = 5
+export var wait_time_randomness : float = 2
 var hunger = 2 # number of grass patches the sheep need to eat -> 0 means it's full and does not need to eat anymore
 var direction = Vector2.ZERO # direction to move to
+var velocity = Vector2.ZERO
 var nearby_sheep = [] # list of sheeps which are in the detection area
 var nearby_grass = [] # list of grass patches which are in the detection area
 var targeted_grass # the grass patch the sheep is targetting and going to
 var shepherd # the shepherd (if in range)
+var sheep_name : String 
 
-
-func _physics_process(_delta):
-	move_and_slide(direction * walk_speed)
-
+func _physics_process(delta):
+	if direction.length() < laziness:
+		$WalkingStreamCycler2D.stop()
+		return
+	move_and_slide(direction.normalized() * walk_speed * delta)
+	$WalkingStreamCycler2D.play()
 
 # will return a vector for the sheep to go to the center of mass of the group of nearby sheeps - Boids rules #1
 func calc_direction_to_center_of_mass_nearby():
@@ -44,7 +51,7 @@ func calc_direction_to_avoid_colliding_nearby():
 func calc_velocity_nearby():
 	var avg_direction = Vector2.ZERO
 	for sheep in nearby_sheep:
-		avg_direction += sheep.direction
+		avg_direction += sheep.direction.normalized()
 	avg_direction /= nearby_sheep.size()
 	
 	return avg_direction * avg_dir_factor
@@ -88,17 +95,39 @@ func target_grass():
 	return targeted_grass != null
 		
 
+func _assemble_animation():
+	$AssemblyStreamPlayer2D.play()
 
-func eat_grass():
-	# play eating animation
-	# wait a certain amount of time
-	if targeted_grass.is_volatile:
-		queue_free() # BOOM
-	else:
-		hunger -= 1
-	
+func _eat_animation():
+	$EatStreamPlayer2D.play()
+
+func _finish_eating():
 	targeted_grass.queue_free()
 	targeted_grass = null
+	hunger -= 1
+
+func _stop_moving():
+	direction = Vector2.ZERO
+	$UpdateMovementTimer.paused = true
+
+func _start_moving():
+	$UpdateMovementTimer.paused = false
+
+func eat_grass():
+	var grass_was_volatile : bool = targeted_grass.is_volatile
+	# play eating animation
+	_stop_moving()
+	_eat_animation()
+	# wait a certain amount of time
+	yield(get_tree().create_timer(2), "timeout")
+	_finish_eating()
+	_start_moving()
+	if grass_was_volatile:
+		$ExplosionStreamCycler2D.play()
+		yield(get_tree().create_timer(0.5), "timeout")
+		$Sprite.hide()
+		yield(get_tree().create_timer(3), "timeout")
+		queue_free() # BOOM
 
 
 func _on_DetectionArea_body_entered(body):
@@ -114,8 +143,7 @@ func _on_DetectionArea_body_exited(body):
 	elif body.is_in_group("shepherds"):
 		shepherd = null
 
-
-func _on_UpdateMovementTimer_timeout():
+func _update_direction():
 	direction = (
 		calc_direction_to_center_of_mass_nearby() +
 		calc_direction_to_avoid_colliding_nearby() +
@@ -123,8 +151,11 @@ func _on_UpdateMovementTimer_timeout():
 		calc_direction_to_nearest_grass() +
 		calc_direction_to_shepherd() + 
 		calc_direction_to_avoid_colliding_shepherd()
-	).normalized()
+	)
 
+func _on_UpdateMovementTimer_timeout():
+	_update_direction()
+	$UpdateMovementTimer.wait_time = wait_time + rand_range(-wait_time_randomness, wait_time_randomness)
 
 func _on_DetectionArea_area_entered(area):
 	if area.is_in_group("grass"):
