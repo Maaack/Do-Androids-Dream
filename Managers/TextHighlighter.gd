@@ -105,6 +105,7 @@ const ENTITY_NAMES_ARRAY : Array = [
 
 const MANIFESTATIONS_OF_FEAR_ARRAY : Array = [
 	"Robot Wolf",
+	"Robot Wolves",
 	"Rogue Sheep",
 	"Unidentified Presence",
 	"Lurking Stranger",
