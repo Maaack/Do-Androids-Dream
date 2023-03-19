@@ -4,6 +4,9 @@ signal normal_grass_eaten
 signal volatile_grass_eaten
 signal exploded
 
+onready var animation_tree = $AnimationTree
+onready var animation_state = animation_tree.get("parameters/playback")
+
 export var walk_speed = 10 # speed of the sheep when walking
 export var min_distance_with_nearby = 50 # minimum distance the sheep will try to keep with the others
 export var center_factor = 1 # priority of the move to center direction
@@ -24,12 +27,20 @@ var targeted_grass # the grass patch the sheep is targetting and going to
 var shepherd # the shepherd (if in range)
 var sheep_name : String 
 
-func _physics_process(delta):
+func _walk(delta):
 	if direction.length() < laziness:
 		$WalkingStreamCycler2D.stop()
+		animation_state.travel("Idle")
 		return
-	move_and_slide(direction.normalized() * walk_speed * delta)
+	var input_vector = direction.normalized()
+	animation_tree.set("parameters/Idle/blend_position", input_vector)
+	animation_tree.set("parameters/Walk/blend_position", input_vector)
+	animation_state.travel("Walk")
+	move_and_slide(input_vector * walk_speed * delta)
 	$WalkingStreamCycler2D.play()
+
+func _physics_process(delta):
+	_walk(delta)
 
 # will return a vector for the sheep to go to the center of mass of the group of nearby sheeps - Boids rules #1
 func calc_direction_to_center_of_mass_nearby():

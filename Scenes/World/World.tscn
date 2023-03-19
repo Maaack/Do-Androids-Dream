@@ -202,7 +202,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 [node name="World" type="Node2D"]
 position = Vector2( 2, 0 )
 script = ExtResource( 4 )
-spawn_range = 300.0
 
 [node name="Dirt" type="TileMap" parent="."]
 tile_set = SubResource( 9 )
