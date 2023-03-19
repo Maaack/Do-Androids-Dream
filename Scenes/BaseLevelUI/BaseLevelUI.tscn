@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/BaseLevelUI/BaseLevelUI.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/World/World.tscn" type="PackedScene" id=2]
@@ -6,11 +6,14 @@
 [ext_resource path="res://Assets/Original/Music/Godot 55 - Do Androids Dream - Music 2 - Mix 1.ogg" type="AudioStream" id=4]
 [ext_resource path="res://Scripts/PauseMenuController.gd" type="Script" id=5]
 [ext_resource path="res://Assets/Original/Music/Godot_55_-_Do_Androids_Dream_-_Music_4_-_Demo_1.mp3" type="AudioStream" id=6]
+[ext_resource path="res://Scenes/Clock/Clock.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Themes/GameTheme.tres" type="Theme" id=8]
 
 [node name="BaseLevelUI" type="Control"]
 pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 8 )
 script = ExtResource( 1 )
 starting_sheep_count = 8
 
@@ -44,15 +47,6 @@ margin_top = 32.0
 margin_right = 992.0
 margin_bottom = 568.0
 
-[node name="EndDayButton" type="Button" parent="MarginContainer/Control"]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -63.0
-margin_top = -20.0
-text = "End Day"
-
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control"]
 visible = false
 margin_right = 200.0
@@ -81,6 +75,29 @@ margin_right = 200.0
 margin_bottom = 124.0
 text = "Build Sheep"
 
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/Control"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -65.0
+margin_top = -99.0
+custom_constants/separation = 16
+
+[node name="Clock" parent="MarginContainer/Control/VBoxContainer2" instance=ExtResource( 7 )]
+pause_mode = 1
+unique_name_in_owner = true
+margin_right = 71.0
+margin_bottom = 65.0
+rect_min_size = Vector2( 0, 65 )
+wait_time = 180.0
+
+[node name="EndDayButton" type="Button" parent="MarginContainer/Control/VBoxContainer2"]
+margin_top = 81.0
+margin_right = 71.0
+margin_bottom = 103.0
+text = "End Day"
+
 [node name="ScoringScreen" parent="." instance=ExtResource( 3 )]
 visible = false
 
@@ -100,9 +117,10 @@ bus = "Music"
 [connection signal="sheep_ate_normal_grass" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_ate_normal_grass"]
 [connection signal="sheep_ate_volatile_grass" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_ate_volatile_grass"]
 [connection signal="sheep_exploded" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_exploded"]
-[connection signal="pressed" from="MarginContainer/Control/EndDayButton" to="." method="_on_EndDayButton_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/FeedSheepButton" to="." method="_on_FeedSheepButton_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/PoisonSheepButton" to="." method="_on_PoisonSheepButton_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/BuildSheepButton" to="." method="_on_BuildSheepButton_pressed"]
+[connection signal="timeout" from="MarginContainer/Control/VBoxContainer2/Clock" to="." method="_on_Clock_timeout"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer2/EndDayButton" to="." method="_on_EndDayButton_pressed"]
 [connection signal="done_pressed" from="ScoringScreen" to="." method="_on_ScoringScreen_done_pressed"]
 [connection signal="restart_pressed" from="ScoringScreen" to="." method="_on_ScoringScreen_restart_pressed"]

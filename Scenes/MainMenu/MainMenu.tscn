@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Scenes/MainMenu/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/MainMenu/MainMenuButtons.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Assets/Original/Music/Godot_55_-_Do_Androids_Dream_-_Music_3_-_Demo_1.mp3" type="AudioStream" id=6]
 [ext_resource path="res://Scenes/World/MainMenuWorld.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Credits/Credits.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Themes/TitleFont64px.tres" type="DynamicFont" id=9]
 
 [sub_resource type="Animation" id=5]
 resource_name = "CloseSubMenu"
@@ -55,7 +56,7 @@ tracks/0/keys = {
 } ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("TitleContainer/Titles/TitlesContainer/Title:modulate")
+tracks/1/path = NodePath("TitleContainer/Titles/Panel/TitlesContainer/Title:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -67,7 +68,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("TitleContainer/Titles/TitlesContainer/SubTitle:modulate")
+tracks/2/path = NodePath("TitleContainer/Titles/Panel/TitlesContainer/SubTitle:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -107,7 +108,7 @@ tracks/4/keys = {
 resource_name = "MainMenuOpen"
 length = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("TitleContainer/Titles/TitlesContainer/Title:modulate")
+tracks/0/path = NodePath("TitleContainer/Titles/Panel/TitlesContainer/Title:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -119,7 +120,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("TitleContainer/Titles/TitlesContainer/SubTitle:modulate")
+tracks/1/path = NodePath("TitleContainer/Titles/Panel/TitlesContainer/SubTitle:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -214,7 +215,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("TitleContainer/Titles/TitlesContainer/Title:modulate")
+tracks/2/path = NodePath("TitleContainer/Titles/Panel/TitlesContainer/Title:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -226,7 +227,7 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("TitleContainer/Titles/TitlesContainer/SubTitle:modulate")
+tracks/3/path = NodePath("TitleContainer/Titles/Panel/TitlesContainer/SubTitle:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -294,7 +295,7 @@ theme = ExtResource( 4 )
 script = ExtResource( 1 )
 game_scene = "res://Scenes/BaseLevelUI/BaseLevelUI.tscn"
 test_scene = "res://Scenes/TestLevel/TestScoring.tscn"
-version_name = "0.1.0"
+version_name = "0.2.0"
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
@@ -308,14 +309,6 @@ render_target_update_mode = 3
 audio_listener_enable_2d = true
 
 [node name="World" parent="ViewportContainer/Viewport" instance=ExtResource( 7 )]
-
-[node name="Panel" type="Panel" parent="."]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -200.0
-margin_top = 14.0
-margin_right = 200.0
-margin_bottom = 165.0
 
 [node name="MenuAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/CloseSubMenu = SubResource( 5 )
@@ -337,35 +330,40 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 custom_constants/margin_right = 32
-custom_constants/margin_top = 64
+custom_constants/margin_top = 32
 custom_constants/margin_left = 32
 custom_constants/margin_bottom = 16
 
 [node name="Titles" type="Control" parent="TitleContainer"]
 margin_left = 32.0
-margin_top = 64.0
+margin_top = 32.0
 margin_right = 992.0
 margin_bottom = 584.0
 mouse_filter = 2
 
-[node name="TitlesContainer" type="VBoxContainer" parent="TitleContainer/Titles"]
+[node name="Panel" type="Panel" parent="TitleContainer/Titles"]
+margin_right = 960.0
+margin_bottom = 96.0
+
+[node name="TitlesContainer" type="VBoxContainer" parent="TitleContainer/Titles/Panel"]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -416.0
 margin_right = 416.0
 margin_bottom = 97.0
-custom_constants/separation = 24
+custom_constants/separation = 32
 
-[node name="Title" type="Label" parent="TitleContainer/Titles/TitlesContainer"]
+[node name="Title" type="Label" parent="TitleContainer/Titles/Panel/TitlesContainer"]
 margin_right = 832.0
-margin_bottom = 14.0
-text = "Do Androids Dream..."
+margin_bottom = 37.0
+custom_fonts/font = ExtResource( 9 )
+text = "Do Androids Dream?"
 align = 1
 
-[node name="SubTitle" type="Label" parent="TitleContainer/Titles/TitlesContainer"]
-margin_top = 38.0
+[node name="SubTitle" type="Label" parent="TitleContainer/Titles/Panel/TitlesContainer"]
+margin_top = 69.0
 margin_right = 832.0
-margin_bottom = 52.0
+margin_bottom = 85.0
 text = "Godot Wild Jam #55 Edition"
 align = 1
 
@@ -389,10 +387,24 @@ custom_constants/margin_bottom = 128
 [node name="MainMenuButtons" parent="MenuContainer" instance=ExtResource( 2 )]
 
 [node name="PlayButton" parent="MenuContainer/MainMenuButtons/ButtonsContainer" index="0"]
-text = "Test World"
+margin_top = 24.0
+margin_bottom = 64.0
 
 [node name="TestButton" parent="MenuContainer/MainMenuButtons/ButtonsContainer" index="1"]
+visible = false
 text = "Test Scoring"
+
+[node name="OptionsButton" parent="MenuContainer/MainMenuButtons/ButtonsContainer" index="2"]
+margin_top = 80.0
+margin_bottom = 120.0
+
+[node name="CreditsButton" parent="MenuContainer/MainMenuButtons/ButtonsContainer" index="3"]
+margin_top = 136.0
+margin_bottom = 176.0
+
+[node name="ExitButton" parent="MenuContainer/MainMenuButtons/ButtonsContainer" index="4"]
+margin_top = 192.0
+margin_bottom = 232.0
 
 [node name="MasterOptionsMenu" parent="." instance=ExtResource( 3 )]
 visible = false

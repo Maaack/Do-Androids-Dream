@@ -1,19 +1,30 @@
 # Attribution
 ## Collaborators
 
-### Role
-Person 1  
-Person 2  
-[Person w/ Link]()  
+### Team Lead
+[Marek](https://maaack.itch.io/) 
 
+### Programmers
+Tomy
+Marek
+
+### Pixel Art
+Michael Estie  
+
+### Music and SFX
+Mike
 
 ## Sourced / Unaffiliated
-### Asset Type
-#### Use Case
-Author: [Name]()  
-Source: [Domain : webpage.html]()  
-License: [License]()
+### Font
+#### Title and Special (Bitfantasy)  
+Author: Mitch  
+Source: [itch.io: nb-pixel-font-bundle](https://nimblebeastscollective.itch.io/nb-pixel-font-bundle)  
+License: [Free](https://nimblebeastscollective.itch.io/nb-pixel-font-bundle)  
 
+#### Most Fonts (BIOSFont)  
+Author: DualBIOS  
+Source: [itch.io: nb-pixel-font-bundle-2](https://nimblebeastscollective.itch.io/nb-pixel-font-bundle-2)  
+License: [Free](https://nimblebeastscollective.itch.io/nb-pixel-font-bundle-2)  
 
 ## Tools
 #### Godot
