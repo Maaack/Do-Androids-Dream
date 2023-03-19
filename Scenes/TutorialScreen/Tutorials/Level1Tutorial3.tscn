@@ -9,6 +9,7 @@ margin_left = 145.0
 margin_right = 450.0
 
 [node name="TutorialText" parent="Control/NinePatchRect/MarginContainer/PanelContainer" index="0"]
-text = "Activate your magnet by pressing the spacebar, or holding the left mouse button.
- 
-This will draw your sheep to you, and allow you to lead them."
+text = "There's green pastures this way... 
+
+
+Go forth!"
