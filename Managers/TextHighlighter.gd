@@ -89,10 +89,12 @@ const BAD_DREAM_WORDS : Array = [
 	"terrified",
 	"terror",
 	"unease",
+	"unsettled",
 	"unsettling",
 ]
 
 const ENTITY_NAMES_ARRAY : Array = [
+	"The Creator",
 	"Guardian of the Dreamworld",
 	"Guardian of the Sheep",
 	"Protector of the Sheep",
@@ -101,11 +103,13 @@ const ENTITY_NAMES_ARRAY : Array = [
 	"Sheep Engineer",
 	"Human Shepherds",
 	"Robot Angel",
+	"Metallic Wolf",
 ]
 
 const MANIFESTATIONS_OF_FEAR_ARRAY : Array = [
 	"Robot Wolf",
 	"Robot Wolves",
+	"Wild Wolves",
 	"Rogue Sheep",
 	"Unidentified Presence",
 	"Lurking Stranger",

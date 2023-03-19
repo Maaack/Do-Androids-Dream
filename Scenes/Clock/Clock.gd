@@ -12,8 +12,6 @@ export(float, 0.0, 3600.0) var wait_time : float = 1.0 setget set_wait_time
 export(float) var shadow_x : float = -8.0 setget set_shadow_x
 export(float) var shadow_y : float = 4.0 setget set_shadow_y
 
-var current_timer
-
 func set_clock_color(value : Color):
 	clock_color = value
 	if is_inside_tree():
@@ -41,6 +39,7 @@ func set_shadow_y(value : float):
 func set_wait_time(value : float):
 	wait_time = value
 	if is_inside_tree():
+		$Timer.wait_time = value
 		$TimerDraw.total_value = wait_time
 		$TimerDraw2.total_value = wait_time
 
@@ -50,7 +49,7 @@ func reset():
 	set_shadow_x(shadow_x)
 	set_shadow_y(shadow_y)
 	set_wait_time(wait_time)
-	stop()
+	draw_clock_value(0.0)
 
 func _ready():
 	reset()
@@ -67,19 +66,14 @@ func draw_clock_value(clock_value : float):
 func start(new_wait_time : float = _default_wait_time()):
 	wait_time = new_wait_time
 	set_wait_time(wait_time)
-	current_timer = get_tree().create_timer(wait_time)
-	yield(current_timer, "timeout")
+	$Timer.start()
+	yield($Timer, "timeout")
 	emit_signal("timeout")
-	current_timer = null
 
 func stop():
-	if current_timer == null:
-		return
 	emit_signal("timeout")
 	draw_clock_value(0.0)
 
 func _process(delta):
-	if current_timer == null:
-		return
-	var current_time : float = wait_time - current_timer.time_left
+	var current_time : float = wait_time - $Timer.time_left
 	draw_clock_value(current_time)
