@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/BaseLevelUI/BaseLevelUI.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/World/World.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/ScoringScreen/ScoringScreen.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Original/Music/Godot 55 - Do Androids Dream - Music 2 - Mix 1.ogg" type="AudioStream" id=4]
 [ext_resource path="res://Scripts/PauseMenuController.gd" type="Script" id=5]
+[ext_resource path="res://Assets/Original/Music/Godot_55_-_Do_Androids_Dream_-_Music_4_-_Demo_1.mp3" type="AudioStream" id=6]
 
 [node name="BaseLevelUI" type="Control"]
 pause_mode = 2
@@ -90,6 +91,10 @@ script = ExtResource( 5 )
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 autoplay = true
+bus = "Music"
+
+[node name="DreamMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
 bus = "Music"
 
 [connection signal="sheep_ate_normal_grass" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_ate_normal_grass"]

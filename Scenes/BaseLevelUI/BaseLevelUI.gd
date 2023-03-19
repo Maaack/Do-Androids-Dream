@@ -118,6 +118,8 @@ func _on_BuildSheepButton_pressed():
 	add_build_sheep_event(random_sheep)
 
 func show_scoring_screen():
+	$BackgroundMusic.stop()
+	$DreamMusic.play()
 	$ScoringScreen.show()
 	$ScoringScreen.start_dream_request(starting_sheep_count, current_sheep_names.size(), game_events)
 
