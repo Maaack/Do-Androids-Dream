@@ -44,6 +44,7 @@ func reset_level() -> void:
 	$"%World".reset_world()
 	for sheep in current_sheep_names:
 		$"%World".add_sheep(sheep)
+	$"%World".extra_sheep_names = extra_sheep_names
 	day_ended = false
 	$"%Clock".start()
 
@@ -146,6 +147,9 @@ func _on_World_sheep_ate_volatile_grass(sheep_name):
 
 func _on_World_sheep_exploded(sheep_name):
 	add_explode_sheep_event(sheep_name)
+
+func _on_World_sheep_assembled(sheep_name):
+	add_build_sheep_event(sheep_name)
 
 func _on_Clock_timeout():
 	_end_day()

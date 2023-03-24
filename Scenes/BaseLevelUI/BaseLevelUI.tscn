@@ -122,6 +122,7 @@ stream = ExtResource( 6 )
 volume_db = -10.0
 bus = "Music"
 
+[connection signal="sheep_assembled" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_assembled"]
 [connection signal="sheep_ate_normal_grass" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_ate_normal_grass"]
 [connection signal="sheep_ate_volatile_grass" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_ate_volatile_grass"]
 [connection signal="sheep_exploded" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_exploded"]

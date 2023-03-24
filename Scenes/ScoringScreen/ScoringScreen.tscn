@@ -613,6 +613,7 @@ percent_visible = 0.0
 margin_top = 35.0
 margin_right = 727.0
 margin_bottom = 311.0
+focus_mode = 2
 size_flags_vertical = 3
 visible_characters = 0
 percent_visible = 0.0
@@ -664,6 +665,7 @@ alignment = 1
 [node name="RichTextLabel" type="RichTextLabel" parent="Panel/MarginContainer/DreamContainer"]
 margin_right = 727.0
 margin_bottom = 294.0
+focus_mode = 2
 size_flags_vertical = 3
 bbcode_enabled = true
 visible_characters = 0

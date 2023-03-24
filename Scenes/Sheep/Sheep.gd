@@ -3,6 +3,7 @@ extends KinematicBody2D
 signal normal_grass_eaten
 signal volatile_grass_eaten
 signal exploded
+signal assembled
 
 onready var animation_tree = $AnimationTree
 onready var animation_state = animation_tree.get("parameters/playback")
@@ -124,6 +125,7 @@ func target_grass():
 		
 
 func _assemble_animation():
+	animation_state.travel("Assemble")
 	$AssemblyStreamPlayer2D.play()
 
 func _eat_animation():
@@ -159,7 +161,6 @@ func _finish_eating(grass_was_volatile : bool = false):
 	elif hunger == 0:
 		emit_signal("normal_grass_eaten")
 
-
 func eat_grass():
 	var grass_was_volatile : bool = targeted_grass.is_volatile
 	# play eating animation
@@ -170,6 +171,12 @@ func eat_grass():
 	_start_moving()
 	_finish_eating(grass_was_volatile)
 
+func assemble():
+	_stop_moving()
+	_assemble_animation()
+	yield(get_tree().create_timer(2), "timeout")
+	emit_signal("assembled")
+	_start_moving()
 
 func _on_DetectionArea_body_entered(body):
 	if body.is_in_group("sheeps"):
