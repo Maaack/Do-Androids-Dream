@@ -29,6 +29,11 @@ tracks/0/keys = {
 
 [node name="Level1" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+starting_sheep_count = 16
+
+[node name="World" parent="ViewportContainer/Viewport" index="0"]
+spawn_range = 100.0
+spawn_offset = Vector2( -200, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6"]
 pause_mode = 1

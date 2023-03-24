@@ -862,6 +862,7 @@ anims/HideClock = SubResource( 8 )
 anims/RESET = SubResource( 9 )
 anims/ShowClock = SubResource( 10 )
 
+[connection signal="timeout" from="Panel/MarginContainer/EventsContainer/CenterContainer/Clock" to="." method="_on_Clock_timeout"]
 [connection signal="pressed" from="Panel/MarginContainer/EventsContainer/NextButton" to="." method="_on_NextButton_pressed"]
 [connection signal="pressed" from="Panel/MarginContainer/DreamContainer/HBoxContainer2/RestartButton" to="." method="_on_RestartButton_pressed"]
 [connection signal="pressed" from="Panel/MarginContainer/DreamContainer/HBoxContainer2/DoneButton" to="." method="_on_DoneButton_pressed"]

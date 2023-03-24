@@ -113,11 +113,13 @@ script = ExtResource( 5 )
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+volume_db = -10.0
 autoplay = true
 bus = "Music"
 
 [node name="DreamMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+volume_db = -10.0
 bus = "Music"
 
 [connection signal="sheep_ate_normal_grass" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_ate_normal_grass"]

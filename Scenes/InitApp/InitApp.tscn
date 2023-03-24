@@ -4,4 +4,4 @@
 
 [node name="InitApp" type="Node"]
 script = ExtResource( 1 )
-next_scene = "res://Scenes/MainMenu/MainMenu.tscn"
+next_scene = "res://Scenes/OpeningScene/OpeningScene.tscn"
