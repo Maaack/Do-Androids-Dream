@@ -39,7 +39,7 @@ func add_sheep(sheep_name : String, sheep_position : Vector2 = _get_random_sheep
 	return sheep_instance
 
 func assemble_sheep(sheep_name : String):
-	var sheep_instance = add_sheep(sheep_name, shepherd_node.position)
+	var sheep_instance = add_sheep(sheep_name, shepherd_node.position + Vector2(0, 20))
 	sheep_instance.assemble()
 
 func _on_sheep_ate_normal_grass(sheep_name : String):
@@ -55,7 +55,7 @@ func _on_sheep_exploded(sheep_name : String):
 func _on_sheep_assembled(sheep_name : String):
 	emit_signal("sheep_assembled", sheep_name)
 
-func _on_Shepherd_assemble_pressed():
+func _on_Shepherd_parts_assembled():
 	if extra_sheep_names.size() == 0:
 		return
 	var sheep_name = extra_sheep_names.pop_back()

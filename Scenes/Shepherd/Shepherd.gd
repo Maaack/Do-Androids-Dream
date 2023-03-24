@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-signal assemble_pressed
+signal parts_assembled
 # the magnet_factor to apply whent the magnet is on or off
 const MAGNET_OFF = 1
 const MAGNET_ON = 5
@@ -26,8 +26,6 @@ func _unhandled_input(event):
 		magnet_factor = MAGNET_OFF
 		$Sprite.modulate = Color.white
 		$MagnetStreamCycler2D.stop()
-	if event.is_action_pressed("assemble"):
-		_assemble_sheep()
 
 func move_state(delta):
 	var input_vector = Vector2.ZERO
@@ -57,11 +55,8 @@ func _physics_process(delta):
 
 func collect_part() -> bool:
 	parts_collected += 1
+	if parts_collected >= 2:
+		parts_collected -= 2
+		emit_signal("parts_assembled")
+		velocity = Vector2.ZERO
 	return true
-
-func _assemble_sheep():
-	if parts_collected < 2:
-		return
-	parts_collected -= 2
-	emit_signal("assemble_pressed")
-
