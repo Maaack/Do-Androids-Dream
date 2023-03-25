@@ -44,7 +44,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Do Androids Dream: GWJ #55 Edition"
+config/name="Do Androids Dream"
 run/main_scene="res://Scenes/InitApp/InitApp.tscn"
 config/icon="res://icon.png"
 
