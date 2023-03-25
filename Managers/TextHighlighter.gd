@@ -3,6 +3,9 @@ extends Node
 const GOOD_DREAM_WORDS : Array = [
 	"amazement",
 	"amazing",
+	"appreciate",
+	"appreciative",
+	"appreciating",
 	"beautiful",
 	"calm",
 	"cheerful",
