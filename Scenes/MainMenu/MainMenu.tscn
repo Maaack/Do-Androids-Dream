@@ -56,7 +56,7 @@ tracks/0/keys = {
 } ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("TitleContainer/Titles/Panel/TitlesContainer/Title:modulate")
+tracks/1/path = NodePath("TitleContainer/Titles/TitlesContainer/Title:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -68,7 +68,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("TitleContainer/Titles/Panel/TitlesContainer/SubTitle:modulate")
+tracks/2/path = NodePath("TitleContainer/Titles/TitlesContainer/SubTitle:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -108,7 +108,7 @@ tracks/4/keys = {
 resource_name = "MainMenuOpen"
 length = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("TitleContainer/Titles/Panel/TitlesContainer/Title:modulate")
+tracks/0/path = NodePath("TitleContainer/Titles/TitlesContainer/Title:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -120,7 +120,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("TitleContainer/Titles/Panel/TitlesContainer/SubTitle:modulate")
+tracks/1/path = NodePath("TitleContainer/Titles/TitlesContainer/SubTitle:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -215,7 +215,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("TitleContainer/Titles/Panel/TitlesContainer/Title:modulate")
+tracks/2/path = NodePath("TitleContainer/Titles/TitlesContainer/Title:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -227,7 +227,7 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("TitleContainer/Titles/Panel/TitlesContainer/SubTitle:modulate")
+tracks/3/path = NodePath("TitleContainer/Titles/TitlesContainer/SubTitle:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -295,7 +295,7 @@ theme = ExtResource( 4 )
 script = ExtResource( 1 )
 game_scene = "res://Scenes/BaseLevelUI/Levels/Level1.tscn"
 test_scene = "res://Scenes/TestLevel/TestScoring.tscn"
-version_name = "1.0.2"
+version_name = "1.1.0"
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
@@ -341,32 +341,6 @@ margin_right = 992.0
 margin_bottom = 584.0
 mouse_filter = 2
 
-[node name="Panel" type="Panel" parent="TitleContainer/Titles"]
-margin_right = 960.0
-margin_bottom = 96.0
-
-[node name="TitlesContainer" type="VBoxContainer" parent="TitleContainer/Titles/Panel"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -416.0
-margin_right = 416.0
-margin_bottom = 97.0
-custom_constants/separation = 32
-
-[node name="Title" type="Label" parent="TitleContainer/Titles/Panel/TitlesContainer"]
-margin_right = 832.0
-margin_bottom = 37.0
-custom_fonts/font = ExtResource( 9 )
-text = "Do Androids Dream?"
-align = 1
-
-[node name="SubTitle" type="Label" parent="TitleContainer/Titles/Panel/TitlesContainer"]
-margin_top = 69.0
-margin_right = 832.0
-margin_bottom = 85.0
-text = "Godot Wild Jam #55 Edition"
-align = 1
-
 [node name="VersionNameLabel" type="Label" parent="TitleContainer/Titles"]
 unique_name_in_owner = true
 anchor_left = 1.0
@@ -375,6 +349,27 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -40.0
 margin_top = -14.0
+
+[node name="TitlesContainer" type="VBoxContainer" parent="TitleContainer/Titles"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -416.0
+margin_right = 416.0
+margin_bottom = 97.0
+custom_constants/separation = 32
+
+[node name="Title" type="Label" parent="TitleContainer/Titles/TitlesContainer"]
+margin_right = 832.0
+margin_bottom = 37.0
+custom_fonts/font = ExtResource( 9 )
+text = "Do Androids Dream?"
+align = 1
+
+[node name="SubTitle" type="Label" parent="TitleContainer/Titles/TitlesContainer"]
+margin_top = 69.0
+margin_right = 832.0
+margin_bottom = 85.0
+align = 1
 
 [node name="MenuContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
