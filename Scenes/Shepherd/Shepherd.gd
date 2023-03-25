@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+signal parts_assembled
 # the magnet_factor to apply whent the magnet is on or off
 const MAGNET_OFF = 1
 const MAGNET_ON = 5
@@ -14,6 +15,7 @@ export(Color) var magnetized_color : Color = Color.white
 
 var velocity = Vector2.ZERO
 var magnet_factor = 1 # this factor will be multiplied in the sheep logic to decide if it should prioritize to follow the shepherd
+var parts_collected = 0
 
 func _unhandled_input(event):
 	if event.is_action_pressed("interact"):
@@ -50,3 +52,11 @@ func move():
 
 func _physics_process(delta):
 	move_state(delta)
+
+func collect_part() -> bool:
+	parts_collected += 1
+	if parts_collected >= 2:
+		parts_collected -= 2
+		emit_signal("parts_assembled")
+		velocity = Vector2.ZERO
+	return true

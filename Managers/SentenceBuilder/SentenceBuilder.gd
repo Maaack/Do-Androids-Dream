@@ -4,7 +4,7 @@ const EAT_NORMAL_GRASS_MESSAGE = "The robot sheep %s grazed on electric grass.\n
 const EAT_VOLATILE_GRASS_MESSAGE = "The robot sheep %s grazed on volatile grass.\n"
 const EXPLODED_MESSAGE = "The robot sheep %s grazed on volatile grass and experienced rapid uncontrolled disassembly.\n"
 const STARVE_MESSAGE = "The robot sheep %s didn't get enough grass, and broke down on the way home.\n"
-const BUILD_MESSAGE = "You assembled new robot sheep and welcomed %s into the world.\n"
+const BUILD_MESSAGE = "The shepherd assembled new robot sheep and welcomed %s into the world.\n"
 
 func _get_concatenated_string(subjects : Array) -> String:
 	if subjects.size() == 0:
