@@ -95,7 +95,7 @@ unique_name_in_owner = true
 margin_right = 71.0
 margin_bottom = 65.0
 rect_min_size = Vector2( 0, 65 )
-wait_time = 180.0
+wait_time = 100.0
 
 [node name="EndDayButton" type="Button" parent="MarginContainer/Control/VBoxContainer2"]
 margin_top = 81.0
