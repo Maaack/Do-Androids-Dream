@@ -17,6 +17,9 @@ func _ready():
 	randomize()
 	# Randomize the placement of the grass patches and obstacles.
 
+func set_day_length(day_length : float):
+	$"DayNightCycle".day_length = day_length
+
 func reset_world():
 	for sheep in sheep_array:
 		if is_instance_valid(sheep):

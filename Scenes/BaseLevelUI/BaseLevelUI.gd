@@ -27,6 +27,7 @@ const ALL_SHEEP_NAMES : Array = [
 ]
 
 export(int) var starting_sheep_count : int = 6
+export(float) var day_length_time : float = 100
 
 var current_sheep_names : Array = []
 var extra_sheep_names : Array = []
@@ -41,11 +42,13 @@ func reset_level() -> void:
 	while current_sheep_names.size() < starting_sheep_count:
 		current_sheep_names.append(extra_sheep_names.pop_back())
 	hungry_sheep = current_sheep_names.duplicate()
+	$"%World".set_day_length(day_length_time)
 	$"%World".reset_world()
 	for sheep in current_sheep_names:
 		$"%World".add_sheep(sheep)
 	$"%World".extra_sheep_names = extra_sheep_names
 	day_ended = false
+	$"%Clock".wait_time = day_length_time
 	$"%Clock".start()
 
 func _ready():

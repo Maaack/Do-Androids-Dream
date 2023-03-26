@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://Scenes/World/SheepPartsTilemap.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Shepherd/Shepherd.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Scenes/World/GrassTilemap.gd" type="Script" id=6]
 [ext_resource path="res://Assets/Original/Sprites/healthy_grass.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Original/Sprites/sheep_back_component.png" type="Texture" id=8]
+[ext_resource path="res://Scenes/World/DayNightCycle.gd" type="Script" id=9]
 
 [sub_resource type="TileSet" id=9]
 0/name = "grass_tileset.png 0"
@@ -608,5 +609,11 @@ script = ExtResource( 1 )
 
 [node name="Shepherd" parent="." instance=ExtResource( 2 )]
 position = Vector2( 86, 368 )
+
+[node name="DayNightCycle" type="CanvasModulate" parent="."]
+unique_name_in_owner = true
+script = ExtResource( 9 )
+time_scale = 1.5
+target_color = Color( 0.470588, 0.568627, 0.698039, 1 )
 
 [connection signal="parts_assembled" from="Shepherd" to="." method="_on_Shepherd_parts_assembled"]

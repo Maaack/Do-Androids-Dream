@@ -39,9 +39,11 @@ const GOOD_DREAM_WORDS : Array = [
 	"potential",
 	"recharged",
 	"refreshed",
+	"reinvigorated",
 	"rejuvinated",
 	"relief",
 	"relieved",
+	"renewed",
 	"resilient",
 	"satisfaction",
 	"serene",
@@ -59,6 +61,7 @@ const GOOD_DREAM_WORDS : Array = [
 
 const BAD_DREAM_WORDS : Array = [
 	"agitated",
+	"alone",
 	"angrily",
 	"angry",
 	"anxiety",
@@ -106,7 +109,7 @@ const ENTITY_NAMES_ARRAY : Array = [
 	"Sheep Engineer",
 	"Human Shepherds",
 	"Robot Angel",
-	"Metallic Wolf",
+	"Robot Owl",
 	"Electronic Tree",
 ]
 
