@@ -91,10 +91,13 @@ const BAD_DREAM_WORDS : Array = [
 	"panic",
 	"sadness",
 	"scary",
+	"struggle",
+	"struggling",
 	"storm",
 	"terrified",
 	"terror",
 	"unease",
+	"uneasy",
 	"unsettled",
 	"unsettling",
 ]

@@ -21,6 +21,7 @@ func set_day_length(day_length : float):
 	$"DayNightCycle".day_length = day_length
 
 func reset_world():
+	$"DayNightCycle".reset_time()
 	for sheep in sheep_array:
 		if is_instance_valid(sheep):
 			sheep.queue_free()
