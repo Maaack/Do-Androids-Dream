@@ -14,7 +14,7 @@ var showing_clock : bool = false
 var dream_returned : bool = false
 
 func _request_dream(starting_sheep_count : int, ending_sheep_count : int, events_string : String):
-	$APIClient.request_dream(starting_sheep_count, ending_sheep_count, events_string)
+	$DreamClient.request_dream(starting_sheep_count, ending_sheep_count, events_string)
 	_start_clock()
 
 func _show_clock():
@@ -96,7 +96,7 @@ func _on_RestartButton_pressed():
 func _on_NextButton_pressed():
 	_show_dream()
 
-func _on_APIClient_dream_recollected(dream_text):
+func _on_DreamClient_dream_recollected(dream_text):
 	_dream_ready(dream_text)
 
 func _ready():
@@ -104,7 +104,6 @@ func _ready():
 	$"%BadWordCount".modulate = $TextHighlighter.bad_word_color
 	$"%DreamEntitiesCount".modulate = $TextHighlighter.dream_entity_color
 	$"%FearManifestationsCount".modulate = $TextHighlighter.fear_manifestation_color
-
 
 func _on_Clock_timeout():
 	if dream_returned:
