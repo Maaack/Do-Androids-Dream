@@ -8,7 +8,7 @@ signal sheep_assembled(sheep_name)
 export(float, 0, 1000) var spawn_range : float = 200
 export(Vector2) var spawn_offset : Vector2 = Vector2.ZERO
 
-onready var shepherd_node = $Shepherd
+onready var shepherd_node = $YSort/Shepherd
 var sheep_scene = preload("res://Scenes/Sheep/Sheep.tscn")
 var sheep_array : Array = []
 var extra_sheep_names : Array
@@ -38,7 +38,7 @@ func add_sheep(sheep_name : String, sheep_position : Vector2 = _get_random_sheep
 	sheep_instance.connect("volatile_grass_eaten", self, "_on_sheep_ate_volatile_grass", [sheep_name])
 	sheep_instance.connect("exploded", self, "_on_sheep_exploded", [sheep_name])
 	sheep_instance.connect("assembled", self, "_on_sheep_assembled", [sheep_name])
-	add_child(sheep_instance)
+	$YSort.add_child(sheep_instance)
 	sheep_array.append(sheep_instance)
 	return sheep_instance
 

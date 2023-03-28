@@ -607,7 +607,9 @@ format = 1
 tile_data = PoolIntArray( 589811, 0, 0, 1310763, 0, 0, 1507401, 0, 0, 3211340, 0, 0 )
 script = ExtResource( 1 )
 
-[node name="Shepherd" parent="." instance=ExtResource( 2 )]
+[node name="YSort" type="YSort" parent="."]
+
+[node name="Shepherd" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 86, 368 )
 
 [node name="DayNightCycle" type="CanvasModulate" parent="."]
@@ -616,4 +618,4 @@ script = ExtResource( 9 )
 time_scale = 1.5
 target_color = Color( 0.470588, 0.568627, 0.698039, 1 )
 
-[connection signal="parts_assembled" from="Shepherd" to="." method="_on_Shepherd_parts_assembled"]
+[connection signal="parts_assembled" from="YSort/Shepherd" to="." method="_on_Shepherd_parts_assembled"]
