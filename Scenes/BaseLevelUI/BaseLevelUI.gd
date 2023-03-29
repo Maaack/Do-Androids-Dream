@@ -75,8 +75,8 @@ func _kill_sheep(sheep_name : String):
 	hungry_sheep.erase(sheep_name)
 	_check_level_end()
 
-func add_event(event_type : int, subject_sheep : String) -> void:
-	game_events.append(EventData.new(event_type, subject_sheep))
+func add_event(event_type : int, content : String) -> void:
+	game_events.append(EventData.new(event_type, content))
 
 func add_feed_sheep_event(sheep_name):
 	add_event(EventData.EVENT_TYPES.EAT_NORMAL_GRASS, sheep_name)
@@ -161,4 +161,5 @@ func _on_MuseTimer_timeout():
 	$MuseClient.request_musing()
 
 func _on_MuseClient_musing_shared(musing_text):
+	add_event(EventData.EVENT_TYPES.MUSE, musing_text)
 	$"%World".shepherd_node.muse(musing_text)
