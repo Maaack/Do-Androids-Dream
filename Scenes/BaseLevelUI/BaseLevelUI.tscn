@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/BaseLevelUI/BaseLevelUI.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/World/World.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Assets/Original/Music/Godot_55_-_Do_Androids_Dream_-_Music_4_-_Demo_1.mp3" type="AudioStream" id=6]
 [ext_resource path="res://Scenes/Clock/Clock.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Themes/GameTheme.tres" type="Theme" id=8]
+[ext_resource path="res://Scenes/APIClient/Wrappers/MuseClient.tscn" type="PackedScene" id=9]
 
 [node name="BaseLevelUI" type="Control"]
 pause_mode = 2
@@ -122,6 +123,13 @@ stream = ExtResource( 6 )
 volume_db = -10.0
 bus = "Music"
 
+[node name="MuseTimer" type="Timer" parent="."]
+wait_time = 40.0
+one_shot = true
+autostart = true
+
+[node name="MuseClient" parent="." instance=ExtResource( 9 )]
+
 [connection signal="sheep_assembled" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_assembled"]
 [connection signal="sheep_ate_normal_grass" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_ate_normal_grass"]
 [connection signal="sheep_ate_volatile_grass" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_ate_volatile_grass"]
@@ -133,3 +141,5 @@ bus = "Music"
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer2/EndDayButton" to="." method="_on_EndDayButton_pressed"]
 [connection signal="done_pressed" from="ScoringScreen" to="." method="_on_ScoringScreen_done_pressed"]
 [connection signal="restart_pressed" from="ScoringScreen" to="." method="_on_ScoringScreen_restart_pressed"]
+[connection signal="timeout" from="MuseTimer" to="." method="_on_MuseTimer_timeout"]
+[connection signal="musing_shared" from="MuseClient" to="." method="_on_MuseClient_musing_shared"]

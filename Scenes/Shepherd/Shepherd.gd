@@ -61,9 +61,6 @@ func collect_part() -> bool:
 		velocity = Vector2.ZERO
 	return true
 
-func _on_Timer_timeout():
-	$MuseClient.request_musing()
-
-func _on_MuseClient_musing_shared(musing_text):
+func muse(musing_text):
 	$"%MusingLabel".text = musing_text
 	$CameraAnimationPlayer.play("Musing")

@@ -156,3 +156,9 @@ func _on_World_sheep_assembled(sheep_name):
 
 func _on_Clock_timeout():
 	_end_day()
+
+func _on_MuseTimer_timeout():
+	$MuseClient.request_musing()
+
+func _on_MuseClient_musing_shared(musing_text):
+	$"%World".shepherd_node.muse(musing_text)
