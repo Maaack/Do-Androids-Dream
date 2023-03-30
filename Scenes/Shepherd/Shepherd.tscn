@@ -15,7 +15,7 @@
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 7.0
-height = 12.0
+height = 2.0
 
 [sub_resource type="Animation" id=25]
 resource_name = "LoadCamera"
@@ -463,7 +463,7 @@ friction = 500
 magnetized_color = Color( 0.345098, 1, 0.756863, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -1 )
+position = Vector2( 0, 4 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
