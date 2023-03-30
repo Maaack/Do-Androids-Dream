@@ -60,3 +60,7 @@ func collect_part() -> bool:
 		emit_signal("parts_assembled")
 		velocity = Vector2.ZERO
 	return true
+
+func muse(musing_text):
+	$"%MusingLabel".text = musing_text
+	$CameraAnimationPlayer.play("Musing")

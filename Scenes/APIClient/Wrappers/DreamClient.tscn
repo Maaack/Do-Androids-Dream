@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/APIClient/APIClient.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/APIClient/Wrappers/DreamClient.gd" type="Script" id=2]
+
+[node name="DreamClient" type="Node"]
+script = ExtResource( 2 )
+
+[node name="APIClient" parent="." instance=ExtResource( 1 )]
+api_url = "https://dk7cqkgzlc.execute-api.us-east-1.amazonaws.com/prod/chat-completions"
+
+[connection signal="request_failed" from="APIClient" to="." method="_on_APIClient_request_failed"]
+[connection signal="response_received" from="APIClient" to="." method="_on_APIClient_response_received"]

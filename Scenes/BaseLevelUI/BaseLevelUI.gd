@@ -4,29 +4,50 @@ extends Control
 const MAX_SHEEP_COUNT : int = 20
 const ALL_SHEEP_NAMES : Array = [
 	"Abby",
+	"Abigail",
+	"Addison",
+	"Amelia",
 	"Angel",
 	"Anna",
 	"Ashley",
 	"Athena",
 	"Aurora",
+	"Avery",
 	"Barbara",
 	"Betsy",
 	"Cara",
+	"Chloe",
 	"Cutie",
+	"Delaney",
+	"Ellie",
+	"Emma",
 	"Erin",
+	"Gracie",
+	"Hadley",
+	"Harper",
+	"Kennedy",
+	"Lily",
 	"Loren",
 	"Lousie",
+	"Madison",
 	"Maggie",
 	"Marg",
 	"Megan",
 	"Nancy",
+	"Norah",
+	"Olivia",
+	"Paige",
 	"Pretty",
+	"Quinn",
+	"Savannah",
 	"Sweetie",
 	"Tammy",
 	"Zelda",
+	"Zoey",
 ]
 
 export(int) var starting_sheep_count : int = 6
+export(float) var day_length_time : float = 100
 
 var current_sheep_names : Array = []
 var extra_sheep_names : Array = []
@@ -41,11 +62,13 @@ func reset_level() -> void:
 	while current_sheep_names.size() < starting_sheep_count:
 		current_sheep_names.append(extra_sheep_names.pop_back())
 	hungry_sheep = current_sheep_names.duplicate()
+	$"%World".set_day_length(day_length_time)
 	$"%World".reset_world()
 	for sheep in current_sheep_names:
 		$"%World".add_sheep(sheep)
 	$"%World".extra_sheep_names = extra_sheep_names
 	day_ended = false
+	$"%Clock".wait_time = day_length_time
 	$"%Clock".start()
 
 func _ready():
@@ -72,8 +95,8 @@ func _kill_sheep(sheep_name : String):
 	hungry_sheep.erase(sheep_name)
 	_check_level_end()
 
-func add_event(event_type : int, subject_sheep : String) -> void:
-	game_events.append(EventData.new(event_type, subject_sheep))
+func add_event(event_type : int, content : String) -> void:
+	game_events.append(EventData.new(event_type, content))
 
 func add_feed_sheep_event(sheep_name):
 	add_event(EventData.EVENT_TYPES.EAT_NORMAL_GRASS, sheep_name)
@@ -153,3 +176,10 @@ func _on_World_sheep_assembled(sheep_name):
 
 func _on_Clock_timeout():
 	_end_day()
+
+func _on_MuseTimer_timeout():
+	$MuseClient.request_musing()
+
+func _on_MuseClient_musing_shared(musing_text):
+	add_event(EventData.EVENT_TYPES.MUSE, musing_text)
+	$"%World".shepherd_node.muse(musing_text)

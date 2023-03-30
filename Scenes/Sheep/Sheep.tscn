@@ -17,11 +17,12 @@
 [ext_resource path="res://Assets/Original/SFX/SFX_SheepAssembling.ogg" type="AudioStream" id=15]
 [ext_resource path="res://Assets/Original/Sprites/explosion.png" type="Texture" id=16]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 9.0
+[sub_resource type="CapsuleShape2D" id=73]
+radius = 6.0
+height = 6.0
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 300.0
+radius = 360.0
 
 [sub_resource type="AudioStreamRandomPitch" id=3]
 audio_stream = ExtResource( 14 )
@@ -921,7 +922,7 @@ graph_offset = Vector2( -498.7, 74.7801 )
 
 [node name="Sheep" type="KinematicBody2D" groups=["sheeps"]]
 script = ExtResource( 2 )
-walk_speed = 1200
+walk_speed = 1250
 min_distance_with_nearby = 45
 center_factor = 5
 avoid_factor = 8
@@ -933,8 +934,9 @@ wait_time = 2.0
 wait_time_randomness = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-shape = SubResource( 1 )
+position = Vector2( 0, 4 )
+rotation = 1.5708
+shape = SubResource( 73 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
