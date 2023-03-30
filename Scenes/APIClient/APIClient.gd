@@ -3,7 +3,7 @@ extends Node
 signal response_received(response_body)
 signal request_failed(error)
 
-const PROXY_API_URL = "https://dk7cqkgzlc.execute-api.us-east-1.amazonaws.com/prod/chat-completions"
+export(String) var api_url : String
 onready var _http_request = $HTTPRequest
 
 func get_http_request():
@@ -20,7 +20,7 @@ func get_api_key() -> String:
 	return content
 
 func get_api_url() -> String:
-	return PROXY_API_URL
+	return api_url
 
 func get_api_user() -> String:
 	return "%s %s" % [OS.get_locale_language(), OS.get_name()]

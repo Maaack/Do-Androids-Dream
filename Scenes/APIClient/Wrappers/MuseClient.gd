@@ -14,7 +14,7 @@ func _build_request_body() -> String:
 		},
 		{
 			"role": "user",
-			"content": "You will act the part of an android shepherd with the ability to dream. Please share a one-sentence musing you would have on the nature of dreams, while going about your day herding your electric sheep. Refrain from repeating the context of what you are."
+			"content": "You will act the part of an android shepherd with the ability to dream. While going about your day herding your electric sheep, share a very short, one-sentence musing you would have on the nature of dreams."
 		}
 	]
 

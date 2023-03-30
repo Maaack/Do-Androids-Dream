@@ -7,6 +7,7 @@
 script = ExtResource( 1 )
 
 [node name="APIClient" parent="." instance=ExtResource( 2 )]
+api_url = "https://dk7cqkgzlc.execute-api.us-east-1.amazonaws.com/prod/gpt-4"
 
 [connection signal="request_failed" from="APIClient" to="." method="_on_APIClient_request_failed"]
 [connection signal="response_received" from="APIClient" to="." method="_on_APIClient_response_received"]
