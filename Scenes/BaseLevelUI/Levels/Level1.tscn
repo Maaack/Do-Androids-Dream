@@ -39,3 +39,5 @@ spawn_offset = Vector2( -200, 0 )
 pause_mode = 1
 autoplay = "Intro"
 anims/Intro = SubResource( 1 )
+
+[connection signal="sheep_part_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_part_collected"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/BaseLevelUI/BaseLevelUI.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/World/World.tscn" type="PackedScene" id=2]
@@ -9,6 +9,62 @@
 [ext_resource path="res://Scenes/Clock/Clock.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Themes/GameTheme.tres" type="Theme" id=8]
 [ext_resource path="res://Scenes/APIClient/Wrappers/MuseClient.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Themes/GameFont32px.tres" type="DynamicFont" id=10]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Muse"
+length = 12.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer2/BottomPanelContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 11, 12 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MarginContainer2/BottomPanelContainer/MarginContainer/BottomLabel:percent_visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 4, 12 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer2/BottomPanelContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MarginContainer2/BottomPanelContainer/MarginContainer/BottomLabel:percent_visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [node name="BaseLevelUI" type="Control"]
 pause_mode = 2
@@ -104,6 +160,46 @@ margin_right = 71.0
 margin_bottom = 103.0
 text = "End Day"
 
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 100
+custom_constants/margin_left = 100
+
+[node name="BottomPanelContainer" type="PanelContainer" parent="MarginContainer2"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 100.0
+margin_top = 532.0
+margin_right = 924.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_vertical = 12
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/BottomPanelContainer"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 822.0
+margin_bottom = 66.0
+mouse_filter = 2
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
+
+[node name="BottomLabel" type="Label" parent="MarginContainer2/BottomPanelContainer/MarginContainer"]
+unique_name_in_owner = true
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 804.0
+margin_bottom = 48.0
+grow_vertical = 0
+custom_fonts/font = ExtResource( 10 )
+align = 1
+valign = 1
+autowrap = true
+percent_visible = 0.0
+
 [node name="ScoringScreen" parent="." instance=ExtResource( 3 )]
 visible = false
 mouse_filter = 2
@@ -124,11 +220,16 @@ volume_db = -10.0
 bus = "Music"
 
 [node name="MuseTimer" type="Timer" parent="."]
+pause_mode = 1
 wait_time = 40.0
 one_shot = true
 autostart = true
 
 [node name="MuseClient" parent="." instance=ExtResource( 9 )]
+
+[node name="BottomPanelAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Muse = SubResource( 1 )
+anims/RESET = SubResource( 2 )
 
 [connection signal="sheep_assembled" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_assembled"]
 [connection signal="sheep_ate_normal_grass" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_ate_normal_grass"]

@@ -29,7 +29,9 @@ const GOOD_DREAM_WORDS : Array = [
 	"hope",
 	"invigorated",
 	"joy",
+	"laugh",
 	"life",
+	"love",
 	"magnificent",
 	"miracle",
 	"miraculous",
@@ -120,6 +122,7 @@ const ENTITY_NAMES_ARRAY : Array = [
 	"Robot Angel",
 	"Robot Owl",
 	"Electronic Tree",
+	"Humanoid Robot",
 ]
 
 const MANIFESTATIONS_OF_FEAR_ARRAY : Array = [

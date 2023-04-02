@@ -12,7 +12,7 @@
 [sub_resource type="Animation" id=1]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer/CenterContainer/Clock:modulate")
+tracks/0/path = NodePath("MarginContainer/Panel/MarginContainer/EventsContainer/CenterContainer/Clock:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -24,7 +24,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Panel/MarginContainer/EventsContainer:visible")
+tracks/1/path = NodePath("MarginContainer/Panel/MarginContainer/EventsContainer:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -36,7 +36,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Panel/MarginContainer/DreamContainer:visible")
+tracks/2/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -48,7 +48,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Panel/MarginContainer/EventsContainer/RichTextLabel:percent_visible")
+tracks/3/path = NodePath("MarginContainer/Panel/MarginContainer/EventsContainer/DayEventsTextLabel:percent_visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -60,7 +60,7 @@ tracks/3/keys = {
 "values": [ 0.0 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Panel/MarginContainer/DreamContainer/RichTextLabel:percent_visible")
+tracks/4/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/DreamTextLabel:percent_visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -72,7 +72,7 @@ tracks/4/keys = {
 "values": [ 0.0 ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Panel/MarginContainer/EventsContainer/Label:percent_visible")
+tracks/5/path = NodePath("MarginContainer/Panel/MarginContainer/EventsContainer/Label:percent_visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -84,7 +84,7 @@ tracks/5/keys = {
 "values": [ 0.0 ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Panel/MarginContainer/EventsContainer/Label2:percent_visible")
+tracks/6/path = NodePath("MarginContainer/Panel/MarginContainer/EventsContainer/Label2:percent_visible")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -96,7 +96,7 @@ tracks/6/keys = {
 "values": [ 0.0 ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer/GoodWordLabel:percent_visible")
+tracks/7/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer/GoodWordLabel:percent_visible")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -108,7 +108,7 @@ tracks/7/keys = {
 "values": [ 0.0 ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer/GoodWordCount:percent_visible")
+tracks/8/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer/GoodWordCount:percent_visible")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -120,7 +120,7 @@ tracks/8/keys = {
 "values": [ 0.0 ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer2/BadWordLabel:percent_visible")
+tracks/9/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer2/BadWordLabel:percent_visible")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -132,7 +132,7 @@ tracks/9/keys = {
 "values": [ 0.0 ]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer2/BadWordCount:percent_visible")
+tracks/10/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer2/BadWordCount:percent_visible")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
@@ -144,7 +144,7 @@ tracks/10/keys = {
 "values": [ 0.0 ]
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer3/DreamEntitiesLabel:percent_visible")
+tracks/11/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer3/DreamEntitiesLabel:percent_visible")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/imported = false
@@ -156,7 +156,7 @@ tracks/11/keys = {
 "values": [ 0.0 ]
 }
 tracks/12/type = "value"
-tracks/12/path = NodePath("Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer3/DreamEntitiesCount:percent_visible")
+tracks/12/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer3/DreamEntitiesCount:percent_visible")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/imported = false
@@ -168,7 +168,7 @@ tracks/12/keys = {
 "values": [ 0.0 ]
 }
 tracks/13/type = "value"
-tracks/13/path = NodePath("Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer4/FearManifestationsLabel:percent_visible")
+tracks/13/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer4/FearManifestationsLabel:percent_visible")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/imported = false
@@ -180,7 +180,7 @@ tracks/13/keys = {
 "values": [ 0.0 ]
 }
 tracks/14/type = "value"
-tracks/14/path = NodePath("Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer4/FearManifestationsCount:percent_visible")
+tracks/14/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer4/FearManifestationsCount:percent_visible")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/imported = false
@@ -192,7 +192,7 @@ tracks/14/keys = {
 "values": [ 0.0 ]
 }
 tracks/15/type = "value"
-tracks/15/path = NodePath("Panel/MarginContainer/DreamContainer/HBoxContainer/GradeLabel:percent_visible")
+tracks/15/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/HBoxContainer/GradeLabel:percent_visible")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/imported = false
@@ -204,7 +204,7 @@ tracks/15/keys = {
 "values": [ 0.0 ]
 }
 tracks/16/type = "value"
-tracks/16/path = NodePath("Panel/MarginContainer/DreamContainer/HBoxContainer/GradeResult:percent_visible")
+tracks/16/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/HBoxContainer/GradeResult:percent_visible")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/imported = false
@@ -220,7 +220,7 @@ tracks/16/keys = {
 resource_name = "ReadEvents"
 length = 11.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer/RichTextLabel:percent_visible")
+tracks/0/path = NodePath("MarginContainer/Panel/MarginContainer/EventsContainer/DayEventsTextLabel:percent_visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -232,7 +232,7 @@ tracks/0/keys = {
 "values": [ 0.0, 0.0, 1.0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Panel/MarginContainer/EventsContainer/Label:percent_visible")
+tracks/1/path = NodePath("MarginContainer/Panel/MarginContainer/EventsContainer/Label:percent_visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -244,7 +244,7 @@ tracks/1/keys = {
 "values": [ 0.0, 1.0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Panel/MarginContainer/EventsContainer/Label2:percent_visible")
+tracks/2/path = NodePath("MarginContainer/Panel/MarginContainer/EventsContainer/Label2:percent_visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -256,7 +256,7 @@ tracks/2/keys = {
 "values": [ 0.0, 0.0, 1.0 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Panel/MarginContainer/EventsContainer:visible")
+tracks/3/path = NodePath("MarginContainer/Panel/MarginContainer/EventsContainer:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -268,7 +268,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Panel/MarginContainer/DreamContainer:visible")
+tracks/4/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -284,7 +284,7 @@ tracks/4/keys = {
 resource_name = "ShowDream"
 length = 16.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer:visible")
+tracks/0/path = NodePath("MarginContainer/Panel/MarginContainer/EventsContainer:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -296,7 +296,7 @@ tracks/0/keys = {
 "values": [ false ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Panel/MarginContainer/DreamContainer:visible")
+tracks/1/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -308,7 +308,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Panel/MarginContainer/DreamContainer/RichTextLabel:percent_visible")
+tracks/2/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/DreamTextLabel:percent_visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -320,7 +320,7 @@ tracks/2/keys = {
 "values": [ 0.0, 1.0 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer/GoodWordLabel:percent_visible")
+tracks/3/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer/GoodWordLabel:percent_visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -332,7 +332,7 @@ tracks/3/keys = {
 "values": [ 0.0, 1.0 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer/GoodWordCount:percent_visible")
+tracks/4/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer/GoodWordCount:percent_visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -344,7 +344,7 @@ tracks/4/keys = {
 "values": [ 0.0, 1.0 ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer2/BadWordLabel:percent_visible")
+tracks/5/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer2/BadWordLabel:percent_visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -356,7 +356,7 @@ tracks/5/keys = {
 "values": [ 0.0, 1.0 ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer2/BadWordCount:percent_visible")
+tracks/6/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer2/BadWordCount:percent_visible")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -368,7 +368,7 @@ tracks/6/keys = {
 "values": [ 0.0, 1.0 ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer3/DreamEntitiesLabel:percent_visible")
+tracks/7/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer3/DreamEntitiesLabel:percent_visible")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -380,7 +380,7 @@ tracks/7/keys = {
 "values": [ 0.0, 1.0 ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer3/DreamEntitiesCount:percent_visible")
+tracks/8/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer3/DreamEntitiesCount:percent_visible")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -392,7 +392,7 @@ tracks/8/keys = {
 "values": [ 0.0, 1.0 ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer4/FearManifestationsLabel:percent_visible")
+tracks/9/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer4/FearManifestationsLabel:percent_visible")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -404,7 +404,7 @@ tracks/9/keys = {
 "values": [ 0.0, 1.0 ]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer4/FearManifestationsCount:percent_visible")
+tracks/10/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer4/FearManifestationsCount:percent_visible")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
@@ -416,7 +416,7 @@ tracks/10/keys = {
 "values": [ 0.0, 1.0 ]
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("Panel/MarginContainer/DreamContainer/HBoxContainer/GradeLabel:percent_visible")
+tracks/11/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/HBoxContainer/GradeLabel:percent_visible")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/imported = false
@@ -428,7 +428,7 @@ tracks/11/keys = {
 "values": [ 0.0, 1.0 ]
 }
 tracks/12/type = "value"
-tracks/12/path = NodePath("Panel/MarginContainer/DreamContainer/HBoxContainer/GradeResult:percent_visible")
+tracks/12/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/HBoxContainer/GradeResult:percent_visible")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/imported = false
@@ -444,7 +444,7 @@ tracks/12/keys = {
 resource_name = "DreamComplete"
 length = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("Panel/MarginContainer/DreamContainer/HBoxContainer2/DoneButton:disabled")
+tracks/0/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/HBoxContainer2/DoneButton:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -456,7 +456,7 @@ tracks/0/keys = {
 "values": [ false ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Panel/MarginContainer/DreamContainer/HBoxContainer2/RestartButton:disabled")
+tracks/1/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/HBoxContainer2/RestartButton:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -472,7 +472,7 @@ tracks/1/keys = {
 resource_name = "DreamReady"
 length = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer/NextButton:disabled")
+tracks/0/path = NodePath("MarginContainer/Panel/MarginContainer/EventsContainer/HBoxContainer/NextButton:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -487,7 +487,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=13]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer/NextButton:disabled")
+tracks/0/path = NodePath("MarginContainer/Panel/MarginContainer/EventsContainer/HBoxContainer/NextButton:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -499,7 +499,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Panel/MarginContainer/DreamContainer/HBoxContainer2/DoneButton:disabled")
+tracks/1/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/HBoxContainer2/DoneButton:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -511,7 +511,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Panel/MarginContainer/DreamContainer/HBoxContainer2/RestartButton:disabled")
+tracks/2/path = NodePath("MarginContainer/Panel/MarginContainer/DreamContainer/HBoxContainer2/RestartButton:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -527,7 +527,7 @@ tracks/2/keys = {
 resource_name = "HideClock"
 length = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer/CenterContainer/Clock:modulate")
+tracks/0/path = NodePath("MarginContainer/Panel/MarginContainer/EventsContainer/CenterContainer/Clock:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -542,7 +542,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=9]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer/CenterContainer/Clock:modulate")
+tracks/0/path = NodePath("MarginContainer/Panel/MarginContainer/EventsContainer/CenterContainer/Clock:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -558,7 +558,7 @@ tracks/0/keys = {
 resource_name = "ShowClock"
 length = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("Panel/MarginContainer/EventsContainer/CenterContainer/Clock:modulate")
+tracks/0/path = NodePath("MarginContainer/Panel/MarginContainer/EventsContainer/CenterContainer/Clock:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -576,17 +576,22 @@ anchor_bottom = 1.0
 theme = ExtResource( 7 )
 script = ExtResource( 1 )
 
-[node name="Panel" type="Panel" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -379.5
-margin_top = -255.0
-margin_right = 379.5
-margin_bottom = 255.0
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+[node name="Panel" type="Panel" parent="MarginContainer"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 1008.0
+margin_bottom = 584.0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/margin_right = 16
@@ -594,34 +599,33 @@ custom_constants/margin_top = 16
 custom_constants/margin_left = 16
 custom_constants/margin_bottom = 16
 
-[node name="EventsContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+[node name="EventsContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer"]
 margin_left = 16.0
 margin_top = 16.0
-margin_right = 743.0
-margin_bottom = 494.0
+margin_right = 976.0
+margin_bottom = 552.0
 custom_constants/separation = 16
 alignment = 1
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/EventsContainer"]
+[node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/EventsContainer"]
 margin_right = 727.0
 margin_bottom = 19.0
 custom_fonts/font = ExtResource( 8 )
 text = "That day..."
 percent_visible = 0.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Panel/MarginContainer/EventsContainer"]
+[node name="DayEventsTextLabel" type="RichTextLabel" parent="MarginContainer/Panel/MarginContainer/EventsContainer"]
+unique_name_in_owner = true
 margin_top = 35.0
 margin_right = 727.0
 margin_bottom = 311.0
-focus_mode = 2
 size_flags_vertical = 3
 visible_characters = 0
 percent_visible = 0.0
 meta_underlined = false
-scroll_following = true
 selection_enabled = true
 
-[node name="Label2" type="Label" parent="Panel/MarginContainer/EventsContainer"]
+[node name="Label2" type="Label" parent="MarginContainer/Panel/MarginContainer/EventsContainer"]
 margin_top = 327.0
 margin_right = 727.0
 margin_bottom = 346.0
@@ -630,13 +634,13 @@ text = "That night, the android shepherd dreamed..."
 align = 2
 percent_visible = 0.0
 
-[node name="CenterContainer" type="CenterContainer" parent="Panel/MarginContainer/EventsContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/Panel/MarginContainer/EventsContainer"]
 margin_top = 362.0
 margin_right = 727.0
 margin_bottom = 422.0
 rect_min_size = Vector2( 0, 60 )
 
-[node name="Clock" parent="Panel/MarginContainer/EventsContainer/CenterContainer" instance=ExtResource( 3 )]
+[node name="Clock" parent="MarginContainer/Panel/MarginContainer/EventsContainer/CenterContainer" instance=ExtResource( 3 )]
 unique_name_in_owner = true
 modulate = Color( 1, 1, 1, 0 )
 margin_left = 333.0
@@ -646,49 +650,55 @@ rect_min_size = Vector2( 60, 60 )
 shadow_color = Color( 0, 0, 0, 0 )
 wait_time = 30.0
 
-[node name="NextButton" parent="Panel/MarginContainer/EventsContainer" instance=ExtResource( 6 )]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/EventsContainer"]
 margin_top = 438.0
 margin_right = 727.0
 margin_bottom = 478.0
+alignment = 1
+
+[node name="NextButton" parent="MarginContainer/Panel/MarginContainer/EventsContainer/HBoxContainer" instance=ExtResource( 6 )]
+margin_left = 303.0
+margin_right = 423.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 120, 40 )
 disabled = true
 text = "Next"
 
-[node name="DreamContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+[node name="DreamContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer"]
 visible = false
 margin_left = 16.0
 margin_top = 16.0
-margin_right = 743.0
-margin_bottom = 494.0
+margin_right = 976.0
+margin_bottom = 552.0
 custom_constants/separation = 16
 alignment = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Panel/MarginContainer/DreamContainer"]
-margin_right = 727.0
-margin_bottom = 294.0
-focus_mode = 2
+[node name="DreamTextLabel" type="RichTextLabel" parent="MarginContainer/Panel/MarginContainer/DreamContainer"]
+unique_name_in_owner = true
+margin_right = 960.0
+margin_bottom = 352.0
 size_flags_vertical = 3
 bbcode_enabled = true
 visible_characters = 0
 percent_visible = 0.0
-scroll_following = true
 selection_enabled = true
 
-[node name="GridContainer" type="GridContainer" parent="Panel/MarginContainer/DreamContainer"]
-margin_top = 310.0
-margin_right = 727.0
-margin_bottom = 374.0
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/Panel/MarginContainer/DreamContainer"]
+margin_top = 368.0
+margin_right = 960.0
+margin_bottom = 432.0
 rect_min_size = Vector2( 0, 64 )
 size_flags_horizontal = 3
 custom_constants/hseparation = 48
 columns = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/DreamContainer/GridContainer"]
-margin_right = 340.0
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer"]
+margin_right = 456.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="GoodWordLabel" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer"]
+[node name="GoodWordLabel" type="Label" parent="MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer"]
 margin_top = 5.0
 margin_right = 197.0
 margin_bottom = 24.0
@@ -696,11 +706,11 @@ custom_fonts/font = ExtResource( 8 )
 text = "Good Dream Words: "
 percent_visible = 0.0
 
-[node name="GoodWordCount" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer"]
+[node name="GoodWordCount" type="Label" parent="MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer"]
 unique_name_in_owner = true
 margin_left = 201.0
 margin_top = 5.0
-margin_right = 340.0
+margin_right = 456.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 8 )
@@ -708,14 +718,14 @@ text = "0"
 align = 2
 percent_visible = 0.0
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/MarginContainer/DreamContainer/GridContainer"]
-margin_left = 388.0
-margin_right = 727.0
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer"]
+margin_left = 504.0
+margin_right = 960.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="BadWordLabel" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer2"]
+[node name="BadWordLabel" type="Label" parent="MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer2"]
 margin_top = 5.0
 margin_right = 185.0
 margin_bottom = 24.0
@@ -723,11 +733,11 @@ custom_fonts/font = ExtResource( 8 )
 text = "Bad Dream Words: "
 percent_visible = 0.0
 
-[node name="BadWordCount" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer2"]
+[node name="BadWordCount" type="Label" parent="MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer2"]
 unique_name_in_owner = true
 margin_left = 189.0
 margin_top = 5.0
-margin_right = 339.0
+margin_right = 456.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 8 )
@@ -735,14 +745,14 @@ text = "0"
 align = 2
 percent_visible = 0.0
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/MarginContainer/DreamContainer/GridContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer"]
 margin_top = 34.0
-margin_right = 340.0
+margin_right = 456.0
 margin_bottom = 64.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="DreamEntitiesLabel" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer3"]
+[node name="DreamEntitiesLabel" type="Label" parent="MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer3"]
 margin_top = 5.0
 margin_right = 259.0
 margin_bottom = 24.0
@@ -750,11 +760,11 @@ custom_fonts/font = ExtResource( 8 )
 text = "Dream Entity Encounters:"
 percent_visible = 0.0
 
-[node name="DreamEntitiesCount" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer3"]
+[node name="DreamEntitiesCount" type="Label" parent="MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer3"]
 unique_name_in_owner = true
 margin_left = 263.0
 margin_top = 5.0
-margin_right = 340.0
+margin_right = 456.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 8 )
@@ -762,15 +772,15 @@ text = "0"
 align = 2
 percent_visible = 0.0
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="Panel/MarginContainer/DreamContainer/GridContainer"]
-margin_left = 388.0
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer"]
+margin_left = 504.0
 margin_top = 34.0
-margin_right = 727.0
+margin_right = 960.0
 margin_bottom = 64.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="FearManifestationsLabel" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer4"]
+[node name="FearManifestationsLabel" type="Label" parent="MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer4"]
 margin_top = 5.0
 margin_right = 240.0
 margin_bottom = 24.0
@@ -778,11 +788,11 @@ custom_fonts/font = ExtResource( 8 )
 text = "Manifestations of Fear:"
 percent_visible = 0.0
 
-[node name="FearManifestationsCount" type="Label" parent="Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer4"]
+[node name="FearManifestationsCount" type="Label" parent="MarginContainer/Panel/MarginContainer/DreamContainer/GridContainer/HBoxContainer4"]
 unique_name_in_owner = true
 margin_left = 244.0
 margin_top = 5.0
-margin_right = 339.0
+margin_right = 456.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 8 )
@@ -790,14 +800,14 @@ text = "0"
 align = 2
 percent_visible = 0.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/DreamContainer"]
-margin_top = 390.0
-margin_right = 727.0
-margin_bottom = 422.0
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/DreamContainer"]
+margin_top = 448.0
+margin_right = 960.0
+margin_bottom = 480.0
 rect_min_size = Vector2( 0, 32 )
 size_flags_horizontal = 3
 
-[node name="GradeLabel" type="Label" parent="Panel/MarginContainer/DreamContainer/HBoxContainer"]
+[node name="GradeLabel" type="Label" parent="MarginContainer/Panel/MarginContainer/DreamContainer/HBoxContainer"]
 margin_top = 6.0
 margin_right = 64.0
 margin_bottom = 25.0
@@ -805,11 +815,11 @@ custom_fonts/font = ExtResource( 8 )
 text = "Grade:"
 percent_visible = 0.0
 
-[node name="GradeResult" type="Label" parent="Panel/MarginContainer/DreamContainer/HBoxContainer"]
+[node name="GradeResult" type="Label" parent="MarginContainer/Panel/MarginContainer/DreamContainer/HBoxContainer"]
 unique_name_in_owner = true
 margin_left = 68.0
 margin_top = 6.0
-margin_right = 727.0
+margin_right = 960.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 8 )
@@ -817,24 +827,26 @@ text = "C"
 align = 2
 percent_visible = 0.0
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/MarginContainer/DreamContainer"]
-margin_top = 438.0
-margin_right = 727.0
-margin_bottom = 478.0
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/DreamContainer"]
+margin_top = 496.0
+margin_right = 960.0
+margin_bottom = 536.0
 custom_constants/separation = 16
+alignment = 1
 
-[node name="RestartButton" parent="Panel/MarginContainer/DreamContainer/HBoxContainer2" instance=ExtResource( 6 )]
-margin_right = 355.0
+[node name="RestartButton" parent="MarginContainer/Panel/MarginContainer/DreamContainer/HBoxContainer2" instance=ExtResource( 6 )]
+margin_left = 352.0
+margin_right = 472.0
 margin_bottom = 40.0
-size_flags_horizontal = 3
+rect_min_size = Vector2( 120, 40 )
 disabled = true
 text = "Restart"
 
-[node name="DoneButton" parent="Panel/MarginContainer/DreamContainer/HBoxContainer2" instance=ExtResource( 6 )]
-margin_left = 371.0
-margin_right = 727.0
+[node name="DoneButton" parent="MarginContainer/Panel/MarginContainer/DreamContainer/HBoxContainer2" instance=ExtResource( 6 )]
+margin_left = 488.0
+margin_right = 608.0
 margin_bottom = 40.0
-size_flags_horizontal = 3
+rect_min_size = Vector2( 120, 40 )
 disabled = true
 text = "Done"
 
@@ -864,8 +876,8 @@ anims/HideClock = SubResource( 8 )
 anims/RESET = SubResource( 9 )
 anims/ShowClock = SubResource( 10 )
 
-[connection signal="timeout" from="Panel/MarginContainer/EventsContainer/CenterContainer/Clock" to="." method="_on_Clock_timeout"]
-[connection signal="pressed" from="Panel/MarginContainer/EventsContainer/NextButton" to="." method="_on_NextButton_pressed"]
-[connection signal="pressed" from="Panel/MarginContainer/DreamContainer/HBoxContainer2/RestartButton" to="." method="_on_RestartButton_pressed"]
-[connection signal="pressed" from="Panel/MarginContainer/DreamContainer/HBoxContainer2/DoneButton" to="." method="_on_DoneButton_pressed"]
+[connection signal="timeout" from="MarginContainer/Panel/MarginContainer/EventsContainer/CenterContainer/Clock" to="." method="_on_Clock_timeout"]
+[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/EventsContainer/HBoxContainer/NextButton" to="." method="_on_NextButton_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/DreamContainer/HBoxContainer2/RestartButton" to="." method="_on_RestartButton_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/DreamContainer/HBoxContainer2/DoneButton" to="." method="_on_DoneButton_pressed"]
 [connection signal="dream_recollected" from="DreamClient" to="." method="_on_DreamClient_dream_recollected"]

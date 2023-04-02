@@ -31,7 +31,7 @@ func _hide_clock():
 
 func _read_events(starting_sheep_count : int, ending_sheep_count : int, events_string : String):
 	var full_string = DAY_EVENTS_STRING % [starting_sheep_count, events_string, ending_sheep_count]
-	$Panel/MarginContainer/EventsContainer/RichTextLabel.text = full_string
+	$"%DayEventsTextLabel".text = full_string
 	$AnimationPlayer.play("ReadEvents")
 	yield($AnimationPlayer, "animation_finished")
 	_show_clock()
@@ -62,7 +62,7 @@ func _dream_ready(dream_text : String):
 	dream_returned = true
 	_hide_clock()
 	var highlighted_dream_text = $TextHighlighter.highlight_dream(dream_text)
-	$Panel/MarginContainer/DreamContainer/RichTextLabel.bbcode_text = highlighted_dream_text
+	$"%DreamTextLabel".bbcode_text = highlighted_dream_text
 	$"%GoodWordCount".text = "%d" % $TextHighlighter.good_word_count
 	$"%BadWordCount".text = "%d" % $TextHighlighter.bad_word_count
 	$"%DreamEntitiesCount".text = "%d" % $TextHighlighter.dream_entity_count

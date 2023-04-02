@@ -11,12 +11,12 @@ margin_left = 145.0
 margin_right = 450.0
 
 [node name="TutorialText" parent="Control/NinePatchRect/MarginContainer/PanelContainer" index="0"]
-text = "Welcome to the green pastures.
-Herd your sheep to graze on the patches of electric grass.
+text = "Welcome to the electric pastures!
+Herd your sheep to graze on electric grass.
 
 
 
-Be wary of the volatile grass.
+Avoid volatile grass!
 
 "
 
