@@ -619,4 +619,5 @@ script = ExtResource( 9 )
 time_scale = 1.5
 target_color = Color( 0.470588, 0.568627, 0.698039, 1 )
 
+[connection signal="part_collected" from="YSort/Shepherd" to="." method="_on_Shepherd_part_collected"]
 [connection signal="parts_assembled" from="YSort/Shepherd" to="." method="_on_Shepherd_parts_assembled"]

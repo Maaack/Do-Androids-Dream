@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 signal parts_assembled
+signal part_collected
 # the magnet_factor to apply whent the magnet is on or off
 const MAGNET_OFF = 1
 const MAGNET_ON = 5
@@ -55,6 +56,7 @@ func _physics_process(delta):
 
 func collect_part() -> bool:
 	parts_collected += 1
+	emit_signal("part_collected")
 	if parts_collected >= 2:
 		parts_collected -= 2
 		emit_signal("parts_assembled")
