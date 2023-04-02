@@ -182,4 +182,5 @@ func _on_MuseTimer_timeout():
 
 func _on_MuseClient_musing_shared(musing_text):
 	add_event(EventData.EVENT_TYPES.MUSE, musing_text)
-	$"%World".shepherd_node.muse(musing_text)
+	$"%BottomLabel".text = musing_text
+	$BottomPanelAnimationPlayer.play("Muse")
