@@ -6,10 +6,20 @@
 
 [node name="NinePatchRect" parent="Control" index="0"]
 margin_left = 145.0
+margin_top = -87.5
 margin_right = 450.0
+margin_bottom = 87.5
+
+[node name="PanelContainer" parent="Control/NinePatchRect/MarginContainer" index="0"]
+margin_bottom = 167.0
 
 [node name="TutorialText" parent="Control/NinePatchRect/MarginContainer/PanelContainer" index="0"]
+margin_bottom = 111.0
 text = "There's green pastures this way... 
 
 
 Go forth!"
+
+[node name="ResumeButton" parent="Control/NinePatchRect/MarginContainer/PanelContainer" index="1"]
+margin_top = 119.0
+margin_bottom = 159.0

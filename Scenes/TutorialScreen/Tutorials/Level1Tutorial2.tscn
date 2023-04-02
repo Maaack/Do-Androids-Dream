@@ -6,9 +6,19 @@
 
 [node name="NinePatchRect" parent="Control" index="0"]
 margin_left = 145.0
+margin_top = -87.5
 margin_right = 450.0
+margin_bottom = 87.5
+
+[node name="PanelContainer" parent="Control/NinePatchRect/MarginContainer" index="0"]
+margin_bottom = 167.0
 
 [node name="TutorialText" parent="Control/NinePatchRect/MarginContainer/PanelContainer" index="0"]
-text = "Activate your magnet by pressing the spacebar, or holding the left mouse button.
+margin_bottom = 111.0
+text = "Press spacebar (or hold left mouse button) to active the magnet.
  
-This will draw your sheep to you, and allow you to lead them."
+This will draw nearby sheep to you."
+
+[node name="ResumeButton" parent="Control/NinePatchRect/MarginContainer/PanelContainer" index="1"]
+margin_top = 119.0
+margin_bottom = 159.0
