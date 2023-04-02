@@ -36,5 +36,5 @@ func request_musing():
 func _on_APIClient_response_received(response_body):
 	emit_signal("musing_shared", response_body)
 
-func _on_APIClient_request_failed(error):
+func _on_APIClient_request_failed(_error):
 	emit_signal("musing_shared", FAILED_MUSING_MESSAGE)

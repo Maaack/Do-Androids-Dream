@@ -26,8 +26,7 @@ func _get_concatenated_string(subjects : Array) -> String:
 		var last_subject = subjects.pop_back()
 		var comma_separated_subjects = ", ".join(subjects)
 		return "%s, and %s" % [comma_separated_subjects, last_subject]
-	return ""
-		
+
 func _get_sentence_for_event_type(event_type : int, contents : Array):
 	var unique_contents : Array = []
 	for content in contents:

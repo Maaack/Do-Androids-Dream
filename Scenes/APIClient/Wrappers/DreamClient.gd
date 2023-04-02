@@ -55,5 +55,5 @@ func request_dream(starting_sheep_count : int, ending_sheep_count : int, events_
 func _on_APIClient_response_received(response_body):
 	emit_signal("dream_recollected", response_body)
 
-func _on_APIClient_request_failed(error):
+func _on_APIClient_request_failed(_error):
 	emit_signal("dream_recollected", FAILED_DREAM_MESSAGE)
