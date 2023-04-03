@@ -5,6 +5,7 @@ signal sheep_ate_volatile_grass(sheep_name)
 signal sheep_exploded(sheep_name)
 signal sheep_assembled(sheep_name)
 signal sheep_part_collected
+signal shepherd_entered_area(area_name)
 
 export(float, 0, 1000) var spawn_range : float = 200
 export(Vector2) var spawn_offset : Vector2 = Vector2.ZERO
@@ -68,3 +69,6 @@ func _on_Shepherd_parts_assembled():
 
 func _on_Shepherd_part_collected():
 	emit_signal("sheep_part_collected")
+
+func _on_WestLandDetectorArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "west_lands")

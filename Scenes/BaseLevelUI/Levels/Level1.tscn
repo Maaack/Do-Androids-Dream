@@ -33,7 +33,7 @@ starting_sheep_count = 16
 
 [node name="World" parent="ViewportContainer/Viewport" index="0"]
 spawn_range = 100.0
-spawn_offset = Vector2( -200, 0 )
+spawn_offset = Vector2( -180, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6"]
 pause_mode = 1
@@ -41,3 +41,4 @@ autoplay = "Intro"
 anims/Intro = SubResource( 1 )
 
 [connection signal="sheep_part_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_part_collected"]
+[connection signal="shepherd_entered_area" from="ViewportContainer/Viewport/World" to="." method="_on_World_shepherd_entered_area"]
