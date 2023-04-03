@@ -10,7 +10,7 @@ func set_collider_shape(value : Shape2D) -> void:
 	collider_shape = value
 	$CollisionShape2D.shape = collider_shape
 
-func _on_ShepherdDetectorArea2D_body_entered(body):
+func _on_CharacterDetectorArea2D_body_entered(body):
 	if Engine.editor_hint:
 		return
 	if body.is_in_group("shepherds"):

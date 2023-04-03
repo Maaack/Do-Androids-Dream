@@ -7,4 +7,4 @@ script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-[connection signal="body_entered" from="." to="." method="_on_ShepherdDetectorArea2D_body_entered"]
+[connection signal="body_entered" from="." to="." method="_on_CharacterDetectorArea2D_body_entered"]
