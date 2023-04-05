@@ -16,3 +16,6 @@ func _add_sheep():
 
 func _on_SheepTimer_timeout():
 	_add_sheep()
+
+func _ready():
+	_add_sheep()

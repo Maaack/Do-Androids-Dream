@@ -111,8 +111,8 @@ tracks/0/keys = {
 [node name="World" type="Node2D"]
 position = Vector2( 2, 0 )
 script = ExtResource( 3 )
-spawn_range = 20.0
-spawn_offset = Vector2( 50, 100 )
+spawn_range = 40.0
+spawn_offset = Vector2( 25, 120 )
 
 [node name="Dirt" type="TileMap" parent="."]
 tile_set = SubResource( 4 )
