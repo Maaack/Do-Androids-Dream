@@ -128,34 +128,12 @@ const ENTITY_NAMES_ARRAY : Array = [
 const MANIFESTATIONS_OF_FEAR_ARRAY : Array = [
 	"Robot Wolf",
 	"Robot Wolves",
+	"Robotic Wolf",
+	"Robotic Wolves",
 	"Wild Wolves",
 	"Rogue Sheep",
 	"Unidentified Presence",
 	"Lurking Stranger",
-]
-
-const ALL_SHEEP_NAMES : Array = [
-	"Abby",
-	"Ashley",
-	"Barbara",
-	"Betsy",
-	"Cara",
-	"Cutie",
-	"Erin",
-	"Lousie", 
-	"Loren", 
-	"Maggie",
-	"Megan",
-	"Nancy",
-	"Anna",
-	"Angel",
-	"Athena",
-	"Aurora",
-	"Marg",
-	"Pretty",
-	"Sweetie",
-	"Tammy",
-	"Zelda",
 ]
 
 export(Color) var good_word_color : Color
@@ -196,6 +174,6 @@ func highlight_dream(dream : String) -> String:
 	for word in MANIFESTATIONS_OF_FEAR_ARRAY:
 		fear_manifestation_count += int(word in highlighted_text)
 		highlighted_text = _highlight_word_with_colorn(highlighted_text, word, fear_manifestation_color)
-	for sheep_name in ALL_SHEEP_NAMES:
+	for sheep_name in SheepConstants.NAMES:
 		highlighted_text = _bold_word(highlighted_text, sheep_name)
 	return highlighted_text
