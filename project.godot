@@ -33,13 +33,19 @@ _global_script_classes=[ {
 "class": "GameLog",
 "language": "GDScript",
 "path": "res://Scripts/GameLog.gd"
+}, {
+"base": "Object",
+"class": "SheepConstants",
+"language": "GDScript",
+"path": "res://Constants/Sheep.gd"
 } ]
 _global_script_class_icons={
 "AppLog": "",
 "AppSettings": "",
 "ClockTimer": "",
 "EventData": "",
-"GameLog": ""
+"GameLog": "",
+"SheepConstants": ""
 }
 
 [application]
