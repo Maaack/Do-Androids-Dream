@@ -43,6 +43,9 @@ func add_event(event_type : int, content : String) -> void:
 	game_events.append(EventData.new(event_type, content))
 	day_events.append(EventData.new(event_type, content))
 
+func add_shepherd_dreamed_event(dream_text):
+	game_events.append(EventData.new(EventData.EVENT_TYPES.DREAM, dream_text))
+
 func add_feed_sheep_event(sheep_name):
 	add_event(EventData.EVENT_TYPES.EAT_NORMAL_GRASS, sheep_name)
 
@@ -97,6 +100,9 @@ func _on_World_sheep_assembled(sheep_name):
 
 func _on_World_sheep_starved(sheep_name):
 	add_sheep_starved_event(sheep_name)
+
+func _on_ScoringScreen_shepherd_dreamed(dream_text):
+	add_shepherd_dreamed_event(dream_text)
 
 func _on_Clock_timeout():
 	_end_day()

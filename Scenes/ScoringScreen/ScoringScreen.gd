@@ -3,6 +3,7 @@ extends Control
 
 signal done_pressed
 signal restart_pressed
+signal shepherd_dreamed(dream_text)
 
 const REVEAL_PERCENT_PER_SECOND = 0.30
 const DAY_EVENTS_STRING = "The android shepherd ventured out in the morning with its flock of %d sheep to graze on the electric pastures. While tending the flock...\n\n" \
@@ -14,6 +15,9 @@ var showing_clock : bool = false
 var dream_returned : bool = false
 
 func _request_dream(starting_sheep_count : int, ending_sheep_count : int, events_string : String):
+	$AnimationPlayer.play("RESET")
+	$ButtonAnimationPlayer.play("RESET")
+	dream_returned = false
 	$DreamClient.request_dream(starting_sheep_count, ending_sheep_count, events_string)
 	_start_clock()
 
@@ -86,6 +90,7 @@ func _dream_ready(dream_text : String):
 	else:
 		$"%GradeResult".text = "F"
 	$ButtonAnimationPlayer.play("DreamReady")
+	emit_signal("shepherd_dreamed", dream_text)
 
 func _on_DoneButton_pressed():
 	emit_signal("done_pressed")

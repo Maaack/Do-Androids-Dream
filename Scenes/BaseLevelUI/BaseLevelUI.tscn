@@ -211,5 +211,6 @@ anims/RESET = SubResource( 2 )
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer2/EndDayButton" to="." method="_on_EndDayButton_pressed"]
 [connection signal="done_pressed" from="ScoringScreen" to="." method="_on_ScoringScreen_done_pressed"]
 [connection signal="restart_pressed" from="ScoringScreen" to="." method="_on_ScoringScreen_restart_pressed"]
+[connection signal="shepherd_dreamed" from="ScoringScreen" to="." method="_on_ScoringScreen_shepherd_dreamed"]
 [connection signal="timeout" from="MuseTimer" to="." method="_on_MuseTimer_timeout"]
 [connection signal="musing_shared" from="MuseClient" to="." method="_on_MuseClient_musing_shared"]

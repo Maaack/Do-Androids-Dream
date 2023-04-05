@@ -74,6 +74,7 @@ const BAD_DREAM_WORDS : Array = [
 	"anxious",
 	"chaos",
 	"confused",
+	"danger",
 	"dangerous",
 	"dark",
 	"death",
@@ -159,6 +160,10 @@ func _bold_word(haystack : String, needle : String) -> String:
 	return haystack.replace(needle, replace_text)
 
 func highlight_dream(dream : String) -> String:
+	good_word_count = 0
+	bad_word_count = 0
+	dream_entity_count = 0
+	fear_manifestation_count = 0
 	var highlighted_text : String = dream
 	for word in GOOD_DREAM_WORDS:
 		good_word_count += highlighted_text.count(word)
@@ -169,10 +174,10 @@ func highlight_dream(dream : String) -> String:
 		highlighted_text = _highlight_word_with_color(highlighted_text, word, bad_word_color)
 		highlighted_text = _highlight_word_with_color(highlighted_text, word.capitalize(), bad_word_color)
 	for word in ENTITY_NAMES_ARRAY:
-		dream_entity_count += int(word in highlighted_text)
+		dream_entity_count += int(highlighted_text.findn(word) != -1)
 		highlighted_text = _highlight_word_with_colorn(highlighted_text, word, dream_entity_color)
 	for word in MANIFESTATIONS_OF_FEAR_ARRAY:
-		fear_manifestation_count += int(word in highlighted_text)
+		fear_manifestation_count += int(highlighted_text.findn(word) != -1)
 		highlighted_text = _highlight_word_with_colorn(highlighted_text, word, fear_manifestation_color)
 	for sheep_name in SheepConstants.NAMES:
 		highlighted_text = _bold_word(highlighted_text, sheep_name)
