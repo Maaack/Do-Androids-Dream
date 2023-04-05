@@ -73,7 +73,6 @@ anchor_bottom = 1.0
 mouse_filter = 2
 theme = ExtResource( 8 )
 script = ExtResource( 1 )
-starting_sheep_count = 8
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
@@ -108,34 +107,6 @@ margin_top = 32.0
 margin_right = 992.0
 margin_bottom = 568.0
 mouse_filter = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control"]
-visible = false
-margin_right = 200.0
-margin_bottom = 536.0
-rect_min_size = Vector2( 200, 0 )
-size_flags_vertical = 3
-custom_constants/separation = 32
-__meta__ = {
-"_editor_description_": "For testing purposes"
-}
-
-[node name="FeedSheepButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]
-margin_right = 200.0
-margin_bottom = 20.0
-text = "Feed Sheep Grass"
-
-[node name="PoisonSheepButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]
-margin_top = 52.0
-margin_right = 200.0
-margin_bottom = 72.0
-text = "Feed Sheep Poison"
-
-[node name="BuildSheepButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]
-margin_top = 104.0
-margin_right = 200.0
-margin_bottom = 124.0
-text = "Build Sheep"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/Control"]
 anchor_left = 1.0
@@ -235,9 +206,7 @@ anims/RESET = SubResource( 2 )
 [connection signal="sheep_ate_normal_grass" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_ate_normal_grass"]
 [connection signal="sheep_ate_volatile_grass" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_ate_volatile_grass"]
 [connection signal="sheep_exploded" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_exploded"]
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/FeedSheepButton" to="." method="_on_FeedSheepButton_pressed"]
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/PoisonSheepButton" to="." method="_on_PoisonSheepButton_pressed"]
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/BuildSheepButton" to="." method="_on_BuildSheepButton_pressed"]
+[connection signal="sheep_starved" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_starved"]
 [connection signal="timeout" from="MarginContainer/Control/VBoxContainer2/Clock" to="." method="_on_Clock_timeout"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer2/EndDayButton" to="." method="_on_EndDayButton_pressed"]
 [connection signal="done_pressed" from="ScoringScreen" to="." method="_on_ScoringScreen_done_pressed"]

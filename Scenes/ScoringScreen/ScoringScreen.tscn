@@ -608,7 +608,7 @@ custom_constants/separation = 16
 alignment = 1
 
 [node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/EventsContainer"]
-margin_right = 727.0
+margin_right = 960.0
 margin_bottom = 19.0
 custom_fonts/font = ExtResource( 8 )
 text = "That day..."
@@ -617,8 +617,9 @@ percent_visible = 0.0
 [node name="DayEventsTextLabel" type="RichTextLabel" parent="MarginContainer/Panel/MarginContainer/EventsContainer"]
 unique_name_in_owner = true
 margin_top = 35.0
-margin_right = 727.0
-margin_bottom = 311.0
+margin_right = 960.0
+margin_bottom = 369.0
+focus_mode = 2
 size_flags_vertical = 3
 visible_characters = 0
 percent_visible = 0.0
@@ -626,39 +627,39 @@ meta_underlined = false
 selection_enabled = true
 
 [node name="Label2" type="Label" parent="MarginContainer/Panel/MarginContainer/EventsContainer"]
-margin_top = 327.0
-margin_right = 727.0
-margin_bottom = 346.0
+margin_top = 385.0
+margin_right = 960.0
+margin_bottom = 404.0
 custom_fonts/font = ExtResource( 8 )
 text = "That night, the android shepherd dreamed..."
 align = 2
 percent_visible = 0.0
 
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer/Panel/MarginContainer/EventsContainer"]
-margin_top = 362.0
-margin_right = 727.0
-margin_bottom = 422.0
+margin_top = 420.0
+margin_right = 960.0
+margin_bottom = 480.0
 rect_min_size = Vector2( 0, 60 )
 
 [node name="Clock" parent="MarginContainer/Panel/MarginContainer/EventsContainer/CenterContainer" instance=ExtResource( 3 )]
 unique_name_in_owner = true
 modulate = Color( 1, 1, 1, 0 )
-margin_left = 333.0
-margin_right = 393.0
+margin_left = 450.0
+margin_right = 510.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
 shadow_color = Color( 0, 0, 0, 0 )
 wait_time = 30.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/EventsContainer"]
-margin_top = 438.0
-margin_right = 727.0
-margin_bottom = 478.0
+margin_top = 496.0
+margin_right = 960.0
+margin_bottom = 536.0
 alignment = 1
 
 [node name="NextButton" parent="MarginContainer/Panel/MarginContainer/EventsContainer/HBoxContainer" instance=ExtResource( 6 )]
-margin_left = 303.0
-margin_right = 423.0
+margin_left = 420.0
+margin_right = 540.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 120, 40 )
 disabled = true
@@ -677,6 +678,7 @@ alignment = 1
 unique_name_in_owner = true
 margin_right = 960.0
 margin_bottom = 352.0
+focus_mode = 2
 size_flags_vertical = 3
 bbcode_enabled = true
 visible_characters = 0

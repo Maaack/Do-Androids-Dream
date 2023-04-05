@@ -4,6 +4,7 @@ signal normal_grass_eaten
 signal volatile_grass_eaten
 signal exploded
 signal assembled
+signal starved
 
 onready var animation_tree = $AnimationTree
 onready var animation_state = animation_tree.get("parameters/playback")
@@ -19,7 +20,8 @@ export var shepherd_avoid_factor = 5 # priority of the direction to avoid gettin
 export var laziness = 3
 export var wait_time : float = 5
 export var wait_time_randomness : float = 2
-var hunger = 2 # number of grass patches the sheep need to eat -> 0 means it's full and does not need to eat anymore
+export(int) var daily_food_required : int = 2
+var hunger = 0 # number of grass patches the sheep need to eat -> 0 means it's full and does not need to eat anymore
 var direction = Vector2.ZERO # direction to move to
 var velocity = Vector2.ZERO
 var nearby_sheep = [] # list of sheeps which are in the detection area
@@ -57,6 +59,9 @@ func _walk(delta):
 func _physics_process(delta):
 	_walk(delta)
 
+func is_hungry() -> bool:
+	return hunger > 0
+
 # will return a vector for the sheep to go to the center of mass of the group of nearby sheeps - Boids rules #1
 func calc_direction_to_center_of_mass_nearby():
 	var center = Vector2.ZERO
@@ -84,7 +89,6 @@ func calc_velocity_nearby():
 	avg_direction /= nearby_sheep.size()
 	
 	return avg_direction * avg_dir_factor
-
 
 func calc_direction_to_nearest_grass():
 	if target_grass():
@@ -161,6 +165,11 @@ func _finish_eating(grass_was_volatile : bool = false):
 	elif hunger == 0:
 		emit_signal("normal_grass_eaten")
 
+func starve():
+	_stop_moving()
+	emit_signal("starved")
+	queue_free()
+
 func eat_grass():
 	var grass_was_volatile : bool = targeted_grass.is_volatile
 	# play eating animation
@@ -183,7 +192,6 @@ func _on_DetectionArea_body_entered(body):
 		nearby_sheep.append(body)
 	elif body.is_in_group("shepherds"):
 		shepherd = body
-
 
 func _on_DetectionArea_body_exited(body):
 	if body.is_in_group("sheeps"):
@@ -209,9 +217,14 @@ func _on_DetectionArea_area_entered(area):
 	if area.is_in_group("grass"):
 		nearby_grass.append(area)
 
-
 func _on_DetectionArea_area_exited(area):
 	if area.is_in_group("grass"):
 		nearby_grass.erase(area)
 		if area == targeted_grass:
 			targeted_grass = null
+
+func reset_hunger():
+	hunger = daily_food_required
+
+func _ready():
+	reset_hunger()
