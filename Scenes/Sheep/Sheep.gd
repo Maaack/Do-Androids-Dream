@@ -199,6 +199,16 @@ func _on_DetectionArea_body_exited(body):
 	elif body.is_in_group("shepherds"):
 		shepherd = null
 
+func _on_GrassDetectionArea_area_entered(area):
+	if area.is_in_group("grass"):
+		nearby_grass.append(area)
+
+func _on_GrassDetectionArea_area_exited(area):
+	if area.is_in_group("grass"):
+		nearby_grass.erase(area)
+		if area == targeted_grass:
+			targeted_grass = null
+
 func _update_direction():
 	direction = (
 		calc_direction_to_center_of_mass_nearby() +
@@ -213,15 +223,6 @@ func _on_UpdateMovementTimer_timeout():
 	_update_direction()
 	$UpdateMovementTimer.wait_time = wait_time + rand_range(-wait_time_randomness, wait_time_randomness)
 
-func _on_DetectionArea_area_entered(area):
-	if area.is_in_group("grass"):
-		nearby_grass.append(area)
-
-func _on_DetectionArea_area_exited(area):
-	if area.is_in_group("grass"):
-		nearby_grass.erase(area)
-		if area == targeted_grass:
-			targeted_grass = null
 
 func reset_hunger():
 	hunger = daily_food_required
