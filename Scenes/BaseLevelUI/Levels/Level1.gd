@@ -6,10 +6,12 @@ var tutorial_3 = preload("res://Scenes/TutorialScreen/Tutorials/Level1Tutorial3.
 var tutorial_sheep_part = preload("res://Scenes/TutorialScreen/Tutorials/Level1TutorialSheepPart.tscn")
 var tutorial_west_lands = preload("res://Scenes/TutorialScreen/Tutorials/Level1TutorialWestLands.tscn")
 var tutorial_sheep_poisoned = preload("res://Scenes/TutorialScreen/Tutorials/Level1TutorialSheepPoisoned.tscn")
+var tutorial_sheep_exploding = preload("res://Scenes/TutorialScreen/Tutorials/Level1TutorialSheepExploding.tscn")
 
 var sheep_part_collected : bool = false
 var shepherd_entered_west_lands : bool = false
 var sheep_poisoned : bool = false
+var sheep_exploded_count : int = 0
 
 func play_tutorial_1():
 	InGameMenuController.open_menu(tutorial_1)
@@ -41,3 +43,9 @@ func _on_World_sheep_ate_volatile_grass(sheep_name):
 	var tutorial = InGameMenuController.open_menu(tutorial_sheep_poisoned)
 	tutorial.set_sheep_name(sheep_name)
 	._on_World_sheep_ate_volatile_grass(sheep_name)
+
+func _on_World_sheep_exploded(sheep_name):
+	sheep_exploded_count += 1
+	if sheep_exploded_count == 4:
+		InGameMenuController.open_menu(tutorial_sheep_exploding)
+	._on_World_sheep_exploded(sheep_name)
