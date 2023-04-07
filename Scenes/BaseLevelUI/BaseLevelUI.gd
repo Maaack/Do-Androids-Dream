@@ -1,5 +1,6 @@
 extends Control
 
+class_name BaseLevel
 
 const MAX_SHEEP_COUNT : int = 20
 

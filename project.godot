@@ -20,6 +20,11 @@ _global_script_classes=[ {
 "path": "res://Scripts/AppSettings.gd"
 }, {
 "base": "Control",
+"class": "BaseLevel",
+"language": "GDScript",
+"path": "res://Scenes/BaseLevelUI/BaseLevelUI.gd"
+}, {
+"base": "Control",
 "class": "ClockTimer",
 "language": "GDScript",
 "path": "res://Scenes/Clock/Clock.gd"
@@ -42,6 +47,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "AppLog": "",
 "AppSettings": "",
+"BaseLevel": "",
 "ClockTimer": "",
 "EventData": "",
 "GameLog": "",
