@@ -117,15 +117,15 @@ func calc_direction_to_avoid_colliding_shepherd():
 # will target the nearest grass patch in range if none is targeted and sheep is hungry
 # return true if there is already a targeted patch or if the function targeted a new one otherwise flase
 func target_grass():
-	if hunger > 0 and targeted_grass == null and nearby_grass.size() > 0:
-		var closest
-		var distance = 99999
+	if hunger > 0 and nearby_grass.size() > 0:
+		var closest_grass
+		var closest_distance = 99999
 		for grass in nearby_grass:
-			var calc_dist = position.distance_to(grass.position)
-			if calc_dist < distance:
-				closest = grass
-				distance = calc_dist
-		targeted_grass = closest
+			var calc_dist_squared = position.distance_squared_to(grass.position)
+			if calc_dist_squared < closest_distance:
+				closest_grass = grass
+				closest_distance = calc_dist_squared
+		targeted_grass = closest_grass
 		
 	return targeted_grass != null
 		
