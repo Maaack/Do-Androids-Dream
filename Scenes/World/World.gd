@@ -131,3 +131,6 @@ func _on_FirstCampDetectorArea2D_shepherd_entered():
 
 func _on_SecondCampDetectorArea2D_shepherd_entered():
 	emit_signal("shepherd_entered_area", "second_camp")
+
+func _on_FinalCampDetectorArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "final_camp")
