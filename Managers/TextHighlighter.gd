@@ -166,11 +166,11 @@ func highlight_dream(dream : String) -> String:
 	fear_manifestation_count = 0
 	var highlighted_text : String = dream
 	for word in GOOD_DREAM_WORDS:
-		good_word_count += highlighted_text.count(word)
+		good_word_count += highlighted_text.countn(word)
 		highlighted_text = _highlight_word_with_color(highlighted_text, word, good_word_color)
 		highlighted_text = _highlight_word_with_color(highlighted_text, word.capitalize(), good_word_color)
 	for word in BAD_DREAM_WORDS:
-		bad_word_count += highlighted_text.count(word)
+		bad_word_count += highlighted_text.countn(word)
 		highlighted_text = _highlight_word_with_color(highlighted_text, word, bad_word_color)
 		highlighted_text = _highlight_word_with_color(highlighted_text, word.capitalize(), bad_word_color)
 	for word in ENTITY_NAMES_ARRAY:

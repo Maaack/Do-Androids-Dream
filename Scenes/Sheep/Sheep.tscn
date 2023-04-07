@@ -1017,9 +1017,9 @@ graph_offset = Vector2( -114.998, 74.7801 )
 
 [node name="Sheep" type="KinematicBody2D" groups=["sheeps"]]
 script = ExtResource( 2 )
-walk_speed = 1300
+walk_speed = 1400
 center_factor = 5
-avoid_factor = 6
+avoid_factor = 7
 avg_dir_factor = 3
 grass_factor = 15
 shepherd_factor = 6

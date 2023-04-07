@@ -393,7 +393,7 @@ start_node = "Idle"
 [node name="Shepherd" type="KinematicBody2D" groups=["shepherds"]]
 script = ExtResource( 2 )
 acceleration = 450
-max_speed = 65
+max_speed = 45
 friction = 500
 magnetized_color = Color( 0.345098, 1, 0.756863, 1 )
 
