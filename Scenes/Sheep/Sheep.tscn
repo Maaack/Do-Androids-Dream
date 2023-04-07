@@ -265,7 +265,6 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=32]
 resource_name = "ExplodingDown"
-loop = true
 step = 0.167
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -291,10 +290,33 @@ tracks/1/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/2/type = "method"
+tracks/2/path = NodePath("ExplosionStreamCycler2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.501 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "play"
+} ]
+}
+tracks/3/type = "animation"
+tracks/3/path = NodePath("ExplosionAnimationPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"clips": PoolStringArray( "Explode" ),
+"times": PoolRealArray( 1.002 )
+}
 
 [sub_resource type="Animation" id=34]
 resource_name = "ExplodingLeft"
-loop = true
 step = 0.167
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -320,10 +342,33 @@ tracks/1/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/2/type = "method"
+tracks/2/path = NodePath("ExplosionStreamCycler2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.501 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "play"
+} ]
+}
+tracks/3/type = "animation"
+tracks/3/path = NodePath("ExplosionAnimationPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"clips": PoolStringArray( "Explode" ),
+"times": PoolRealArray( 1.002 )
+}
 
 [sub_resource type="Animation" id=33]
 resource_name = "ExplodingRight"
-loop = true
 step = 0.167
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -349,10 +394,33 @@ tracks/1/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/2/type = "method"
+tracks/2/path = NodePath("ExplosionStreamCycler2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.501 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "play"
+} ]
+}
+tracks/3/type = "animation"
+tracks/3/path = NodePath("ExplosionAnimationPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"clips": PoolStringArray( "Explode" ),
+"times": PoolRealArray( 1.002 )
+}
 
 [sub_resource type="Animation" id=35]
 resource_name = "ExplodingUp"
-loop = true
 step = 0.167
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -377,6 +445,30 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("ExplosionStreamCycler2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.501 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "play"
+} ]
+}
+tracks/3/type = "animation"
+tracks/3/path = NodePath("ExplosionAnimationPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"clips": PoolStringArray( "Explode" ),
+"times": PoolRealArray( 1.002 )
 }
 
 [sub_resource type="Animation" id=5]
@@ -919,20 +1011,20 @@ states/Walk/node = SubResource( 25 )
 states/Walk/position = Vector2( 492, 100 )
 transitions = [ "Idle", "Walk", SubResource( 26 ), "Walk", "Idle", SubResource( 27 ), "Walk", "Run", SubResource( 45 ), "Run", "Walk", SubResource( 46 ), "Walk", "Eat", SubResource( 57 ), "Eat", "Walk", SubResource( 58 ), "Run", "Eat", SubResource( 59 ), "Eat", "Run", SubResource( 60 ), "Idle", "Eat", SubResource( 61 ), "Eat", "Idle", SubResource( 62 ), "Idle", "Explode", SubResource( 63 ), "Walk", "Explode", SubResource( 64 ), "Run", "Explode", SubResource( 65 ), "Eat", "Explode", SubResource( 66 ), "Assemble", "Idle", SubResource( 71 ), "Idle", "Assemble", SubResource( 72 ) ]
 start_node = "Idle"
-graph_offset = Vector2( -498.7, 74.7801 )
+graph_offset = Vector2( -114.998, 74.7801 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=20]
 
 [node name="Sheep" type="KinematicBody2D" groups=["sheeps"]]
 script = ExtResource( 2 )
 walk_speed = 1300
-min_distance_with_nearby = 45
 center_factor = 5
 avoid_factor = 6
 avg_dir_factor = 3
 grass_factor = 15
 shepherd_factor = 6
 shepherd_avoid_factor = 9
+poisoned_sheep_avoid_factor = 80
 laziness = 4
 wait_time = 1.0
 wait_time_randomness = 0.5
@@ -966,6 +1058,9 @@ shape = SubResource( 74 )
 [node name="UpdateMovementTimer" type="Timer" parent="."]
 wait_time = 0.1
 autostart = true
+
+[node name="AnimationEventTimer" type="Timer" parent="."]
+wait_time = 4.0
 
 [node name="BahStreamCycler2D" parent="." instance=ExtResource( 3 )]
 streams = [ ExtResource( 4 ), ExtResource( 5 ) ]

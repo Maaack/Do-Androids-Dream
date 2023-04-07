@@ -17,6 +17,7 @@ export var avg_dir_factor = 1 # priority of the common direction
 export var grass_factor = 10 # priority of the direction to targeted grass patch
 export var shepherd_factor = 3 # priority of the direction to shepherd
 export var shepherd_avoid_factor = 5 # priority of the direction to avoid getting to close to the shepherd
+export var poisoned_sheep_avoid_factor = 40 # priority of the direction to avoid getting to close to the shepherd
 export var laziness = 3
 export var wait_time : float = 5
 export var wait_time_randomness : float = 2
@@ -30,6 +31,7 @@ var targeted_grass # the grass patch the sheep is targetting and going to
 var shepherd # the shepherd (if in range)
 var sheep_name : String 
 var is_moving : bool = true
+var is_poisoned : bool = false
 
 func _set_blend_positions(input_vector : Vector2):
 	animation_tree.set("parameters/Idle/blend_position", input_vector)
@@ -77,7 +79,7 @@ func calc_direction_to_avoid_colliding_nearby():
 	var avoid = position
 	for sheep in nearby_sheep:
 		if position.distance_to(sheep.position) <= min_distance_with_nearby:
-			avoid -= position.direction_to(sheep.position)
+			avoid -= position.direction_to(sheep.position) * (1 + (int(sheep.is_poisoned) * poisoned_sheep_avoid_factor))
 	return position.direction_to(avoid) * avoid_factor
 
 
@@ -146,13 +148,14 @@ func _start_moving():
 
 func _explode():
 	_stop_moving()
+	is_poisoned = true
 	animation_state.travel("Explode")
-	yield(get_tree().create_timer(0.5), "timeout")
-	$ExplosionStreamCycler2D.play()
-	yield(get_tree().create_timer(0.5), "timeout")
-	$ExplosionAnimationPlayer.play("Explode")
 	emit_signal("exploded")
-	yield(get_tree().create_timer(4), "timeout")
+	$AnimationEventTimer.start(1)
+	yield($AnimationEventTimer, "timeout")
+	$CollisionShape2D.disabled = true
+	$AnimationEventTimer.start(3)
+	yield($AnimationEventTimer, "timeout")
 	queue_free() # BOOM
 
 func _finish_eating(grass_was_volatile : bool = false):
