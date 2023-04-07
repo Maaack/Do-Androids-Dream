@@ -40,12 +40,16 @@ func reset_world(target_sheep_count : int = 1):
 		add_sheep()
 	reset_day()
 
-func _on_sheep_death(sheep_name : String):
+func get_sheep_instance(sheep_name : String):
 	var matched_sheep : Node2D
 	for sheep_instance in sheep_instances:
 		if sheep_instance.sheep_name == sheep_name:
-			matched_sheep = sheep_instance
-			break
+			return sheep_instance
+
+func _on_sheep_death(sheep_name : String, drop_rate : float = 0.5):
+	var matched_sheep : Node2D = get_sheep_instance(sheep_name)
+	if randf() < drop_rate:
+		add_sheep_part(matched_sheep.position)
 	sheep_instances.erase(matched_sheep)
 	extra_sheep_names.append(sheep_name)
 	current_sheep_names.erase(sheep_name)
@@ -92,9 +96,7 @@ func get_hungry_sheep():
 func starve_hungry_sheep():
 	var hungry_sheep_instances : Array = get_hungry_sheep()
 	for hungry_sheep in hungry_sheep_instances:
-		var sheep_position : Vector2 = hungry_sheep.position
 		hungry_sheep.starve()
-		add_sheep_part(sheep_position)
 
 func _on_sheep_ate_normal_grass(sheep_name : String):
 	emit_signal("sheep_ate_normal_grass", sheep_name)
@@ -103,14 +105,14 @@ func _on_sheep_ate_volatile_grass(sheep_name : String):
 	emit_signal("sheep_ate_volatile_grass", sheep_name)
 
 func _on_sheep_exploded(sheep_name : String):
-	_on_sheep_death(sheep_name)
+	_on_sheep_death(sheep_name, 0.25)
 	emit_signal("sheep_exploded", sheep_name)
 
 func _on_sheep_assembled(sheep_name : String):
 	emit_signal("sheep_assembled", sheep_name)
 
 func _on_sheep_starved(sheep_name : String):
-	_on_sheep_death(sheep_name)
+	_on_sheep_death(sheep_name, 1)
 	emit_signal("sheep_starved", sheep_name)
 
 func _on_Shepherd_parts_assembled():
