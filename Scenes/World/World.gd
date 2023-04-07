@@ -123,3 +123,9 @@ func _on_Shepherd_part_collected():
 
 func _on_WestLandDetectorArea2D_shepherd_entered():
 	emit_signal("shepherd_entered_area", "west_lands")
+
+func _on_FirstCampDetectorArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "first_camp")
+
+func _on_SecondCampDetectorArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "second_camp")
