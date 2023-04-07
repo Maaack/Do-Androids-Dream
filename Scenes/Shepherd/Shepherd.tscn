@@ -363,7 +363,7 @@ animation = "WalkDown"
 animation = "WalkRight"
 
 [sub_resource type="AnimationNodeAnimation" id=19]
-animation = "WalkDown"
+animation = "WalkUp"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id=20]
 blend_point_0/node = SubResource( 16 )
