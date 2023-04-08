@@ -55,6 +55,7 @@ func _on_World_shepherd_entered_area(area_name):
 			if shepherd_entered_final_camp:
 				return
 			shepherd_entered_final_camp = true
+			destination_reached = true
 			InGameMenuController.open_menu(tutorial_final_camp)
 
 func _on_World_sheep_ate_volatile_grass(sheep_name):

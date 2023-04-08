@@ -9,6 +9,7 @@ export(float) var day_length : float = 100
 export(int, 1, 12) var game_days : int = 3
 
 var day_ended : bool = false
+var destination_reached : bool = false
 var current_day : int = 0
 var game_events : Array = []
 var day_events : Array = []
@@ -72,10 +73,13 @@ func show_scoring_screen():
 func hide_scoring_screen():
 	$ScoringScreen.hide()
 
+func game_is_over():
+	return current_day >= game_days or destination_reached
+
 func _on_ScoringScreen_done_pressed():
 	hide_scoring_screen()
 	current_day += 1
-	if current_day >= game_days:
+	if game_is_over():
 		SceneLoader.load_scene("res://Scenes/Credits/EndCredits.tscn")
 	else:
 		_start_day()
