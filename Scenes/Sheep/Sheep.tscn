@@ -1016,6 +1016,7 @@ graph_offset = Vector2( -114.998, 74.7801 )
 [sub_resource type="AnimationNodeStateMachinePlayback" id=20]
 
 [node name="Sheep" type="KinematicBody2D" groups=["sheeps"]]
+collision_layer = 3
 script = ExtResource( 2 )
 walk_speed = 1400
 center_factor = 5
@@ -1046,11 +1047,15 @@ texture = ExtResource( 16 )
 hframes = 6
 
 [node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource( 2 )
 
 [node name="GrassDetectionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrassDetectionArea"]
 shape = SubResource( 74 )
