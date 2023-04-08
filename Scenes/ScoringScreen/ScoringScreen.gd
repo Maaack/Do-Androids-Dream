@@ -115,3 +115,13 @@ func _on_Clock_timeout():
 		return
 	yield(get_tree().create_timer(5), "timeout")
 	_dream_ready(OOPS_STRING)
+
+
+func _input(event):
+	if $AnimationPlayer.is_playing() and (event is InputEventMouseButton or event is InputEventKey):
+		match($AnimationPlayer.current_animation):
+			# Seek 0.01 from the end to still trigger `animation_finished` signals.
+			"ReadEvents":
+				$AnimationPlayer.seek(11 - 0.01)
+			"ShowDream":
+				$AnimationPlayer.seek(16 - 0.01)
