@@ -124,6 +124,7 @@ const ENTITY_NAMES_ARRAY : Array = [
 	"Robot Owl",
 	"Electronic Tree",
 	"Humanoid Robot",
+	"Humanoid Android",
 ]
 
 const MANIFESTATIONS_OF_FEAR_ARRAY : Array = [

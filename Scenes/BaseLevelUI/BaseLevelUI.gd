@@ -30,6 +30,7 @@ func _start_day():
 	day_starting_sheep_count = $"%World".get_sheep_count()
 	$"%Clock".start()
 	$"%World".reset_day()
+	$MuseTimer.start()
 
 func reset_level() -> void:
 	game_events.clear()
