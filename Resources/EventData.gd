@@ -9,7 +9,8 @@ enum EVENT_TYPES{
 	STARVE,
 	BUILD,
 	MUSE,
-	DREAM
+	DREAM,
+	ENTER_AREA,
 }
 
 export(EVENT_TYPES) var event_type : int = EVENT_TYPES.NONE

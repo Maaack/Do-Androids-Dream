@@ -72,6 +72,9 @@ func add_build_sheep_event(sheep_name):
 func add_sheep_starved_event(sheep_name):
 	add_event(EventData.EVENT_TYPES.STARVE, sheep_name)
 
+func add_shephered_entered_area_event(area_name):
+	add_event(EventData.EVENT_TYPES.ENTER_AREA, area_name)
+
 func show_scoring_screen():
 	$BackgroundMusic.stop()
 	$DreamMusic.play()

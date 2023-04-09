@@ -6,13 +6,15 @@ const EXPLODED_MESSAGE = "The robot sheep %s grazed on volatile grass and experi
 const STARVE_MESSAGE = "The robot sheep %s didn't get enough grass, and broke down in the night.\n"
 const BUILD_MESSAGE = "The shepherd assembled new robot sheep and welcomed %s into the world.\n"
 const MUSE_MESSAGE = "The shepherd mused, \"%s\".\n"
+const ENTER_AREA_MESSAGE = "The shepherd entered %s.\n"
 
 const CONCATENATE_CONTENT_EVENTS : Array = [
 	EventData.EVENT_TYPES.EAT_NORMAL_GRASS,
 	EventData.EVENT_TYPES.EAT_VOLATILE_GRASS,
 	EventData.EVENT_TYPES.EXPLODE,
 	EventData.EVENT_TYPES.STARVE,
-	EventData.EVENT_TYPES.BUILD
+	EventData.EVENT_TYPES.BUILD,
+	EventData.EVENT_TYPES.ENTER_AREA,
 ]
 
 func _get_concatenated_string(subjects : Array) -> String:
@@ -46,6 +48,8 @@ func _get_sentence_for_event_type(event_type : int, contents : Array):
 			return BUILD_MESSAGE % content_part
 		EventData.EVENT_TYPES.MUSE:
 			return MUSE_MESSAGE % content_part
+		EventData.EVENT_TYPES.ENTER_AREA:
+			return ENTER_AREA_MESSAGE % content_part
 	return ""
 
 func get_event_sentences(events_array : Array) -> String:

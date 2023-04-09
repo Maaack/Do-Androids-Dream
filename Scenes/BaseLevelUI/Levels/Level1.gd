@@ -14,6 +14,15 @@ var tutorial_well_fed = preload("res://Scenes/TutorialScreen/Tutorials/Level1Tut
 
 var oneshots_completed : Array = []
 var sheep_exploded_count : int = 0
+var area_names_map : Dictionary = {
+	"crossroads" : "The Crossroads",
+	"alpha_pasture" : "Alpha Pasture",
+	"beta_pasture" : "Beta Pasture",
+	"delta_pasture" : "Delta Pasture",
+	"barren_limit" : "The Barren Limit",
+	"volatile_pastures" : "Volatile Pastures",
+	"winding_circuit" : "The Winding Circuit",
+}
 
 func play_tutorial_1():
 	InGameMenuController.open_menu(tutorial_1)
@@ -38,7 +47,20 @@ func _on_World_sheep_part_collected():
 	complete_oneshot("sheep_part_collected")
 	InGameMenuController.open_menu(tutorial_sheep_part)
 
+func _enter_area_event(area_name : String) -> bool:
+	if not area_names_map.has(area_name):
+		return false
+	if is_oneshot_completed(area_name):
+		return false
+	complete_oneshot(area_name)
+	var area_readable_name : String = area_names_map[area_name]
+	show_entering_area(area_readable_name)
+	add_shephered_entered_area_event(area_readable_name)
+	return true
+
 func _on_World_shepherd_entered_area(area_name):
+	if _enter_area_event(area_name):
+		return
 	match area_name:
 		"west_lands":
 			if is_oneshot_completed("west_lands"):
@@ -66,41 +88,6 @@ func _on_World_shepherd_entered_area(area_name):
 				return
 			complete_oneshot("well_fed_hint")
 			InGameMenuController.open_menu(tutorial_well_fed)
-		"crossroads":
-			if is_oneshot_completed("crossroads"):
-				return
-			complete_oneshot("crossroads")
-			show_entering_area("The Crossroads")
-		"alpha_pasture":
-			if is_oneshot_completed("alpha_pasture"):
-				return
-			complete_oneshot("alpha_pasture")
-			show_entering_area("Alpha Pasture")
-		"beta_pasture":
-			if is_oneshot_completed("beta_pasture"):
-				return
-			complete_oneshot("beta_pasture")
-			show_entering_area("Beta Pasture")
-		"delta_pasture":
-			if is_oneshot_completed("delta_pasture"):
-				return
-			complete_oneshot("delta_pasture")
-			show_entering_area("Delta Pasture")
-		"barren_limit":
-			if is_oneshot_completed("barren_limit"):
-				return
-			complete_oneshot("barren_limit")
-			show_entering_area("Barren Limit")
-		"volatile_pastures":
-			if is_oneshot_completed("volatile_pastures"):
-				return
-			complete_oneshot("volatile_pastures")
-			show_entering_area("Volatile Pastures")
-		"winding_circuit":
-			if is_oneshot_completed("winding_circuit"):
-				return
-			complete_oneshot("winding_circuit")
-			show_entering_area("Winding Circuit")
 
 func _on_World_sheep_ate_volatile_grass(sheep_name):
 	if is_oneshot_completed("sheep_poisoned"):
