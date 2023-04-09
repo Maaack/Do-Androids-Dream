@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=2]
+[gd_scene load_steps=95 format=2]
 
 [ext_resource path="res://Assets/Original/Sprites/sheep_compiled.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Sheep/Sheep.gd" type="Script" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://Assets/Original/SFX/SFX_SheepAssembling.ogg" type="AudioStream" id=15]
 [ext_resource path="res://Assets/Original/Sprites/explosion.png" type="Texture" id=16]
 [ext_resource path="res://Assets/Original/Sprites/hunger_meter.png" type="Texture" id=17]
+[ext_resource path="res://Themes/SheepNameFont16px.tres" type="DynamicFont" id=18]
 
 [sub_resource type="CapsuleShape2D" id=73]
 radius = 6.0
@@ -851,19 +852,35 @@ tracks/1/keys = {
 resource_name = "FadeInNOut"
 length = 3.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("HungerMeter:visible")
+tracks/0/path = NodePath("HungerMeter:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 3.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, false ]
+"times": PoolRealArray( 0, 0.2, 3, 3.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=77]
+resource_name = "FadeInNOutWithName"
+length = 3.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("HungerMeter:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 3, 3.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("HungerMeter:modulate")
+tracks/1/path = NodePath("NameLabel:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -878,7 +895,7 @@ tracks/1/keys = {
 [sub_resource type="Animation" id=76]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("HungerMeter:visible")
+tracks/0/path = NodePath("HungerMeter:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -887,10 +904,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ false ]
+"values": [ Color( 1, 1, 1, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("HungerMeter:modulate")
+tracks/1/path = NodePath("NameLabel:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -1152,8 +1169,19 @@ bus = "SFX"
 stream = SubResource( 4 )
 bus = "SFX"
 
+[node name="NameLabel" type="Label" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -52.0
+margin_top = -38.0
+margin_right = 52.0
+margin_bottom = -22.0
+custom_fonts/font = ExtResource( 18 )
+text = "Amy Stewart"
+align = 1
+
 [node name="HungerMeter" type="Node2D" parent="."]
-visible = false
 modulate = Color( 1, 1, 1, 0 )
 position = Vector2( 0, -14 )
 
@@ -1197,6 +1225,7 @@ anims/WalkUp = SubResource( 11 )
 
 [node name="HungerMeterAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/FadeInNOut = SubResource( 75 )
+anims/FadeInNOutWithName = SubResource( 77 )
 anims/RESET = SubResource( 76 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]

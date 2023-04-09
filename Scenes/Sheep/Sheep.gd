@@ -30,7 +30,7 @@ var nearby_sheep = [] # list of sheeps which are in the detection area
 var nearby_grass = [] # list of grass patches which are in the detection area
 var targeted_grass # the grass patch the sheep is targetting and going to
 var shepherd # the shepherd (if in range)
-var sheep_name : String 
+export(String) var sheep_name : String setget set_sheep_name
 var is_moving : bool = true
 var is_poisoned : bool = false
 
@@ -64,6 +64,10 @@ func _physics_process(delta):
 
 func is_hungry() -> bool:
 	return hunger > 0
+
+func set_sheep_name(new_value : String):
+	sheep_name = new_value
+	$NameLabel.text = sheep_name
 
 # will return a vector for the sheep to go to the center of mass of the group of nearby sheeps - Boids rules #1
 func calc_direction_to_center_of_mass_nearby():
@@ -159,10 +163,13 @@ func _explode():
 	yield($AnimationEventTimer, "timeout")
 	queue_free() # BOOM
 
-func show_hunger_meter():
+func show_hunger_meter(show_name : bool = false):
 	if not hunger_meter_visible:
 		return
-	$HungerMeterAnimationPlayer.play("FadeInNOut")
+	if show_name:
+		$HungerMeterAnimationPlayer.play("FadeInNOutWithName")
+	else:
+		$HungerMeterAnimationPlayer.play("FadeInNOut")
 
 func _update_hunger(delta : int = 0) -> void:
 	hunger += delta
@@ -249,4 +256,4 @@ func _ready():
 	reset_hunger()
 
 func _on_Sheep_mouse_entered():
-	show_hunger_meter()
+	show_hunger_meter(true)
