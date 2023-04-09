@@ -19,7 +19,7 @@ var magnet_factor = 1 # this factor will be multiplied in the sheep logic to dec
 var parts_collected = 0
 
 func _unhandled_input(event):
-	if event.is_action_released("interact"):
+	if event.is_action_pressed("interact"):
 		if magnet_flag:
 			magnet_factor = MAGNET_OFF
 			$MagnetSprite.hide()
