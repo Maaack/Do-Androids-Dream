@@ -16,7 +16,7 @@ margin_bottom = 167.0
 
 [node name="TutorialText" parent="Control/NinePatchRect/MarginContainer/PanelContainer" index="0"]
 margin_bottom = 111.0
-text = "Press spacebar (or hold left mouse button) to active the magnet.
+text = "Press spacebar (or the left mouse button) to toggle the magnet.
  
 
 
