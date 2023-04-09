@@ -63,6 +63,7 @@ const GOOD_DREAM_WORDS : Array = [
 	"victorious",
 	"victory",
 	"wonder",
+	"wonderous",
 ]
 
 const BAD_DREAM_WORDS : Array = [

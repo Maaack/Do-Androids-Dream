@@ -1073,6 +1073,7 @@ graph_offset = Vector2( -114.998, 74.7801 )
 
 [node name="Sheep" type="KinematicBody2D" groups=["sheeps"]]
 collision_layer = 3
+input_pickable = true
 script = ExtResource( 2 )
 walk_speed = 1400
 center_factor = 5
@@ -1209,6 +1210,7 @@ parameters/Idle/blend_position = Vector2( 0, 0 )
 parameters/Run/blend_position = Vector2( 0, 0 )
 parameters/Walk/blend_position = Vector2( 0, 0 )
 
+[connection signal="mouse_entered" from="." to="." method="_on_Sheep_mouse_entered"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]
 [connection signal="area_entered" from="GrassDetectionArea" to="." method="_on_GrassDetectionArea_area_entered"]

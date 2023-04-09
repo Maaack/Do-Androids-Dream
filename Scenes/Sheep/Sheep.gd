@@ -243,6 +243,10 @@ func _on_UpdateMovementTimer_timeout():
 
 func reset_hunger():
 	hunger = daily_food_required
+	_update_hunger()
 
 func _ready():
 	reset_hunger()
+
+func _on_Sheep_mouse_entered():
+	show_hunger_meter()
