@@ -78,6 +78,8 @@ func show_scoring_screen():
 	$ScoringScreen.start_dream_request(day_starting_sheep_count, $"%World".get_sheep_count(), day_events)
 
 func hide_scoring_screen():
+	$BackgroundMusic.play()
+	$DreamMusic.stop()
 	$ScoringScreen.hide()
 
 func game_is_over():
