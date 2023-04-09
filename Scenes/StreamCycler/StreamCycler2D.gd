@@ -48,9 +48,10 @@ func _play_loop(skip_first : bool = false):
 			skipped_first = true
 		else:
 			play_stream()
-		var wait_time = repeat_delay + rand_range(-repeat_delay_randomness, repeat_delay_randomness)
 		_is_waiting = true
-		yield(get_tree().create_timer(wait_time), "timeout")
+		var wait_time = repeat_delay + rand_range(-repeat_delay_randomness, repeat_delay_randomness)
+		$Timer.start(wait_time)
+		yield($Timer, "timeout")
 		_is_waiting = false
 		if not repeats:
 			return

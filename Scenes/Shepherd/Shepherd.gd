@@ -12,21 +12,23 @@ onready var animation_state = animation_tree.get("parameters/playback")
 export var acceleration = 600
 export var max_speed = 125
 export var friction = 600
-export(Color) var magnetized_color : Color = Color.white
 
 var velocity = Vector2.ZERO
+var magnet_flag : bool = false
 var magnet_factor = 1 # this factor will be multiplied in the sheep logic to decide if it should prioritize to follow the shepherd
 var parts_collected = 0
 
 func _unhandled_input(event):
 	if event.is_action_pressed("interact"):
-		magnet_factor = MAGNET_ON
-		$Sprite.modulate = magnetized_color
-		$MagnetStreamCycler2D.play()
-	elif event.is_action_released("interact"):
-		magnet_factor = MAGNET_OFF
-		$Sprite.modulate = Color.white
-		$MagnetStreamCycler2D.stop()
+		if magnet_flag:
+			magnet_factor = MAGNET_OFF
+			$MagnetSprite.hide()
+			$MagnetStreamCycler2D.stop()
+		else:
+			magnet_factor = MAGNET_ON
+			$MagnetSprite.show()
+			$MagnetStreamCycler2D.play()
+		magnet_flag = !(magnet_flag)
 
 func move_state(delta):
 	var input_vector = Vector2.ZERO

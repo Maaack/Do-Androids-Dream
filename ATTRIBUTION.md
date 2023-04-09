@@ -15,7 +15,10 @@ Michael Estie
 Mike
 
 ### Dream Text
-ChatGPT 3.5 Turbo  
+GPT 3.5 Turbo  
+
+### Musing Text
+GPT 4  
 
 ## Sourced / Unaffiliated
 ### Font

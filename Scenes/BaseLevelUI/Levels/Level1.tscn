@@ -5,7 +5,7 @@
 
 [sub_resource type="Animation" id=1]
 resource_name = "Intro"
-length = 6.0
+length = 7.0
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
 tracks/0/interp = 1
@@ -13,7 +13,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.4, 3.6, 6 ),
+"times": PoolRealArray( 3.5, 4.5, 7 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
 "args": [  ],
@@ -30,10 +30,12 @@ tracks/0/keys = {
 [node name="Level1" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 starting_sheep_count = 16
+game_days = 5
+musing_start_day = 1
 
 [node name="World" parent="ViewportContainer/Viewport" index="0"]
 spawn_range = 100.0
-spawn_offset = Vector2( -200, 0 )
+spawn_offset = Vector2( -180, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6"]
 pause_mode = 1
@@ -41,3 +43,4 @@ autoplay = "Intro"
 anims/Intro = SubResource( 1 )
 
 [connection signal="sheep_part_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_part_collected"]
+[connection signal="shepherd_entered_area" from="ViewportContainer/Viewport/World" to="." method="_on_World_shepherd_entered_area"]

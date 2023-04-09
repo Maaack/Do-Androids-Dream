@@ -1,6 +1,25 @@
-[gd_resource type="Theme" load_steps=2 format=2]
+[gd_resource type="Theme" load_steps=10 format=2]
 
 [ext_resource path="res://Themes/GameFont16px.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Themes/ProgressBarBgStyleBox.tres" type="StyleBox" id=2]
+[ext_resource path="res://Themes/ProgressBarFgStyleBox.tres" type="StyleBox" id=3]
+[ext_resource path="res://Themes/ButtonPressedStyleBox.tres" type="StyleBox" id=4]
+[ext_resource path="res://Themes/ButtonNormalStyleBox.tres" type="StyleBox" id=5]
+[ext_resource path="res://Themes/ButtonHoverStyleBox.tres" type="StyleBox" id=6]
+[ext_resource path="res://Themes/PanelStyleBox.tres" type="StyleBox" id=7]
+[ext_resource path="res://Themes/TabBgStyleBox.tres" type="StyleBox" id=8]
+[ext_resource path="res://Themes/TabFgStyleBox.tres" type="StyleBox" id=9]
 
 [resource]
 default_font = ExtResource( 1 )
+Button/styles/disabled = ExtResource( 4 )
+Button/styles/hover = ExtResource( 6 )
+Button/styles/normal = ExtResource( 5 )
+Button/styles/pressed = ExtResource( 4 )
+Panel/styles/panel = ExtResource( 7 )
+ProgressBar/styles/bg = ExtResource( 2 )
+ProgressBar/styles/fg = ExtResource( 3 )
+TabContainer/styles/panel = ExtResource( 7 )
+TabContainer/styles/tab_bg = ExtResource( 8 )
+TabContainer/styles/tab_disabled = ExtResource( 8 )
+TabContainer/styles/tab_fg = ExtResource( 9 )
