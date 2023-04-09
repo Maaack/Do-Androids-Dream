@@ -7,6 +7,7 @@ const MAX_SHEEP_COUNT : int = 20
 export(int) var starting_sheep_count : int = 6
 export(float) var day_length : float = 100
 export(int, 1, 12) var game_days : int = 3
+export(int, 0, 12) var musing_start_day : int = 0
 
 var day_ended : bool = false
 var destination_reached : bool = false
@@ -35,7 +36,8 @@ func _start_day():
 	$"%Clock".start()
 	$"%World".reset_day()
 	$"%DaysLeftLabel".text = "Days Left: %d" % _get_days_left()
-	$MuseTimer.start()
+	if current_day >= musing_start_day:
+		$MuseTimer.start()
 
 func reset_level() -> void:
 	game_events.clear()

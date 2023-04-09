@@ -31,6 +31,7 @@ tracks/0/keys = {
 script = ExtResource( 2 )
 starting_sheep_count = 16
 game_days = 5
+musing_start_day = 1
 
 [node name="World" parent="ViewportContainer/Viewport" index="0"]
 spawn_range = 100.0

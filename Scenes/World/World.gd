@@ -51,7 +51,7 @@ func _on_sheep_death(sheep_name : String, drop_rate : float = 0.5):
 	if randf() < drop_rate:
 		add_sheep_part(matched_sheep.position)
 	sheep_instances.erase(matched_sheep)
-	extra_sheep_names.append(sheep_name)
+	extra_sheep_names.push_front(sheep_name)
 	current_sheep_names.erase(sheep_name)
 
 func _get_random_sheep_position():
