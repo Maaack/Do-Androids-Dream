@@ -11,6 +11,7 @@ func _add_sheep():
 	var sheep_instance = sheep_scene.instance()
 	var spawn_range_vector = Vector2(rand_range(-spawn_range,spawn_range),rand_range(-spawn_range,spawn_range))
 	sheep_instance.position = camera_node.position + spawn_range_vector + spawn_offset
+	sheep_instance.hunger_meter_visible = false
 	add_child(sheep_instance)
 
 func _on_SheepTimer_timeout():

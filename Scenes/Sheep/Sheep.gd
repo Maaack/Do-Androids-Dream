@@ -22,6 +22,7 @@ export var laziness = 3
 export var wait_time : float = 5
 export var wait_time_randomness : float = 2
 export(int) var daily_food_required : int = 2
+export(bool) var hunger_meter_visible : bool = true
 var hunger = 0 # number of grass patches the sheep need to eat -> 0 means it's full and does not need to eat anymore
 var direction = Vector2.ZERO # direction to move to
 var velocity = Vector2.ZERO
@@ -158,10 +159,20 @@ func _explode():
 	yield($AnimationEventTimer, "timeout")
 	queue_free() # BOOM
 
+func show_hunger_meter():
+	if not hunger_meter_visible:
+		return
+	$HungerMeterAnimationPlayer.play("FadeInNOut")
+
+func _update_hunger(delta : int = 0) -> void:
+	hunger += delta
+	$HungerMeter/MeterSprite1.frame = int(hunger < 2)
+	$HungerMeter/MeterSprite2.frame = int(hunger < 1)
+
 func _finish_eating(grass_was_volatile : bool = false):
 	targeted_grass.queue_free()
 	targeted_grass = null
-	hunger -= 1
+	_update_hunger(-1)
 	if grass_was_volatile:
 		emit_signal("volatile_grass_eaten")
 		_explode()
@@ -179,7 +190,11 @@ func eat_grass():
 	_stop_moving()
 	_eat_animation()
 	# wait a certain amount of time
-	yield(get_tree().create_timer(2), "timeout")
+	$AnimationEventTimer.start(0.5)
+	yield($AnimationEventTimer, "timeout")
+	show_hunger_meter()
+	$AnimationEventTimer.start(1.5)
+	yield($AnimationEventTimer, "timeout")
 	_start_moving()
 	_finish_eating(grass_was_volatile)
 
@@ -225,7 +240,6 @@ func _update_direction():
 func _on_UpdateMovementTimer_timeout():
 	_update_direction()
 	$UpdateMovementTimer.wait_time = wait_time + rand_range(-wait_time_randomness, wait_time_randomness)
-
 
 func reset_hunger():
 	hunger = daily_food_required
