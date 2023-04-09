@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://Scenes/World/SheepPartsTilemap.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Shepherd/Shepherd.tscn" type="PackedScene" id=2]
@@ -580,6 +580,9 @@ extents = Vector2( 50, 120 )
 [sub_resource type="RectangleShape2D" id=60]
 extents = Vector2( 50, 250 )
 
+[sub_resource type="RectangleShape2D" id=64]
+extents = Vector2( 20, 80 )
+
 [sub_resource type="RectangleShape2D" id=63]
 extents = Vector2( 50, 500 )
 
@@ -626,14 +629,14 @@ script = ExtResource( 1 )
 position = Vector2( -888, 402 )
 
 [node name="Shepherd" parent="YSort" instance=ExtResource( 2 )]
-position = Vector2( 2550, 305 )
+position = Vector2( -888, 402 )
 max_speed = 70
 
 [node name="DayNightCycle" type="CanvasModulate" parent="."]
 unique_name_in_owner = true
 script = ExtResource( 9 )
 time_scale = 1.5
-target_color = Color( 0.470588, 0.568627, 0.698039, 1 )
+target_color = Color( 0.4, 0.509804, 0.647059, 1 )
 
 [node name="WestLandDetectorArea2D" parent="." instance=ExtResource( 10 )]
 position = Vector2( -1418, 416 )
@@ -647,6 +650,10 @@ collider_shape = SubResource( 62 )
 position = Vector2( 2622, 344 )
 collider_shape = SubResource( 60 )
 
+[node name="WellFedHintDetectorArea2D" parent="." instance=ExtResource( 10 )]
+position = Vector2( 2887, 344 )
+collider_shape = SubResource( 64 )
+
 [node name="FinalCampDetectorArea2D" parent="." instance=ExtResource( 10 )]
 position = Vector2( 5714, 355 )
 collider_shape = SubResource( 63 )
@@ -656,4 +663,5 @@ collider_shape = SubResource( 63 )
 [connection signal="shepherd_entered" from="WestLandDetectorArea2D" to="." method="_on_WestLandDetectorArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="FirstCampDetectorArea2D" to="." method="_on_FirstCampDetectorArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="SecondCampDetectorArea2D" to="." method="_on_SecondCampDetectorArea2D_shepherd_entered"]
+[connection signal="shepherd_entered" from="WellFedHintDetectorArea2D" to="." method="_on_WellFedHintDetectorArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="FinalCampDetectorArea2D" to="." method="_on_FinalCampDetectorArea2D_shepherd_entered"]
