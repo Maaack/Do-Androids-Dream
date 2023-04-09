@@ -19,7 +19,7 @@ margin_bottom = 92.0
 text = "A change of seasons brought volatile grass to the west lands.
 
 
-It's time to leave and head east."
+It's time to head east."
 
 [node name="TextureRect" type="TextureRect" parent="Control/NinePatchRect/MarginContainer/PanelContainer/TutorialText" index="0"]
 anchor_left = 0.5

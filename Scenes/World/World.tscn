@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=2]
+[gd_scene load_steps=70 format=2]
 
 [ext_resource path="res://Scenes/World/SheepPartsTilemap.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Shepherd/Shepherd.tscn" type="PackedScene" id=2]
@@ -574,6 +574,9 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 [sub_resource type="RectangleShape2D" id=61]
 extents = Vector2( 50, 100 )
 
+[sub_resource type="RectangleShape2D" id=65]
+extents = Vector2( 100, 20 )
+
 [sub_resource type="RectangleShape2D" id=62]
 extents = Vector2( 50, 120 )
 
@@ -642,6 +645,10 @@ target_color = Color( 0.4, 0.509804, 0.647059, 1 )
 position = Vector2( -1418, 416 )
 collider_shape = SubResource( 61 )
 
+[node name="WestLandDetectorArea2D2" parent="." instance=ExtResource( 10 )]
+position = Vector2( -114, 248 )
+collider_shape = SubResource( 65 )
+
 [node name="FirstCampDetectorArea2D" parent="." instance=ExtResource( 10 )]
 position = Vector2( 452, 386 )
 collider_shape = SubResource( 62 )
@@ -661,6 +668,7 @@ collider_shape = SubResource( 63 )
 [connection signal="part_collected" from="YSort/Shepherd" to="." method="_on_Shepherd_part_collected"]
 [connection signal="parts_assembled" from="YSort/Shepherd" to="." method="_on_Shepherd_parts_assembled"]
 [connection signal="shepherd_entered" from="WestLandDetectorArea2D" to="." method="_on_WestLandDetectorArea2D_shepherd_entered"]
+[connection signal="shepherd_entered" from="WestLandDetectorArea2D2" to="." method="_on_WestLandDetectorArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="FirstCampDetectorArea2D" to="." method="_on_FirstCampDetectorArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="SecondCampDetectorArea2D" to="." method="_on_SecondCampDetectorArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="WellFedHintDetectorArea2D" to="." method="_on_WellFedHintDetectorArea2D_shepherd_entered"]
