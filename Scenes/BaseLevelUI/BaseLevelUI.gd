@@ -87,6 +87,14 @@ func hide_scoring_screen():
 func game_is_over():
 	return current_day >= game_days or destination_reached
 
+func show_musing(musing_text : String = ""):
+	$"%BottomLabel".text = musing_text
+	$BottomPanelAnimationPlayer.play("Muse")
+
+func show_entering_area(area_name : String = ""):
+	$"%AreaNameLabel".text = area_name
+	$AreaNameAnimationPlayer.play("FadeInNOut")
+
 func _on_ScoringScreen_done_pressed():
 	hide_scoring_screen()
 	if game_is_over():
@@ -127,5 +135,4 @@ func _on_MuseTimer_timeout():
 
 func _on_MuseClient_musing_shared(musing_text):
 	add_event(EventData.EVENT_TYPES.MUSE, musing_text)
-	$"%BottomLabel".text = musing_text
-	$BottomPanelAnimationPlayer.play("Muse")
+	show_musing(musing_text)
