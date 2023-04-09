@@ -18,7 +18,7 @@ margin_bottom = 111.0
 text = "There's green pastures this way... 
 
 
-Go forth!"
+Try to get there in 5 days."
 
 [node name="ResumeButton" parent="Control/NinePatchRect/MarginContainer/PanelContainer" index="1"]
 margin_top = 119.0

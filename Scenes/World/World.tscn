@@ -575,7 +575,7 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 extents = Vector2( 50, 100 )
 
 [sub_resource type="RectangleShape2D" id=62]
-extents = Vector2( 50, 100 )
+extents = Vector2( 50, 120 )
 
 [sub_resource type="RectangleShape2D" id=60]
 extents = Vector2( 50, 250 )
@@ -626,7 +626,7 @@ script = ExtResource( 1 )
 position = Vector2( -888, 402 )
 
 [node name="Shepherd" parent="YSort" instance=ExtResource( 2 )]
-position = Vector2( -888, 402 )
+position = Vector2( 2550, 305 )
 max_speed = 70
 
 [node name="DayNightCycle" type="CanvasModulate" parent="."]
@@ -644,11 +644,11 @@ position = Vector2( 452, 386 )
 collider_shape = SubResource( 62 )
 
 [node name="SecondCampDetectorArea2D" parent="." instance=ExtResource( 10 )]
-position = Vector2( 2678, 356 )
+position = Vector2( 2622, 344 )
 collider_shape = SubResource( 60 )
 
 [node name="FinalCampDetectorArea2D" parent="." instance=ExtResource( 10 )]
-position = Vector2( 5741, 355 )
+position = Vector2( 5714, 355 )
 collider_shape = SubResource( 63 )
 
 [connection signal="part_collected" from="YSort/Shepherd" to="." method="_on_Shepherd_part_collected"]
