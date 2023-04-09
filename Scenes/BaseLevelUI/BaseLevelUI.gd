@@ -23,6 +23,9 @@ func _end_day():
 	$"%World".starve_hungry_sheep()
 	show_scoring_screen()
 
+func _get_days_left():
+	return game_days - current_day
+
 func _start_day():
 	day_events.clear()
 	get_tree().paused = false
@@ -30,6 +33,7 @@ func _start_day():
 	day_starting_sheep_count = $"%World".get_sheep_count()
 	$"%Clock".start()
 	$"%World".reset_day()
+	$"%DaysLeftLabel".text = "Days Left: %d" % _get_days_left()
 	$MuseTimer.start()
 
 func reset_level() -> void:

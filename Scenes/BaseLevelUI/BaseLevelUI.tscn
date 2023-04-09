@@ -98,16 +98,16 @@ unique_name_in_owner = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-custom_constants/margin_right = 32
-custom_constants/margin_top = 32
-custom_constants/margin_left = 32
-custom_constants/margin_bottom = 32
+custom_constants/margin_right = 8
+custom_constants/margin_top = 8
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = 8
 
 [node name="Control" type="Control" parent="MarginContainer"]
-margin_left = 32.0
-margin_top = 32.0
-margin_right = 992.0
-margin_bottom = 568.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 1016.0
+margin_bottom = 592.0
 mouse_filter = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/Control"]
@@ -115,36 +115,48 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -65.0
-margin_top = -99.0
+margin_left = -97.0
+margin_top = -135.0
 custom_constants/separation = 16
 
-[node name="Clock" parent="MarginContainer/Control/VBoxContainer2" instance=ExtResource( 7 )]
+[node name="DaysLeftLabel" type="Label" parent="MarginContainer/Control/VBoxContainer2"]
+unique_name_in_owner = true
+margin_right = 97.0
+margin_bottom = 16.0
+text = "Days Left: 3"
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/Control/VBoxContainer2"]
+margin_top = 32.0
+margin_right = 97.0
+margin_bottom = 97.0
+
+[node name="Clock" parent="MarginContainer/Control/VBoxContainer2/CenterContainer" instance=ExtResource( 7 )]
 pause_mode = 1
 unique_name_in_owner = true
-margin_right = 71.0
+margin_left = 16.0
+margin_right = 81.0
 margin_bottom = 65.0
-rect_min_size = Vector2( 0, 65 )
+rect_min_size = Vector2( 65, 65 )
 wait_time = 100.0
 
 [node name="EndDayButton" type="Button" parent="MarginContainer/Control/VBoxContainer2"]
-margin_top = 81.0
-margin_right = 71.0
-margin_bottom = 103.0
+margin_top = 113.0
+margin_right = 97.0
+margin_bottom = 135.0
 text = "End Day"
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-custom_constants/margin_right = 100
-custom_constants/margin_left = 100
+custom_constants/margin_right = 112
+custom_constants/margin_left = 112
 
 [node name="BottomPanelContainer" type="PanelContainer" parent="MarginContainer2"]
 modulate = Color( 1, 1, 1, 0 )
-margin_left = 100.0
+margin_left = 112.0
 margin_top = 532.0
-margin_right = 924.0
+margin_right = 912.0
 margin_bottom = 600.0
 mouse_filter = 2
 size_flags_vertical = 12
@@ -152,7 +164,7 @@ size_flags_vertical = 12
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/BottomPanelContainer"]
 margin_left = 2.0
 margin_top = 2.0
-margin_right = 822.0
+margin_right = 798.0
 margin_bottom = 66.0
 mouse_filter = 2
 custom_constants/margin_right = 16
@@ -164,7 +176,7 @@ custom_constants/margin_bottom = 16
 unique_name_in_owner = true
 margin_left = 16.0
 margin_top = 16.0
-margin_right = 804.0
+margin_right = 780.0
 margin_bottom = 48.0
 grow_vertical = 0
 custom_fonts/font = ExtResource( 10 )
@@ -208,7 +220,7 @@ anims/RESET = SubResource( 2 )
 [connection signal="sheep_ate_volatile_grass" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_ate_volatile_grass"]
 [connection signal="sheep_exploded" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_exploded"]
 [connection signal="sheep_starved" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_starved"]
-[connection signal="timeout" from="MarginContainer/Control/VBoxContainer2/Clock" to="." method="_on_Clock_timeout"]
+[connection signal="timeout" from="MarginContainer/Control/VBoxContainer2/CenterContainer/Clock" to="." method="_on_Clock_timeout"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer2/EndDayButton" to="." method="_on_EndDayButton_pressed"]
 [connection signal="done_pressed" from="ScoringScreen" to="." method="_on_ScoringScreen_done_pressed"]
 [connection signal="restart_pressed" from="ScoringScreen" to="." method="_on_ScoringScreen_restart_pressed"]
