@@ -663,7 +663,7 @@ margin_right = 540.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 120, 40 )
 disabled = true
-text = "Next"
+text = "Recall Dream"
 
 [node name="DreamContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer"]
 visible = false
@@ -837,6 +837,7 @@ custom_constants/separation = 16
 alignment = 1
 
 [node name="RestartButton" parent="MarginContainer/Panel/MarginContainer/DreamContainer/HBoxContainer2" instance=ExtResource( 6 )]
+visible = false
 margin_left = 352.0
 margin_right = 472.0
 margin_bottom = 40.0
@@ -845,12 +846,13 @@ disabled = true
 text = "Restart"
 
 [node name="DoneButton" parent="MarginContainer/Panel/MarginContainer/DreamContainer/HBoxContainer2" instance=ExtResource( 6 )]
+unique_name_in_owner = true
 margin_left = 488.0
 margin_right = 608.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 120, 40 )
 disabled = true
-text = "Done"
+text = "Start Day"
 
 [node name="SentenceBuilder" parent="." instance=ExtResource( 2 )]
 

@@ -73,6 +73,7 @@ anchor_bottom = 1.0
 mouse_filter = 2
 theme = ExtResource( 8 )
 script = ExtResource( 1 )
+day_length = 120.0
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
@@ -142,7 +143,7 @@ wait_time = 100.0
 [node name="EndDayButton" type="Button" parent="MarginContainer/Control/VBoxContainer2"]
 margin_top = 113.0
 margin_right = 97.0
-margin_bottom = 135.0
+margin_bottom = 133.0
 text = "End Day"
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]

@@ -19,6 +19,7 @@ func _end_day():
 	if day_ended:
 		return
 	day_ended = true
+	current_day += 1
 	get_tree().paused = true
 	$"%World".starve_hungry_sheep()
 	show_scoring_screen()
@@ -73,6 +74,7 @@ func show_scoring_screen():
 	$BackgroundMusic.stop()
 	$DreamMusic.play()
 	$ScoringScreen.show()
+	$ScoringScreen.last_dream_flag = game_is_over()
 	$ScoringScreen.start_dream_request(day_starting_sheep_count, $"%World".get_sheep_count(), day_events)
 
 func hide_scoring_screen():
@@ -83,7 +85,6 @@ func game_is_over():
 
 func _on_ScoringScreen_done_pressed():
 	hide_scoring_screen()
-	current_day += 1
 	if game_is_over():
 		SceneLoader.load_scene("res://Scenes/Credits/EndCredits.tscn")
 	else:

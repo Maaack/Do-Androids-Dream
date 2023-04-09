@@ -8,11 +8,15 @@ signal shepherd_dreamed(dream_text)
 const REVEAL_PERCENT_PER_SECOND = 0.30
 const DAY_EVENTS_STRING = "The android shepherd ventured out in the morning with its flock of %d sheep to graze on the electric pastures. While tending the flock...\n\n" \
 	+ "%s\n" \
+	+ "At the end of the day, the android shepherd made camp with %d robot sheep."
+const LAST_DAY_EVENTS_STRING = "The android shepherd ventured out in the morning with its flock of %d sheep to graze on the electric pastures. While tending the flock...\n\n" \
+	+ "%s\n" \
 	+ "At the end of the day, the android shepherd safely returned home with %d robot sheep."
 const OOPS_STRING = "Oops... Something went wrong. We didn't get a response from the android shepherd (ChatGPT API) for way too long. Must be dead."
 
 var showing_clock : bool = false
 var dream_returned : bool = false
+var last_dream_flag : bool = false
 
 func _request_dream(starting_sheep_count : int, ending_sheep_count : int, events_string : String):
 	$AnimationPlayer.play("RESET")
@@ -33,9 +37,16 @@ func _hide_clock():
 	$ClockAnimationPlayer.play("HideClock")
 	showing_clock = false
 
+func _get_day_events_string():
+	if last_dream_flag:
+		return LAST_DAY_EVENTS_STRING
+	return DAY_EVENTS_STRING
+
+func _get_filled_day_events_string(starting_sheep_count : int, ending_sheep_count : int, events_string : String):
+	return _get_day_events_string() % [starting_sheep_count, events_string, ending_sheep_count]
+
 func _read_events(starting_sheep_count : int, ending_sheep_count : int, events_string : String):
-	var full_string = DAY_EVENTS_STRING % [starting_sheep_count, events_string, ending_sheep_count]
-	$"%DayEventsTextLabel".text = full_string
+	$"%DayEventsTextLabel".text = _get_filled_day_events_string(starting_sheep_count, ending_sheep_count, events_string)
 	$AnimationPlayer.play("ReadEvents")
 	yield($AnimationPlayer, "animation_finished")
 	_show_clock()
@@ -56,9 +67,12 @@ func _stop_clock():
 		clock_node.stop()
 
 func _show_dream():
+	if last_dream_flag:
+		$"%DoneButton".text = "The End"
 	$AnimationPlayer.play("ShowDream")
 	yield($AnimationPlayer, "animation_finished")
 	$ButtonAnimationPlayer.play("DreamComplete")
+		
 
 func _dream_ready(dream_text : String):
 	if dream_returned:
