@@ -1,6 +1,17 @@
-[gd_resource type="Theme" load_steps=2 format=2]
+[gd_resource type="Theme" load_steps=7 format=2]
 
 [ext_resource path="res://Themes/GameFont16px.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Themes/ProgressBarBgStyleBox.tres" type="StyleBox" id=2]
+[ext_resource path="res://Themes/ProgressBarFgStyleBox.tres" type="StyleBox" id=3]
+[ext_resource path="res://Themes/ButtonPressedStyleBox.tres" type="StyleBox" id=4]
+[ext_resource path="res://Themes/ButtonNormalStyleBox.tres" type="StyleBox" id=5]
+[ext_resource path="res://Themes/ButtonHoverStyleBox.tres" type="StyleBox" id=6]
 
 [resource]
 default_font = ExtResource( 1 )
+Button/styles/disabled = ExtResource( 4 )
+Button/styles/hover = ExtResource( 6 )
+Button/styles/normal = ExtResource( 5 )
+Button/styles/pressed = ExtResource( 4 )
+ProgressBar/styles/bg = ExtResource( 2 )
+ProgressBar/styles/fg = ExtResource( 3 )
