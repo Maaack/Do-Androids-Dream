@@ -149,3 +149,12 @@ func _on_BetaPastureArea2D_shepherd_entered():
 
 func _on_DeltaPastureArea2D_shepherd_entered():
 	emit_signal("shepherd_entered_area", "delta_pasture")
+
+func _on_BarrenLimitArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "barren_limit")
+
+func _on_VolatilePasturesArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "volatile_pastures")
+
+func _on_WindingCircuitArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "winding_circuit")

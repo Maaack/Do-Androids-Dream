@@ -86,6 +86,21 @@ func _on_World_shepherd_entered_area(area_name):
 				return
 			complete_oneshot("delta_pasture")
 			show_entering_area("Delta Pasture")
+		"barren_limit":
+			if is_oneshot_completed("barren_limit"):
+				return
+			complete_oneshot("barren_limit")
+			show_entering_area("Barren Limit")
+		"volatile_pastures":
+			if is_oneshot_completed("volatile_pastures"):
+				return
+			complete_oneshot("volatile_pastures")
+			show_entering_area("Volatile Pastures")
+		"winding_circuit":
+			if is_oneshot_completed("winding_circuit"):
+				return
+			complete_oneshot("winding_circuit")
+			show_entering_area("Winding Circuit")
 
 func _on_World_sheep_ate_volatile_grass(sheep_name):
 	if is_oneshot_completed("sheep_poisoned"):
