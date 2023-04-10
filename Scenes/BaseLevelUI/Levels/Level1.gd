@@ -12,14 +12,17 @@ var tutorial_second_camp = preload("res://Scenes/TutorialScreen/Tutorials/Level1
 var tutorial_final_camp = preload("res://Scenes/TutorialScreen/Tutorials/Level1TutorialFinalCamp.tscn")
 var tutorial_well_fed = preload("res://Scenes/TutorialScreen/Tutorials/Level1TutorialWellFed.tscn")
 
-var sheep_part_collected : bool = false
-var shepherd_entered_west_lands : bool = false
-var shepherd_entered_first_camp : bool = false
-var shepherd_entered_second_camp : bool = false
-var shepherd_entered_final_camp : bool = false
-var shepherd_entered_well_fed_hint : bool = false
-var sheep_poisoned : bool = false
+var oneshots_completed : Array = []
 var sheep_exploded_count : int = 0
+var area_names_map : Dictionary = {
+	"crossroads" : "The Crossroads",
+	"alpha_pasture" : "Alpha Pasture",
+	"beta_pasture" : "Beta Pasture",
+	"delta_pasture" : "Delta Pasture",
+	"barren_limit" : "The Barren Limit",
+	"volatile_pastures" : "Volatile Pastures",
+	"winding_circuit" : "The Winding Circuit",
+}
 
 func play_tutorial_1():
 	InGameMenuController.open_menu(tutorial_1)
@@ -30,45 +33,66 @@ func play_tutorial_2():
 func play_tutorial_3():
 	InGameMenuController.open_menu(tutorial_3)
 
-func _on_World_sheep_part_collected():
-	if sheep_part_collected:
+func is_oneshot_completed(oneshot : String):
+	return oneshots_completed.has(oneshot)
+
+func complete_oneshot(oneshot : String):
+	if is_oneshot_completed(oneshot):
 		return
-	sheep_part_collected = true
+	oneshots_completed.append(oneshot)
+
+func _on_World_sheep_part_collected():
+	if is_oneshot_completed("sheep_part_collected"):
+		return
+	complete_oneshot("sheep_part_collected")
 	InGameMenuController.open_menu(tutorial_sheep_part)
 
+func _enter_area_event(area_name : String) -> bool:
+	if not area_names_map.has(area_name):
+		return false
+	if is_oneshot_completed(area_name):
+		return false
+	complete_oneshot(area_name)
+	var area_readable_name : String = area_names_map[area_name]
+	show_entering_area(area_readable_name)
+	add_shephered_entered_area_event(area_readable_name)
+	return true
+
 func _on_World_shepherd_entered_area(area_name):
+	if _enter_area_event(area_name):
+		return
 	match area_name:
 		"west_lands":
-			if shepherd_entered_west_lands:
+			if is_oneshot_completed("west_lands"):
 				return
-			shepherd_entered_west_lands = true
+			complete_oneshot("west_lands")
 			InGameMenuController.open_menu(tutorial_west_lands)
 		"first_camp":
-			if current_day > 0 or shepherd_entered_first_camp:
+			if current_day > 0 or is_oneshot_completed("first_camp"):
 				return
-			shepherd_entered_first_camp = true
+			complete_oneshot("first_camp")
 			InGameMenuController.open_menu(tutorial_first_camp)
 		"second_camp":
-			if current_day > 1 or shepherd_entered_second_camp:
+			if current_day > 1 or is_oneshot_completed("second_camp"):
 				return
-			shepherd_entered_second_camp = true
+			complete_oneshot("second_camp")
 			InGameMenuController.open_menu(tutorial_second_camp)
 		"final_camp":
-			if shepherd_entered_final_camp:
+			if is_oneshot_completed("final_camp"):
 				return
-			shepherd_entered_final_camp = true
+			complete_oneshot("final_camp")
 			destination_reached = true
 			InGameMenuController.open_menu(tutorial_final_camp)
 		"well_fed_hint":
-			if shepherd_entered_well_fed_hint:
+			if is_oneshot_completed("well_fed_hint"):
 				return
-			shepherd_entered_well_fed_hint = true
+			complete_oneshot("well_fed_hint")
 			InGameMenuController.open_menu(tutorial_well_fed)
 
 func _on_World_sheep_ate_volatile_grass(sheep_name):
-	if sheep_poisoned:
+	if is_oneshot_completed("sheep_poisoned"):
 		return
-	sheep_poisoned = true
+	complete_oneshot("sheep_poisoned")
 	var tutorial = InGameMenuController.open_menu(tutorial_sheep_poisoned)
 	tutorial.set_sheep_name(sheep_name)
 	._on_World_sheep_ate_volatile_grass(sheep_name)

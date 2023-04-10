@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scenes/BaseLevelUI/BaseLevelUI.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/World/World.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Themes/GameTheme.tres" type="Theme" id=8]
 [ext_resource path="res://Scenes/APIClient/Wrappers/MuseClient.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Themes/GameFont32px.tres" type="DynamicFont" id=10]
+[ext_resource path="res://Themes/GameAreaFont48px.tres" type="DynamicFont" id=11]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Muse"
@@ -64,6 +65,37 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "FadeInNOut"
+length = 9.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer/Control/AreaNameLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 8, 9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer/Control/AreaNameLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
 }
 
 [node name="BaseLevelUI" type="Control"]
@@ -146,6 +178,18 @@ margin_right = 97.0
 margin_bottom = 133.0
 text = "End Day"
 
+[node name="AreaNameLabel" type="Label" parent="MarginContainer/Control"]
+unique_name_in_owner = true
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+margin_bottom = 90.0
+custom_fonts/font = ExtResource( 11 )
+text = "The Crossroads"
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
+
 [node name="MarginContainer2" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -215,6 +259,10 @@ one_shot = true
 [node name="BottomPanelAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Muse = SubResource( 1 )
 anims/RESET = SubResource( 2 )
+
+[node name="AreaNameAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/FadeInNOut = SubResource( 3 )
+anims/RESET = SubResource( 4 )
 
 [connection signal="sheep_assembled" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_assembled"]
 [connection signal="sheep_ate_normal_grass" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_ate_normal_grass"]

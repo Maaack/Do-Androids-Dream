@@ -16,7 +16,7 @@ margin_bottom = 148.0
 
 [node name="TutorialText" parent="Control/NinePatchRect/MarginContainer/PanelContainer" index="0"]
 margin_bottom = 92.0
-text = "Make sure to feed the sheep before venturing out further.
+text = "Feed the sheep before the end of the day, or they'll starve.
 
 
 You can set out in the morning."
