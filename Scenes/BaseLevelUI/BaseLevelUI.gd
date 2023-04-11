@@ -15,6 +15,7 @@ var current_day : int = 0
 var game_events : Array = []
 var day_events : Array = []
 var day_starting_sheep_count : int = 0
+var sheep_editor_packed = preload("res://Scenes/SheepEditor/SheepEditor.tscn")
 
 func _end_day():
 	if day_ended:
@@ -46,8 +47,14 @@ func reset_level() -> void:
 	$"%Clock".wait_time = day_length
 	_start_day()
 
+func _show_sheep_editor(sheep_list : Array):
+	var sheep_editor = InGameMenuController.open_menu(sheep_editor_packed)
+	sheep_editor.sheep_list = sheep_list
+
 func _ready():
 	reset_level()
+	yield(get_tree().create_timer(0.1), "timeout")
+	_show_sheep_editor($"%World".sheep_instances)
 
 func add_event(event_type : int, content : String) -> void:
 	game_events.append(EventData.new(event_type, content))
@@ -139,3 +146,4 @@ func _on_MuseTimer_timeout():
 func _on_MuseClient_musing_shared(musing_text):
 	add_event(EventData.EVENT_TYPES.MUSE, musing_text)
 	show_musing(musing_text)
+
