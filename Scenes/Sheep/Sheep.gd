@@ -261,6 +261,8 @@ func reset_hunger():
 
 func _ready():
 	reset_hunger()
+	set_sheep_name(sheep_name)
+	set_collar_color(collar_color)
 
 func _on_Sheep_mouse_entered():
 	show_hunger_meter(true)

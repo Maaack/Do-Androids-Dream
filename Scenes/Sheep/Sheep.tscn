@@ -1714,7 +1714,6 @@ margin_top = -38.0
 margin_right = 52.0
 margin_bottom = -22.0
 custom_fonts/font = ExtResource( 18 )
-text = "Amy Stewart"
 align = 1
 
 [node name="HungerMeter" type="Node2D" parent="."]
