@@ -31,6 +31,7 @@ var nearby_grass = [] # list of grass patches which are in the detection area
 var targeted_grass # the grass patch the sheep is targetting and going to
 var shepherd # the shepherd (if in range)
 export(String) var sheep_name : String setget set_sheep_name
+export(Color) var collar_color : Color setget set_collar_color
 var is_moving : bool = true
 var is_poisoned : bool = false
 
@@ -67,7 +68,13 @@ func is_hungry() -> bool:
 
 func set_sheep_name(new_value : String):
 	sheep_name = new_value
-	$NameLabel.text = sheep_name
+	if is_inside_tree():
+		$NameLabel.text = sheep_name
+
+func set_collar_color(new_value : Color):
+	collar_color = new_value
+	if is_inside_tree():
+		$CollarSprite.modulate = collar_color
 
 # will return a vector for the sheep to go to the center of mass of the group of nearby sheeps - Boids rules #1
 func calc_direction_to_center_of_mass_nearby():
