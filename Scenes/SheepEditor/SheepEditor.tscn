@@ -35,16 +35,16 @@ margin_bottom = 584.0
 mouse_filter = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="Control/MarginContainer/CenterContainer"]
-margin_left = 426.0
+margin_left = 410.0
 margin_top = 238.0
-margin_right = 566.0
+margin_right = 582.0
 margin_bottom = 330.0
 custom_styles/panel = ExtResource( 3 )
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/CenterContainer/PanelContainer"]
 margin_left = 2.0
 margin_top = 2.0
-margin_right = 138.0
+margin_right = 170.0
 margin_bottom = 90.0
 custom_constants/margin_right = 8
 custom_constants/margin_top = 8
@@ -54,33 +54,34 @@ custom_constants/margin_bottom = 8
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/CenterContainer/PanelContainer/MarginContainer"]
 margin_left = 8.0
 margin_top = 8.0
-margin_right = 128.0
+margin_right = 160.0
 margin_bottom = 80.0
 custom_constants/separation = 8
 
 [node name="Label" type="Label" parent="Control/MarginContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-margin_right = 120.0
+margin_right = 152.0
 margin_bottom = 16.0
-text = "Sheep Editor"
+text = "Robot Sheep Editor"
 align = 1
 valign = 1
 
 [node name="GridContainer" type="GridContainer" parent="Control/MarginContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 margin_top = 24.0
-margin_right = 120.0
+margin_right = 152.0
 margin_bottom = 24.0
 columns = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 margin_top = 32.0
-margin_right = 120.0
+margin_right = 152.0
 margin_bottom = 72.0
 alignment = 1
 
 [node name="DonePressed" parent="Control/MarginContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource( 4 )]
 unique_name_in_owner = true
-margin_right = 120.0
+margin_left = 16.0
+margin_right = 136.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 120, 40 )
 text = "Done"
