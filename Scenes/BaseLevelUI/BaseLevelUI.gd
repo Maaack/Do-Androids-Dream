@@ -117,7 +117,6 @@ func _on_ScoringScreen_restart_pressed():
 
 func _on_EndDayButton_pressed():
 	_end_day()
-	show_scoring_screen()
 
 func _on_World_sheep_ate_normal_grass(sheep_name):
 	add_feed_sheep_event(sheep_name)

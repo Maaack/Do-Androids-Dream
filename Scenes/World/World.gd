@@ -68,7 +68,7 @@ func add_sheep(sheep_position : Vector2 = _get_random_sheep_position()) -> Node2
 	sheep_instance.connect("exploded", self, "_on_sheep_exploded", [sheep_name])
 	sheep_instance.connect("assembled", self, "_on_sheep_assembled", [sheep_name])
 	sheep_instance.connect("starved", self, "_on_sheep_starved", [sheep_name])
-	$YSort.add_child(sheep_instance)
+	$YSort.call_deferred("add_child", sheep_instance)
 	sheep_instances.append(sheep_instance)
 	current_sheep_names.append(sheep_name)
 	return sheep_instance
@@ -81,6 +81,8 @@ func add_sheep_part(sheep_part_position : Vector2) -> Node2D:
 
 func assemble_sheep():
 	var sheep_instance = add_sheep(shepherd_node.position + Vector2(0, 20))
+	if not sheep_instance.is_visible_in_tree():
+		yield(sheep_instance, "ready")
 	sheep_instance.assemble()
 
 func get_sheep_count():
