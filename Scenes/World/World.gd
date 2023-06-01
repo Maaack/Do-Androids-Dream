@@ -3,7 +3,7 @@ extends Node2D
 signal sheep_ate_normal_grass(sheep_name)
 signal sheep_ate_volatile_grass(sheep_name)
 signal sheep_exploded(sheep_name)
-signal sheep_assembled(sheep_name)
+signal sheep_assembled(sheep_instance)
 signal sheep_starved(sheep_name)
 signal sheep_part_collected
 signal shepherd_entered_area(area_name)
@@ -66,7 +66,7 @@ func add_sheep(sheep_position : Vector2 = _get_random_sheep_position()) -> Node2
 	sheep_instance.connect("normal_grass_eaten", self, "_on_sheep_ate_normal_grass", [sheep_name])
 	sheep_instance.connect("volatile_grass_eaten", self, "_on_sheep_ate_volatile_grass", [sheep_name])
 	sheep_instance.connect("exploded", self, "_on_sheep_exploded", [sheep_name])
-	sheep_instance.connect("assembled", self, "_on_sheep_assembled", [sheep_name])
+	sheep_instance.connect("assembled", self, "_on_sheep_assembled", [sheep_instance])
 	sheep_instance.connect("starved", self, "_on_sheep_starved", [sheep_name])
 	$YSort.call_deferred("add_child", sheep_instance)
 	sheep_instances.append(sheep_instance)
@@ -110,8 +110,8 @@ func _on_sheep_exploded(sheep_name : String):
 	_on_sheep_death(sheep_name, 0.25)
 	emit_signal("sheep_exploded", sheep_name)
 
-func _on_sheep_assembled(sheep_name : String):
-	emit_signal("sheep_assembled", sheep_name)
+func _on_sheep_assembled(sheep_instance : Node2D):
+	emit_signal("sheep_assembled", sheep_instance)
 
 func _on_sheep_starved(sheep_name : String):
 	_on_sheep_death(sheep_name, 1)

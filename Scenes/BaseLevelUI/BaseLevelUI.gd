@@ -127,8 +127,9 @@ func _on_World_sheep_ate_volatile_grass(sheep_name):
 func _on_World_sheep_exploded(sheep_name):
 	add_explode_sheep_event(sheep_name)
 
-func _on_World_sheep_assembled(sheep_name):
-	add_build_sheep_event(sheep_name)
+func _on_World_sheep_assembled(sheep_instance):
+	_show_sheep_editor([sheep_instance])
+	add_build_sheep_event(sheep_instance.sheep_name)
 
 func _on_World_sheep_starved(sheep_name):
 	add_sheep_starved_event(sheep_name)
