@@ -225,12 +225,13 @@ func eat_grass():
 	_start_moving()
 	_finish_eating(grass_was_volatile)
 
+func _finish_assembly():
+	emit_signal("assembled")
+	_start_moving()
+
 func assemble():
 	_stop_moving()
 	_assemble_animation()
-	yield(get_tree().create_timer(2), "timeout")
-	emit_signal("assembled")
-	_start_moving()
 
 func _on_DetectionArea_body_entered(body):
 	if body.is_in_group("sheeps"):
