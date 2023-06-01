@@ -31,6 +31,7 @@ var nearby_grass = [] # list of grass patches which are in the detection area
 var targeted_grass # the grass patch the sheep is targetting and going to
 var shepherd # the shepherd (if in range)
 export(String) var sheep_name : String setget set_sheep_name
+var custom_sheep_name : String setget set_custom_sheep_name
 export(Color) var collar_color : Color setget set_collar_color
 var is_moving : bool = true
 var is_poisoned : bool = false
@@ -66,10 +67,22 @@ func _physics_process(delta):
 func is_hungry() -> bool:
 	return hunger > 0
 
+func _update_sheep_name():
+	if is_inside_tree():
+		$NameLabel.text = get_readable_name()
+
 func set_sheep_name(new_value : String):
 	sheep_name = new_value
-	if is_inside_tree():
-		$NameLabel.text = sheep_name
+	_update_sheep_name()
+
+func get_readable_name() -> String:
+	if custom_sheep_name != "":
+		return custom_sheep_name
+	return sheep_name
+
+func set_custom_sheep_name(new_value : String):
+	custom_sheep_name = new_value
+	_update_sheep_name()
 
 func set_collar_color(new_value : Color):
 	collar_color = new_value

@@ -10,7 +10,7 @@ func set_sheep_instance(new_instance : Node2D):
 
 func _on_SheepNameEdit_text_changed(new_text):
 	if sheep_instance.is_in_group("sheeps"):
-		sheep_instance.sheep_name = new_text
+		sheep_instance.custom_sheep_name = new_text
 
 func _on_ColorPickerButton_color_changed(color):
 	$"%CollarTextureRect".modulate = color
