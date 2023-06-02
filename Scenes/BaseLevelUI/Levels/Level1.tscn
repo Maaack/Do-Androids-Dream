@@ -42,5 +42,6 @@ pause_mode = 1
 autoplay = "Intro"
 anims/Intro = SubResource( 1 )
 
+[connection signal="magnet_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_magnet_collected"]
 [connection signal="sheep_part_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_part_collected"]
 [connection signal="shepherd_entered_area" from="ViewportContainer/Viewport/World" to="." method="_on_World_shepherd_entered_area"]
