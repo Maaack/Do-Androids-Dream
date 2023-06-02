@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 signal parts_assembled
 signal part_collected
+signal magnet_collected
 # the magnet_factor to apply whent the magnet is on or off
 const MAGNET_OFF = 1
 const MAGNET_ON = 5
@@ -12,14 +13,17 @@ onready var animation_state = animation_tree.get("parameters/playback")
 export var acceleration = 600
 export var max_speed = 125
 export var friction = 600
+export(Texture) var shepherd_and_magnet : Texture
+export(Texture) var shepherd_no_magnet : Texture
 
 var velocity = Vector2.ZERO
 var magnet_flag : bool = false
 var magnet_factor = 1 # this factor will be multiplied in the sheep logic to decide if it should prioritize to follow the shepherd
 var parts_collected = 0
+var has_magnet : bool = false
 
 func _unhandled_input(event):
-	if event.is_action_pressed("interact"):
+	if event.is_action_pressed("interact") and has_magnet:
 		if magnet_flag:
 			magnet_factor = MAGNET_OFF
 			$MagnetSprite.hide()
@@ -64,3 +68,12 @@ func collect_part() -> bool:
 		emit_signal("parts_assembled")
 		velocity = Vector2.ZERO
 	return true
+
+func collect_magnet() -> bool:
+	emit_signal("magnet_collected")
+	has_magnet = true
+	$Sprite.texture = shepherd_and_magnet
+	return true
+
+func _ready():
+	$Sprite.texture = shepherd_no_magnet
