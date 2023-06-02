@@ -56,28 +56,29 @@ func _ready():
 	yield(get_tree().create_timer(0.1), "timeout")
 	_show_sheep_editor($"%World".sheep_instances)
 
-func add_event(event_type : int, content : String) -> void:
-	game_events.append(EventData.new(event_type, content))
-	day_events.append(EventData.new(event_type, content))
+func add_event(event_type : int, content : String, readable_content : String = "") -> void:
+	var event : EventData = EventData.new(event_type, content, readable_content)
+	game_events.append(event)
+	day_events.append(event)
 
 func add_shepherd_dreamed_event(dream_text):
-	game_events.append(EventData.new(EventData.EVENT_TYPES.DREAM, dream_text))
+	game_events.append(EventData.new(EventData.EVENT_TYPES.DREAM, dream_text, dream_text))
 
-func add_feed_sheep_event(sheep_name):
-	add_event(EventData.EVENT_TYPES.EAT_NORMAL_GRASS, sheep_name)
+func add_feed_sheep_event(sheep_instance : Sheep):
+	add_event(EventData.EVENT_TYPES.EAT_NORMAL_GRASS, sheep_instance.sheep_name, sheep_instance.custom_sheep_name)
 
 func add_poison_sheep_event(sheep_name):
 	pass
 	# add_event(EventData.EVENT_TYPES.EAT_VOLATILE_GRASS, sheep_name)
 
-func add_explode_sheep_event(sheep_name):
-	add_event(EventData.EVENT_TYPES.EXPLODE, sheep_name)
+func add_explode_sheep_event(sheep_instance : Sheep):
+	add_event(EventData.EVENT_TYPES.EXPLODE, sheep_instance.sheep_name, sheep_instance.custom_sheep_name)
 
-func add_build_sheep_event(sheep_name):
-	add_event(EventData.EVENT_TYPES.BUILD, sheep_name)
+func add_build_sheep_event(sheep_instance : Sheep):
+	add_event(EventData.EVENT_TYPES.BUILD, sheep_instance.sheep_name, sheep_instance.custom_sheep_name)
 
-func add_sheep_starved_event(sheep_name):
-	add_event(EventData.EVENT_TYPES.STARVE, sheep_name)
+func add_sheep_starved_event(sheep_instance : Sheep):
+	add_event(EventData.EVENT_TYPES.STARVE, sheep_instance.sheep_name, sheep_instance.custom_sheep_name)
 
 func add_shephered_entered_area_event(area_name):
 	add_event(EventData.EVENT_TYPES.ENTER_AREA, area_name)
@@ -118,21 +119,21 @@ func _on_ScoringScreen_restart_pressed():
 func _on_EndDayButton_pressed():
 	_end_day()
 
-func _on_World_sheep_ate_normal_grass(sheep_name):
-	add_feed_sheep_event(sheep_name)
+func _on_World_sheep_ate_normal_grass(sheep_instance : Sheep):
+	add_feed_sheep_event(sheep_instance)
 
-func _on_World_sheep_ate_volatile_grass(sheep_name):
-	add_poison_sheep_event(sheep_name)
+func _on_World_sheep_ate_volatile_grass(sheep_instance : Sheep):
+	add_poison_sheep_event(sheep_instance)
 
-func _on_World_sheep_exploded(sheep_name):
-	add_explode_sheep_event(sheep_name)
+func _on_World_sheep_exploded(sheep_instance : Sheep):
+	add_explode_sheep_event(sheep_instance)
 
-func _on_World_sheep_assembled(sheep_instance):
+func _on_World_sheep_assembled(sheep_instance : Sheep):
 	_show_sheep_editor([sheep_instance])
-	add_build_sheep_event(sheep_instance.sheep_name)
+	add_build_sheep_event(sheep_instance)
 
-func _on_World_sheep_starved(sheep_name):
-	add_sheep_starved_event(sheep_name)
+func _on_World_sheep_starved(sheep_instance : Sheep):
+	add_sheep_starved_event(sheep_instance)
 
 func _on_ScoringScreen_shepherd_dreamed(dream_text):
 	add_shepherd_dreamed_event(dream_text)

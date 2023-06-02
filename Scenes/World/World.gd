@@ -1,10 +1,10 @@
 extends Node2D
 
-signal sheep_ate_normal_grass(sheep_name)
-signal sheep_ate_volatile_grass(sheep_name)
-signal sheep_exploded(sheep_name)
+signal sheep_ate_normal_grass(sheep_instance)
+signal sheep_ate_volatile_grass(sheep_instance)
+signal sheep_exploded(sheep_instance)
 signal sheep_assembled(sheep_instance)
-signal sheep_starved(sheep_name)
+signal sheep_starved(sheep_instance)
 signal sheep_part_collected
 signal shepherd_entered_area(area_name)
 
@@ -63,11 +63,11 @@ func add_sheep(sheep_position : Vector2 = _get_random_sheep_position()) -> Node2
 	var sheep_instance = sheep_scene.instance()
 	sheep_instance.position = sheep_position
 	sheep_instance.sheep_name = sheep_name
-	sheep_instance.connect("normal_grass_eaten", self, "_on_sheep_ate_normal_grass", [sheep_name])
-	sheep_instance.connect("volatile_grass_eaten", self, "_on_sheep_ate_volatile_grass", [sheep_name])
-	sheep_instance.connect("exploded", self, "_on_sheep_exploded", [sheep_name])
+	sheep_instance.connect("normal_grass_eaten", self, "_on_sheep_ate_normal_grass", [sheep_instance])
+	sheep_instance.connect("volatile_grass_eaten", self, "_on_sheep_ate_volatile_grass", [sheep_instance])
+	sheep_instance.connect("exploded", self, "_on_sheep_exploded", [sheep_instance])
 	sheep_instance.connect("assembled", self, "_on_sheep_assembled", [sheep_instance])
-	sheep_instance.connect("starved", self, "_on_sheep_starved", [sheep_name])
+	sheep_instance.connect("starved", self, "_on_sheep_starved", [sheep_instance])
 	$YSort.call_deferred("add_child", sheep_instance)
 	sheep_instances.append(sheep_instance)
 	current_sheep_names.append(sheep_name)
@@ -100,22 +100,22 @@ func starve_hungry_sheep():
 	for hungry_sheep in hungry_sheep_instances:
 		hungry_sheep.starve()
 
-func _on_sheep_ate_normal_grass(sheep_name : String):
-	emit_signal("sheep_ate_normal_grass", sheep_name)
+func _on_sheep_ate_normal_grass(sheep_instance : Sheep):
+	emit_signal("sheep_ate_normal_grass", sheep_instance)
 
-func _on_sheep_ate_volatile_grass(sheep_name : String):
-	emit_signal("sheep_ate_volatile_grass", sheep_name)
+func _on_sheep_ate_volatile_grass(sheep_instance : Sheep):
+	emit_signal("sheep_ate_volatile_grass", sheep_instance)
 
-func _on_sheep_exploded(sheep_name : String):
-	_on_sheep_death(sheep_name, 0.25)
-	emit_signal("sheep_exploded", sheep_name)
+func _on_sheep_exploded(sheep_instance : Sheep):
+	_on_sheep_death(sheep_instance.sheep_name, 0.25)
+	emit_signal("sheep_exploded", sheep_instance)
 
-func _on_sheep_assembled(sheep_instance : Node2D):
+func _on_sheep_assembled(sheep_instance : Sheep):
 	emit_signal("sheep_assembled", sheep_instance)
 
-func _on_sheep_starved(sheep_name : String):
-	_on_sheep_death(sheep_name, 1)
-	emit_signal("sheep_starved", sheep_name)
+func _on_sheep_starved(sheep_instance : Sheep):
+	_on_sheep_death(sheep_instance.sheep_name, 1)
+	emit_signal("sheep_starved", sheep_instance)
 
 func _on_Shepherd_parts_assembled():
 	if extra_sheep_names.size() == 0:

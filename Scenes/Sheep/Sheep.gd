@@ -1,4 +1,5 @@
 extends KinematicBody2D
+class_name Sheep
 
 signal normal_grass_eaten
 signal volatile_grass_eaten
