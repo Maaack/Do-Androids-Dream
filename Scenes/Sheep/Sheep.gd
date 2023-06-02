@@ -1,4 +1,5 @@
 extends KinematicBody2D
+class_name Sheep
 
 signal normal_grass_eaten
 signal volatile_grass_eaten
@@ -31,6 +32,8 @@ var nearby_grass = [] # list of grass patches which are in the detection area
 var targeted_grass # the grass patch the sheep is targetting and going to
 var shepherd # the shepherd (if in range)
 export(String) var sheep_name : String setget set_sheep_name
+var custom_sheep_name : String setget set_custom_sheep_name
+export(Color) var collar_color : Color setget set_collar_color
 var is_moving : bool = true
 var is_poisoned : bool = false
 
@@ -65,9 +68,27 @@ func _physics_process(delta):
 func is_hungry() -> bool:
 	return hunger > 0
 
+func _update_sheep_name():
+	if is_inside_tree():
+		$NameLabel.text = get_readable_name()
+
 func set_sheep_name(new_value : String):
 	sheep_name = new_value
-	$NameLabel.text = sheep_name
+	_update_sheep_name()
+
+func get_readable_name() -> String:
+	if custom_sheep_name != "":
+		return custom_sheep_name
+	return sheep_name
+
+func set_custom_sheep_name(new_value : String):
+	custom_sheep_name = new_value
+	_update_sheep_name()
+
+func set_collar_color(new_value : Color):
+	collar_color = new_value
+	if is_inside_tree():
+		$CollarSprite.modulate = collar_color
 
 # will return a vector for the sheep to go to the center of mass of the group of nearby sheeps - Boids rules #1
 func calc_direction_to_center_of_mass_nearby():
@@ -205,12 +226,13 @@ func eat_grass():
 	_start_moving()
 	_finish_eating(grass_was_volatile)
 
+func _finish_assembly():
+	emit_signal("assembled")
+	_start_moving()
+
 func assemble():
 	_stop_moving()
 	_assemble_animation()
-	yield(get_tree().create_timer(2), "timeout")
-	emit_signal("assembled")
-	_start_moving()
 
 func _on_DetectionArea_body_entered(body):
 	if body.is_in_group("sheeps"):
@@ -254,6 +276,8 @@ func reset_hunger():
 
 func _ready():
 	reset_hunger()
+	set_sheep_name(sheep_name)
+	set_collar_color(collar_color)
 
 func _on_Sheep_mouse_entered():
 	show_hunger_meter(true)

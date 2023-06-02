@@ -89,16 +89,16 @@ func _on_World_shepherd_entered_area(area_name):
 			complete_oneshot("well_fed_hint")
 			InGameMenuController.open_menu(tutorial_well_fed)
 
-func _on_World_sheep_ate_volatile_grass(sheep_name):
+func _on_World_sheep_ate_volatile_grass(sheep_instance):
 	if is_oneshot_completed("sheep_poisoned"):
 		return
 	complete_oneshot("sheep_poisoned")
 	var tutorial = InGameMenuController.open_menu(tutorial_sheep_poisoned)
-	tutorial.set_sheep_name(sheep_name)
-	._on_World_sheep_ate_volatile_grass(sheep_name)
+	tutorial.set_sheep_name(sheep_instance.get_readable_name())
+	._on_World_sheep_ate_volatile_grass(sheep_instance)
 
-func _on_World_sheep_exploded(sheep_name):
+func _on_World_sheep_exploded(sheep_instance):
 	sheep_exploded_count += 1
 	if sheep_exploded_count == 4:
 		InGameMenuController.open_menu(tutorial_sheep_exploding)
-	._on_World_sheep_exploded(sheep_name)
+	._on_World_sheep_exploded(sheep_instance)

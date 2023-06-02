@@ -17,6 +17,7 @@ const OOPS_STRING = "Oops... Something went wrong. We didn't get a response from
 var showing_clock : bool = false
 var dream_returned : bool = false
 var last_dream_flag : bool = false
+var string_maps : Dictionary = {}
 
 func _request_dream(starting_sheep_count : int, ending_sheep_count : int, events_string : String):
 	$AnimationPlayer.play("RESET")
@@ -51,10 +52,25 @@ func _read_events(starting_sheep_count : int, ending_sheep_count : int, events_s
 	yield($AnimationPlayer, "animation_finished")
 	_show_clock()
 
+func _fill_string_map(events_array : Array):
+	for event in events_array:
+		if event is EventData:
+			if event.custom_event_content != "" and event.custom_event_content != event.event_content:
+				string_maps[event.event_content] = event.custom_event_content
+
+func _replace_backend_strings(text : String):
+	var result_text : String = text
+	for backend_string in string_maps:
+		var custom_string : String = string_maps[backend_string]
+		result_text = result_text.replace(backend_string, custom_string)
+	return result_text
+
 func start_dream_request(starting_sheep_count : int, ending_sheep_count : int, events_array : Array):
+	_fill_string_map(events_array)
 	var events_string = $SentenceBuilder.get_event_sentences(events_array)
+	var custom_events_string : String = _replace_backend_strings(events_string)
 	_request_dream(starting_sheep_count, ending_sheep_count, events_string)
-	_read_events(starting_sheep_count, ending_sheep_count, events_string)
+	_read_events(starting_sheep_count, ending_sheep_count, custom_events_string)
 
 func _start_clock():
 	var clock_node = get_node_or_null("%Clock")
@@ -115,8 +131,9 @@ func _on_RestartButton_pressed():
 func _on_NextButton_pressed():
 	_show_dream()
 
-func _on_DreamClient_dream_recollected(dream_text):
-	_dream_ready(dream_text)
+func _on_DreamClient_dream_recollected(dream_text : String):
+	var custom_dream_text : String = _replace_backend_strings(dream_text)
+	_dream_ready(custom_dream_text)
 
 func _ready():
 	$"%GoodWordCount".modulate = $TextHighlighter.good_word_color
