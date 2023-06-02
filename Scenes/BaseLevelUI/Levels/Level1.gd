@@ -94,7 +94,7 @@ func _on_World_sheep_ate_volatile_grass(sheep_instance):
 		return
 	complete_oneshot("sheep_poisoned")
 	var tutorial = InGameMenuController.open_menu(tutorial_sheep_poisoned)
-	tutorial.set_sheep_name(sheep_instance.sheep_name)
+	tutorial.set_sheep_name(sheep_instance.get_readable_name())
 	._on_World_sheep_ate_volatile_grass(sheep_instance)
 
 func _on_World_sheep_exploded(sheep_instance):
