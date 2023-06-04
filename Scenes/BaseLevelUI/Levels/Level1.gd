@@ -11,6 +11,7 @@ var tutorial_first_camp = preload("res://Scenes/TutorialScreen/Tutorials/Level1T
 var tutorial_second_camp = preload("res://Scenes/TutorialScreen/Tutorials/Level1TutorialSecondCamp.tscn")
 var tutorial_final_camp = preload("res://Scenes/TutorialScreen/Tutorials/Level1TutorialFinalCamp.tscn")
 var tutorial_well_fed = preload("res://Scenes/TutorialScreen/Tutorials/Level1TutorialWellFed.tscn")
+var tutorial_magnet = preload("res://Scenes/TutorialScreen/Tutorials/Level1TutorialMagnet.tscn")
 
 var oneshots_completed : Array = []
 var sheep_exploded_count : int = 0
@@ -102,3 +103,9 @@ func _on_World_sheep_exploded(sheep_instance):
 	if sheep_exploded_count == 4:
 		InGameMenuController.open_menu(tutorial_sheep_exploding)
 	._on_World_sheep_exploded(sheep_instance)
+
+func _on_World_magnet_collected():
+	if is_oneshot_completed("magnet_collected"):
+		return
+	complete_oneshot("magnet_collected")
+	InGameMenuController.open_menu(tutorial_magnet)

@@ -6,6 +6,7 @@ signal sheep_exploded(sheep_instance)
 signal sheep_assembled(sheep_instance)
 signal sheep_starved(sheep_instance)
 signal sheep_part_collected
+signal magnet_collected
 signal shepherd_entered_area(area_name)
 
 export(float, 0, 1000) var spawn_range : float = 200
@@ -160,3 +161,6 @@ func _on_VolatilePasturesArea2D_shepherd_entered():
 
 func _on_WindingCircuitArea2D_shepherd_entered():
 	emit_signal("shepherd_entered_area", "winding_circuit")
+
+func _on_Shepherd_magnet_collected():
+	emit_signal("magnet_collected")
