@@ -114,6 +114,8 @@ func get_grid_distance(distance: Vector2) -> float:
 	return vec.x + vec.y
 
 func get_half_cell_size() -> Vector2:
+	if mode == MODE_ISOMETRIC:
+		return Vector2(0, cell_size.y / 2)
 	return cell_size / 2
 
 func map_to_world_path(path : Array):
