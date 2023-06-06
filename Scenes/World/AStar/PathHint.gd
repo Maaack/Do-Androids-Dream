@@ -4,17 +4,14 @@ export(PoolVector2Array) var path_points : PoolVector2Array setget set_path_poin
 export(Color) var color : Color = Color.white setget set_color
 export(Texture) var path_texture : Texture setget set_path_texture
 export(Texture) var destination_marker_texture : Texture setget set_destination_marker_texture
+export(Vector2) var destination_marker_offset : Vector2 = Vector2(0,-16)
 
 func set_path_points(value : PoolVector2Array):
 	path_points = value
 	$Path.points = path_points
 
-func _remove_first_point():
-	if $Path.points.size() > 0:
-		$Path.remove_point(0)
-
-func _set_indicator_position(new_position):
-	$DestinationMarker.position = new_position + Vector2(0,-16)
+func set_indicator_position(new_position):
+	$DestinationMarker.position = new_position + destination_marker_offset
 
 func set_path_texture(value : Texture):
 	path_texture = value
