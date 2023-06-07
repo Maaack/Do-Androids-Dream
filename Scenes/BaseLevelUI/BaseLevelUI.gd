@@ -3,6 +3,7 @@ extends Control
 class_name BaseLevel
 
 const MAX_SHEEP_COUNT : int = 20
+const TOGGLE_ACTION_RADIUS : float = 40.0
 enum InputModes{
 	MOUSE,
 	KEYBOARD
@@ -177,6 +178,12 @@ func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		input_mode = InputModes.MOUSE
 		if event.doubleclick:
-			$"%World".set_shepherd_destination(event.position - _get_camera_center())
+			var direction = event.position - _get_camera_center()
+			if direction.length() > TOGGLE_ACTION_RADIUS:
+				$"%World".set_shepherd_destination(event.position - _get_camera_center())
+			else:
+				$"%World".toggle_shepherd_magnet()
 	elif event is InputEventKey:
 		input_mode = InputModes.KEYBOARD
+		if event.is_action_pressed("interact"):
+			$"%World".toggle_shepherd_magnet()

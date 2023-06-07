@@ -23,17 +23,18 @@ var magnet_factor = 1 # this factor will be multiplied in the sheep logic to dec
 var parts_collected = 0
 var has_magnet : bool = false
 
-func _unhandled_input(event):
-	if event.is_action_pressed("interact") and has_magnet:
-		if magnet_flag:
-			magnet_factor = MAGNET_OFF
-			$MagnetSprite.hide()
-			$MagnetStreamCycler2D.stop()
-		else:
-			magnet_factor = MAGNET_ON
-			$MagnetSprite.show()
-			$MagnetStreamCycler2D.play()
-		magnet_flag = !(magnet_flag)
+func toggle_magnet():
+	if not has_magnet:
+		return
+	magnet_flag = !(magnet_flag)
+	if not magnet_flag:
+		magnet_factor = MAGNET_OFF
+		$MagnetSprite.hide()
+		$MagnetStreamCycler2D.stop()
+	else:
+		magnet_factor = MAGNET_ON
+		$MagnetSprite.show()
+		$MagnetStreamCycler2D.play()
 
 func set_move_vector(value : Vector2):
 	move_vector = value.normalized()

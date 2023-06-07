@@ -106,9 +106,11 @@ func move_shepherd(direction : Vector2):
 		direction = direction.normalized()
 	$"%Shepherd".move_vector = direction
 
+func toggle_shepherd_magnet():
+	$"%Shepherd".toggle_magnet()
+
 func set_shepherd_destination(destination : Vector2):
 	destination *= $"%Shepherd".get_current_zoom()
-	print(destination)
 	$PathManager2D.path = $Dirt.get_world_path_avoiding_points($"%Shepherd".position, $"%Shepherd".position + destination)
 
 func _process(delta):
