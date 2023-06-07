@@ -17,34 +17,34 @@ export(Texture) var shepherd_and_magnet : Texture
 export(Texture) var shepherd_no_magnet : Texture
 
 var velocity = Vector2.ZERO
+var move_vector : Vector2 = Vector2.ZERO setget set_move_vector
 var magnet_flag : bool = false
 var magnet_factor = 1 # this factor will be multiplied in the sheep logic to decide if it should prioritize to follow the shepherd
 var parts_collected = 0
 var has_magnet : bool = false
 
-func _unhandled_input(event):
-	if event.is_action_pressed("interact") and has_magnet:
-		if magnet_flag:
-			magnet_factor = MAGNET_OFF
-			$MagnetSprite.hide()
-			$MagnetStreamCycler2D.stop()
-		else:
-			magnet_factor = MAGNET_ON
-			$MagnetSprite.show()
-			$MagnetStreamCycler2D.play()
-		magnet_flag = !(magnet_flag)
+func toggle_magnet():
+	if not has_magnet:
+		return
+	magnet_flag = !(magnet_flag)
+	if not magnet_flag:
+		magnet_factor = MAGNET_OFF
+		$MagnetSprite.hide()
+		$MagnetStreamCycler2D.stop()
+	else:
+		magnet_factor = MAGNET_ON
+		$MagnetSprite.show()
+		$MagnetStreamCycler2D.play()
+
+func set_move_vector(value : Vector2):
+	move_vector = value.normalized()
 
 func move_state(delta):
-	var input_vector = Vector2.ZERO
-	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
-	input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
-	input_vector = input_vector.normalized()
-	
-	if input_vector != Vector2.ZERO:
-		animation_tree.set("parameters/Idle/blend_position", input_vector)
-		animation_tree.set("parameters/Walk/blend_position", input_vector)
+	if move_vector != Vector2.ZERO:
+		animation_tree.set("parameters/Idle/blend_position", move_vector)
+		animation_tree.set("parameters/Walk/blend_position", move_vector)
 		animation_state.travel("Walk")
-		velocity = velocity.move_toward(input_vector * max_speed, acceleration * delta)
+		velocity = velocity.move_toward(move_vector * max_speed, acceleration * delta)
 	else:
 		animation_state.travel("Idle")
 		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
@@ -77,3 +77,6 @@ func collect_magnet() -> bool:
 
 func _ready():
 	$Sprite.texture = shepherd_no_magnet
+
+func get_current_zoom():
+	return $Camera2D.zoom

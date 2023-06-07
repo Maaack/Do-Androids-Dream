@@ -3,6 +3,11 @@ extends Control
 class_name BaseLevel
 
 const MAX_SHEEP_COUNT : int = 20
+const TOGGLE_ACTION_RADIUS : float = 60.0
+enum InputModes{
+	MOUSE,
+	KEYBOARD
+}
 
 export(int) var starting_sheep_count : int = 6
 export(float) var day_length : float = 100
@@ -16,6 +21,7 @@ var game_events : Array = []
 var day_events : Array = []
 var day_starting_sheep_count : int = 0
 var sheep_editor_packed = preload("res://Scenes/SheepEditor/SheepEditor.tscn")
+var input_mode : int = InputModes.MOUSE
 
 func _end_day():
 	if day_ended:
@@ -148,3 +154,36 @@ func _on_MuseClient_musing_shared(musing_text):
 	add_event(EventData.EVENT_TYPES.MUSE, musing_text)
 	show_musing(musing_text)
 
+func _get_camera_center():
+	return get_viewport_rect().size / 2
+
+func _process(delta):
+	match(input_mode):
+		InputModes.MOUSE:
+			if Input.is_action_pressed("interact"):
+				$"%World".move_shepherd(get_local_mouse_position() - _get_camera_center())
+			elif Input.is_action_just_released("interact"):
+				$"%World".move_shepherd(Vector2.ZERO)
+				return
+		InputModes.KEYBOARD:
+			var input_vector = Vector2.ZERO
+			input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
+			input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
+			if input_vector.length() < 0.01:
+				$"%World".move_shepherd(Vector2.ZERO)
+				return
+			$"%World".move_shepherd(input_vector)
+
+func _unhandled_input(event):
+	if event is InputEventMouseButton:
+		input_mode = InputModes.MOUSE
+		if event.doubleclick:
+			var direction = event.position - _get_camera_center()
+			if direction.length() > TOGGLE_ACTION_RADIUS:
+				$"%World".set_shepherd_destination(event.position - _get_camera_center())
+			else:
+				$"%World".toggle_shepherd_magnet()
+	elif event is InputEventKey:
+		input_mode = InputModes.KEYBOARD
+		if event.is_action_pressed("interact"):
+			$"%World".toggle_shepherd_magnet()

@@ -101,6 +101,21 @@ func starve_hungry_sheep():
 	for hungry_sheep in hungry_sheep_instances:
 		hungry_sheep.starve()
 
+func move_shepherd(direction : Vector2):
+	if direction != Vector2.ZERO:
+		direction = direction.normalized()
+	$"%Shepherd".move_vector = direction
+
+func toggle_shepherd_magnet():
+	$"%Shepherd".toggle_magnet()
+
+func set_shepherd_destination(destination : Vector2):
+	destination *= $"%Shepherd".get_current_zoom()
+	$PathManager2D.path = $AStarTileMap.get_world_path_avoiding_points($"%Shepherd".position, $"%Shepherd".position + destination)
+
+func _process(delta):
+	$PathManager2D.move_to_next_point($"%Shepherd".position)
+
 func _on_sheep_ate_normal_grass(sheep_instance : Sheep):
 	emit_signal("sheep_ate_normal_grass", sheep_instance)
 
@@ -164,3 +179,9 @@ func _on_WindingCircuitArea2D_shepherd_entered():
 
 func _on_Shepherd_magnet_collected():
 	emit_signal("magnet_collected")
+
+func _on_PathManager2D_move(direction):
+	move_shepherd(direction)
+
+func _on_PathManager2D_destination_reached():
+	move_shepherd(Vector2.ZERO)
