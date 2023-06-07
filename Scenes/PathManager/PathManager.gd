@@ -22,7 +22,7 @@ func get_current_point():
 	return path[path_iter]
 
 func get_current_point_proximity(position : Vector2):
-	var point : Vector2 = get_current_point()
+	var point = get_current_point()
 	if point == null:
 		return 0
 	return (position - point).length()
