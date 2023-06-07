@@ -3,7 +3,7 @@ extends Control
 class_name BaseLevel
 
 const MAX_SHEEP_COUNT : int = 20
-const TOGGLE_ACTION_RADIUS : float = 40.0
+const TOGGLE_ACTION_RADIUS : float = 60.0
 enum InputModes{
 	MOUSE,
 	KEYBOARD
