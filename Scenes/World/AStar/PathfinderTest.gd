@@ -2,8 +2,6 @@ extends Node2D
 
 export(float) var move_time : float = 0.5
 export(int) var max_path_size : int = 30
-var move_tween
-var current_path_points
 
 func _find_nearest_tile(nearby_position : Vector2):
 	return $AStarTileMap.get_nearest_tile_position(nearby_position)
@@ -24,12 +22,6 @@ func _move_pc_to_position(destination : Vector2):
 		return
 	$PathManager2D.path = path_points
 
-func get_pc_path_to_destination(destination : Vector2, delay : float = move_time):
-	var path_points = $AStarTileMap.get_world_path_avoiding_points($ShepherdDummy.position, destination)
-	if path_points.size() < 2 or path_points.size() > max_path_size:
-		return
-	current_path_points = path_points
-
 func _get_camera_center():
 	return $"%Camera2D".global_position - ($"%Camera2D".get_viewport_rect().size / 2)
 
@@ -47,4 +39,7 @@ func _on_PathManager2D_move(direction):
 	$ShepherdDummy.position += direction
 
 func _on_PathManager2D_point_reached():
-	print("point reached")
+	pass
+
+func _on_PathManager2D_destination_reached():
+	print("destination reached")

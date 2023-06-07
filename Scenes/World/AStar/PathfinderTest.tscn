@@ -50,5 +50,6 @@ destination_marker_texture = ExtResource( 6 )
 
 [node name="PathManager2D" parent="." instance=ExtResource( 8 )]
 
+[connection signal="destination_reached" from="PathManager2D" to="." method="_on_PathManager2D_destination_reached"]
 [connection signal="move" from="PathManager2D" to="." method="_on_PathManager2D_move"]
 [connection signal="point_reached" from="PathManager2D" to="." method="_on_PathManager2D_point_reached"]
