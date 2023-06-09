@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/Shader/Circuit.gdshader" type="Shader" id=1]
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 1 )
+shader_param/zoomScale = 0.6
+shader_param/modulo = 1696
+shader_param/underValue = 157
+
+[node name="Control" type="ColorRect"]
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
