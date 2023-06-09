@@ -9,7 +9,7 @@ func _find_nearest_tile(nearby_position : Vector2):
 func _reposition_move_indicator(destination: Vector2):
 	$PathHint.show()
 	var end_tile = _find_nearest_tile(destination)
-	$PathHint.set_indicator_position(end_tile)
+	$PathHint.end_position = end_tile
 	var path_points = $AStarTileMap.get_world_path_avoiding_points($ShepherdDummy.position, destination)
 	if path_points.size() < 2 or path_points.size() > max_path_size: 
 		$PathHint.hide()
