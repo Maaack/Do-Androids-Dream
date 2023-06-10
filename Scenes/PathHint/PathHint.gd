@@ -1,3 +1,4 @@
+tool
 extends Node2D
 
 export(PoolVector2Array) var path_points : PoolVector2Array setget set_path_points
@@ -43,6 +44,7 @@ func set_color(value : Color):
 	color = value
 	if is_visible_in_tree():
 		$Path.modulate = color
+		$Path.default_color = color
 		$StartMarker.modulate = color
 		$EndMarker.modulate = color
 

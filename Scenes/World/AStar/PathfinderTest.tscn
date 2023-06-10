@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://Scenes/World/AStar/PathHint.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/PathHint/PathHint.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/World/AStar/AStarTileMap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Shepherd/ShepherdDummy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/World/AStar/PathfinderTest.gd" type="Script" id=4]
