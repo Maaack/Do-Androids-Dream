@@ -11,6 +11,7 @@ signal shepherd_entered_area(area_name)
 
 export(float, 0, 1000) var spawn_range : float = 200
 export(Vector2) var spawn_offset : Vector2 = Vector2.ZERO
+export(float, 0, 1) var sheep_path_visible_probability : float = 0
 
 onready var shepherd_node = $YSort/Shepherd
 var sheep_scene = preload("res://Scenes/Sheep/Sheep.tscn")
@@ -69,6 +70,7 @@ func add_sheep(sheep_position : Vector2 = _get_random_sheep_position()) -> Node2
 	sheep_instance.connect("exploded", self, "_on_sheep_exploded", [sheep_instance])
 	sheep_instance.connect("assembled", self, "_on_sheep_assembled", [sheep_instance])
 	sheep_instance.connect("starved", self, "_on_sheep_starved", [sheep_instance])
+	sheep_instance.connect("pathing", self, "_on_sheep_pathing", [sheep_instance])
 	$YSort.call_deferred("add_child", sheep_instance)
 	sheep_instances.append(sheep_instance)
 	current_sheep_names.append(sheep_name)
@@ -136,6 +138,18 @@ func _on_sheep_assembled(sheep_instance : Sheep):
 func _on_sheep_starved(sheep_instance : Sheep):
 	_on_sheep_death(sheep_instance.sheep_name, 1)
 	emit_signal("sheep_starved", sheep_instance)
+
+func _on_sheep_pathing(sheep_instance : Sheep):
+	var sheep_tile_position = $AStarTileMap.get_nearest_tile_position(sheep_instance.position)
+	var shepherd_tile_position = $AStarTileMap.get_nearest_tile_position($"%Shepherd".position)
+	var path_points = $AStarTileMap.get_world_path_avoiding_points(sheep_tile_position, shepherd_tile_position)
+	if path_points.size() < 2:
+		sheep_instance.next_path_point_to_shepherd = $"%Shepherd".position
+		return
+	if $"%Shepherd".magnet_flag and randf() < sheep_path_visible_probability:
+		$PathsSpawner.add_path(path_points, sheep_tile_position, shepherd_tile_position)
+	var next_path_point = path_points[1]
+	sheep_instance.next_path_point_to_shepherd = path_points[1]
 
 func _on_Shepherd_parts_assembled():
 	if extra_sheep_names.size() == 0:

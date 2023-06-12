@@ -617,6 +617,7 @@ extents = Vector2( 50, 500 )
 [node name="World" type="Node2D"]
 position = Vector2( 2, 0 )
 script = ExtResource( 4 )
+sheep_path_visible_probability = 0.1
 
 [node name="PathManager2D" parent="." instance=ExtResource( 13 )]
 point_proximity_margin = 4.0
