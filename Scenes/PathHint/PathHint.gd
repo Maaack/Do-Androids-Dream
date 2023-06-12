@@ -5,9 +5,9 @@ export(PoolVector2Array) var path_points : PoolVector2Array setget set_path_poin
 export(Color) var color : Color = Color.white setget set_color
 export(Texture) var path_texture : Texture setget set_path_texture
 export(Texture) var start_marker_texture : Texture setget set_start_marker_texture
-export(Vector2) var start_marker_offset : Vector2 = Vector2(0,-16)
+export(Vector2) var start_marker_offset : Vector2 = Vector2.ZERO
 export(Texture) var end_marker_texture : Texture setget set_end_marker_texture
-export(Vector2) var end_marker_offset : Vector2 = Vector2(0,-16)
+export(Vector2) var end_marker_offset : Vector2 = Vector2.ZERO
 export(Vector2) var start_position : Vector2 setget set_start_position
 export(Vector2) var end_position : Vector2 setget set_end_position
 
@@ -53,3 +53,5 @@ func _ready():
 	self.path_texture = path_texture
 	self.start_marker_texture = start_marker_texture
 	self.end_marker_texture = end_marker_texture
+	self.start_position = start_position
+	self.end_position = end_position
