@@ -111,8 +111,12 @@ func toggle_shepherd_magnet():
 
 func set_shepherd_destination(destination : Vector2):
 	destination *= $"%Shepherd".get_current_zoom()
-	$PathManager2D.path = $AStarTileMap.get_world_path_avoiding_points($"%Shepherd".position, $"%Shepherd".position + destination)
-
+	destination += $"%Shepherd".position
+	var tile_position = $AStarTileMap.get_nearest_tile_position(destination)
+	var path_points = $AStarTileMap.get_world_path_avoiding_points($"%Shepherd".position, tile_position)
+	$PathsSpawner.add_path(path_points, $"%Shepherd".position, tile_position)
+	$PathManager2D.path = path_points
+	
 func _process(delta):
 	$PathManager2D.move_to_next_point($"%Shepherd".position)
 

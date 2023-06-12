@@ -20,6 +20,7 @@ func _move_pc_to_position(destination : Vector2):
 	var path_points = $AStarTileMap.get_world_path_avoiding_points($ShepherdDummy.position, destination)
 	if path_points.size() < 2 or path_points.size() > max_path_size: 
 		return
+	$PathsSpawner.add_path(PoolVector2Array(path_points), $ShepherdDummy.position, _find_nearest_tile(destination))
 	$PathManager2D.path = path_points
 
 func _get_camera_center():
