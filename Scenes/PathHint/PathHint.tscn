@@ -9,6 +9,7 @@ __meta__ = {
 }
 
 [node name="Path" type="Line2D" parent="."]
+width = 1.0
 default_color = Color( 1, 1, 1, 1 )
 texture_mode = 1
 

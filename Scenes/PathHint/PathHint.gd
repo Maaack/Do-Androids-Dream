@@ -55,6 +55,7 @@ func set_color(value : Color):
 
 func _ready():
 	self.color = color
+	self.line_width = line_width
 	self.path_texture = path_texture
 	self.start_marker_texture = start_marker_texture
 	self.end_marker_texture = end_marker_texture

@@ -46,6 +46,7 @@ __meta__ = {
 
 [node name="PathHint" parent="." instance=ExtResource( 1 )]
 color = Color( 0, 0, 0, 0.745098 )
+line_width = 3.0
 path_texture = ExtResource( 5 )
 end_marker_texture = ExtResource( 6 )
 
