@@ -3,6 +3,7 @@ extends Node2D
 
 export(PoolVector2Array) var path_points : PoolVector2Array setget set_path_points
 export(Color) var color : Color = Color.white setget set_color
+export(float) var line_width : float = 1.0 setget set_line_width
 export(Texture) var path_texture : Texture setget set_path_texture
 export(Texture) var start_marker_texture : Texture setget set_start_marker_texture
 export(Vector2) var start_marker_offset : Vector2 = Vector2.ZERO
@@ -14,6 +15,11 @@ export(Vector2) var end_position : Vector2 setget set_end_position
 func set_path_points(value : PoolVector2Array):
 	path_points = value
 	$Path.points = path_points
+
+func set_line_width(value : float):
+	line_width = value
+	if is_visible_in_tree():
+		$Path.width = line_width
 
 func set_start_position(value : Vector2):
 	start_position = value
