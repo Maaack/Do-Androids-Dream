@@ -43,7 +43,6 @@ func set_end_marker_texture(value : Texture):
 func set_color(value : Color):
 	color = value
 	if is_visible_in_tree():
-		$Path.modulate = color
 		$Path.default_color = color
 		$StartMarker.modulate = color
 		$EndMarker.modulate = color

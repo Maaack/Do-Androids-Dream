@@ -114,9 +114,10 @@ func toggle_shepherd_magnet():
 func set_shepherd_destination(destination : Vector2):
 	destination *= $"%Shepherd".get_current_zoom()
 	destination += $"%Shepherd".position
-	var tile_position = $AStarTileMap.get_nearest_tile_position(destination)
-	var path_points = $AStarTileMap.get_world_path_avoiding_points($"%Shepherd".position, tile_position)
-	$PathsSpawner.add_path(path_points, $"%Shepherd".position, tile_position)
+	var start_tile = $AStarTileMap.get_nearest_tile_position($"%Shepherd".position)
+	var destination_tile = $AStarTileMap.get_nearest_tile_position(destination)
+	var path_points = $AStarTileMap.get_world_path_avoiding_points($"%Shepherd".position, destination_tile)
+	$PathsSpawner.add_path(path_points, start_tile, destination_tile)
 	$PathManager2D.path = path_points
 	
 func _process(delta):
@@ -147,7 +148,9 @@ func _on_sheep_pathing(sheep_instance : Sheep):
 		sheep_instance.next_path_point_to_shepherd = $"%Shepherd".position
 		return
 	if $"%Shepherd".magnet_flag and randf() < sheep_path_visible_probability:
-		$PathsSpawner.add_path(path_points, sheep_tile_position, shepherd_tile_position)
+		var sheep_color = sheep_instance.collar_color
+		sheep_color.a = 0.8
+		$PathsSpawner.add_path(path_points, sheep_tile_position, shepherd_tile_position, sheep_instance.collar_color)
 	var next_path_point = path_points[1]
 	sheep_instance.next_path_point_to_shepherd = path_points[1]
 
