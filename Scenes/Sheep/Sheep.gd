@@ -6,6 +6,7 @@ signal volatile_grass_eaten
 signal exploded
 signal assembled
 signal starved
+signal pathing
 
 onready var animation_tree = $AnimationTree
 onready var animation_state = animation_tree.get("parameters/playback")
@@ -31,6 +32,7 @@ var nearby_sheep = [] # list of sheeps which are in the detection area
 var nearby_grass = [] # list of grass patches which are in the detection area
 var targeted_grass # the grass patch the sheep is targetting and going to
 var shepherd # the shepherd (if in range)
+var next_path_point_to_shepherd
 export(String) var sheep_name : String setget set_sheep_name
 var custom_sheep_name : String setget set_custom_sheep_name
 export(Color) var collar_color : Color setget set_collar_color
@@ -128,7 +130,9 @@ func calc_direction_to_nearest_grass():
 # calculate direction to the shepherd (player), the shepherd.magnet_factor will cahnge depending iif the player is using the magnet or not
 func calc_direction_to_shepherd():
 	if shepherd:
-		return position.direction_to(shepherd.position) * shepherd_factor * shepherd.magnet_factor
+		if next_path_point_to_shepherd == null:
+			next_path_point_to_shepherd = shepherd.position
+		return position.direction_to(next_path_point_to_shepherd) * shepherd_factor * shepherd.magnet_factor
 	else:
 		return Vector2.ZERO
 
@@ -257,6 +261,7 @@ func _on_GrassDetectionArea_area_exited(area):
 			targeted_grass = null
 
 func _update_direction():
+	emit_signal("pathing")
 	direction = (
 		calc_direction_to_center_of_mass_nearby() +
 		calc_direction_to_avoid_colliding_nearby() +

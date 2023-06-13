@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/PathHint/PathHint.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Original/Sprites/circuit_ring_32x32.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Original/Sprites/circuit_x_32x32.png" type="Texture" id=3]
+
+[node name="PathHintType1" instance=ExtResource( 1 )]
+start_marker_texture = ExtResource( 2 )
+end_marker_texture = ExtResource( 3 )
+
+[node name="Path" parent="." index="0"]
+width = 1.0
+
+[node name="StartMarker" parent="." index="1"]
+texture = ExtResource( 2 )
+
+[node name="EndMarker" parent="." index="2"]
+texture = ExtResource( 3 )

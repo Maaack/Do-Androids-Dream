@@ -1,6 +1,6 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://Scenes/World/AStar/PathHint.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/PathHint/PathHint.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/World/AStar/AStarTileMap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Shepherd/ShepherdDummy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/World/AStar/PathfinderTest.gd" type="Script" id=4]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Assets/Original/Sprites/navigation_marker.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Original/Tilesets/grass_tileset.png" type="Texture" id=7]
 [ext_resource path="res://Scenes/PathManager/PathManager.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/PathHint/PathsSpawner.tscn" type="PackedScene" id=9]
 
 [sub_resource type="TileSet" id=1]
 0/name = "grass_tileset.png 0"
@@ -45,10 +46,13 @@ __meta__ = {
 
 [node name="PathHint" parent="." instance=ExtResource( 1 )]
 color = Color( 0, 0, 0, 0.745098 )
+line_width = 3.0
 path_texture = ExtResource( 5 )
-destination_marker_texture = ExtResource( 6 )
+end_marker_texture = ExtResource( 6 )
 
 [node name="PathManager2D" parent="." instance=ExtResource( 8 )]
+
+[node name="PathsSpawner" parent="." instance=ExtResource( 9 )]
 
 [connection signal="destination_reached" from="PathManager2D" to="." method="_on_PathManager2D_destination_reached"]
 [connection signal="move" from="PathManager2D" to="." method="_on_PathManager2D_move"]
