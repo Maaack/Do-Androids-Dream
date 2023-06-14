@@ -114,22 +114,24 @@ func remove_nothing_equip_state():
 	if Equipped.NOTHING in equipped_states:
 		equipped_states.remove(Equipped.NOTHING)
 
+func collect_item(item_id : int):
+	remove_nothing_equip_state()
+	if item_id in equipped_states:
+		return true
+	equipment_active = false
+	equipped_states.append(item_id)
+	equipped_state_iter = equipped_states.size() - 1
+	_update_equipped_active()
+	_update_shepherd_texture()
+	return true
+	
+
 func collect_magnet() -> bool:
 	emit_signal("magnet_collected")
-	remove_nothing_equip_state()
-	if not Equipped.ATTRACTOR in equipped_states:
-		equipped_states.append(Equipped.ATTRACTOR)
-		equipped_state_iter = equipped_states.size() - 1
-		_update_shepherd_texture()
-	return true
+	return collect_item(Equipped.ATTRACTOR)
 
 func collect_repeller() -> bool:
-	remove_nothing_equip_state()
-	if not Equipped.REPELLER in equipped_states:
-		equipped_states.append(Equipped.REPELLER)
-		equipped_state_iter = equipped_states.size() - 1
-		_update_shepherd_texture()
-	return true
+	return collect_item(Equipped.REPELLER)
 
 func swap():
 	var new_equipped_state_iter = equipped_state_iter + 1
