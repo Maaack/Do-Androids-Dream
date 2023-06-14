@@ -6,6 +6,11 @@ signal magnet_collected
 # the magnet_factor to apply whent the magnet is on or off
 const MAGNET_OFF = 1
 const MAGNET_ON = 5
+enum Equipped{
+	NOTHING,
+	REPELLER,
+	ATTRACTOR
+}
 
 onready var animation_tree = $AnimationTree
 onready var animation_state = animation_tree.get("parameters/playback")
@@ -13,28 +18,64 @@ onready var animation_state = animation_tree.get("parameters/playback")
 export var acceleration = 600
 export var max_speed = 125
 export var friction = 600
-export(Texture) var shepherd_and_magnet : Texture
-export(Texture) var shepherd_no_magnet : Texture
+export(Texture) var shepherd_texture : Texture
+export(Texture) var shepherd_with_attractor : Texture
+export(Texture) var shepherd_with_repeller : Texture
 
 var velocity = Vector2.ZERO
 var move_vector : Vector2 = Vector2.ZERO setget set_move_vector
-var magnet_flag : bool = false
 var magnet_factor = 1 # this factor will be multiplied in the sheep logic to decide if it should prioritize to follow the shepherd
-var parts_collected = 0
-var has_magnet : bool = false
+var parts_collected : int = 0
+var equipped_states : Array = [Equipped.NOTHING]
+var equipped_state_iter : int = 0
+var equipment_active : bool = false
 
-func toggle_magnet():
-	if not has_magnet:
-		return
-	magnet_flag = !(magnet_flag)
-	if not magnet_flag:
-		magnet_factor = MAGNET_OFF
-		$MagnetSprite.hide()
-		$MagnetStreamCycler2D.stop()
-	else:
+func get_equipped_state():
+	return equipped_states[equipped_state_iter]
+
+func _update_shepherd_texture():
+	var equipped_state : int = get_equipped_state()
+	match(equipped_state):
+		Equipped.NOTHING:
+			$Sprite.texture = shepherd_texture
+		Equipped.ATTRACTOR:
+			$Sprite.texture = shepherd_with_attractor
+		Equipped.REPELLER:
+			$Sprite.texture = shepherd_with_repeller
+
+func is_nothing_equipped():
+	return get_equipped_state() == Equipped.NOTHING
+
+func is_magnet_equipped():
+	return get_equipped_state() == Equipped.ATTRACTOR
+
+func is_magnet_active():
+	return is_magnet_equipped() and equipment_active
+
+func is_repeller_equipped():
+	return get_equipped_state() == Equipped.REPELLER
+
+func is_repeller_active():
+	return is_repeller_equipped() and equipment_active
+
+func set_magnet_state(state : bool):
+	if state:
 		magnet_factor = MAGNET_ON
 		$MagnetSprite.show()
 		$MagnetStreamCycler2D.play()
+	else:
+		magnet_factor = MAGNET_OFF
+		$MagnetSprite.hide()
+		$MagnetStreamCycler2D.stop()
+
+func _update_equipped_active():
+	set_magnet_state(equipment_active)
+
+func toggle_equipped():
+	if is_nothing_equipped():
+		return
+	equipment_active = !(equipment_active)
+	_update_equipped_active()
 
 func set_move_vector(value : Vector2):
 	move_vector = value.normalized()
@@ -69,14 +110,43 @@ func collect_part() -> bool:
 		velocity = Vector2.ZERO
 	return true
 
+func remove_nothing_equip_state():
+	if Equipped.NOTHING in equipped_states:
+		equipped_states.remove(Equipped.NOTHING)
+
+func collect_item(item_id : int):
+	remove_nothing_equip_state()
+	if item_id in equipped_states:
+		return true
+	equipment_active = false
+	equipped_states.append(item_id)
+	equipped_state_iter = equipped_states.size() - 1
+	_update_equipped_active()
+	_update_shepherd_texture()
+	return true
+	
+
 func collect_magnet() -> bool:
 	emit_signal("magnet_collected")
-	has_magnet = true
-	$Sprite.texture = shepherd_and_magnet
-	return true
+	return collect_item(Equipped.ATTRACTOR)
+
+func collect_repeller() -> bool:
+	return collect_item(Equipped.REPELLER)
+
+func swap():
+	var new_equipped_state_iter = equipped_state_iter + 1
+	if new_equipped_state_iter >= equipped_states.size():
+		new_equipped_state_iter = 0
+	if new_equipped_state_iter == equipped_state_iter:
+		return
+	equipped_state_iter = new_equipped_state_iter
+	equipment_active = false
+	_update_equipped_active()
+	_update_shepherd_texture()
 
 func _ready():
-	$Sprite.texture = shepherd_no_magnet
+	_update_shepherd_texture()
 
 func get_current_zoom():
 	return $Camera2D.zoom
+

@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=2]
 
-[ext_resource path="res://Assets/Original/Sprites/shepard_master.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Original/Sprites/shepard_master_magnet.png" type="Texture" id=1]
 
 [sub_resource type="Animation" id=2]
 resource_name = "IdleDown"

@@ -177,13 +177,15 @@ func _process(delta):
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		input_mode = InputModes.MOUSE
-		if event.doubleclick:
+		if  event.is_action_pressed("interact") and event.doubleclick:
 			var direction = event.position - _get_camera_center()
 			if direction.length() > TOGGLE_ACTION_RADIUS:
 				$"%World".set_shepherd_destination(event.position - _get_camera_center())
 			else:
-				$"%World".toggle_shepherd_magnet()
+				$"%World".toggle_shepherd_equipped()
+		elif event.is_action_pressed("swap"):
+			$"%World".swap_shepherd_equipped()
 	elif event is InputEventKey:
 		input_mode = InputModes.KEYBOARD
 		if event.is_action_pressed("interact"):
-			$"%World".toggle_shepherd_magnet()
+			$"%World".toggle_shepherd_equipped()

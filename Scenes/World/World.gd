@@ -108,8 +108,11 @@ func move_shepherd(direction : Vector2):
 		direction = direction.normalized()
 	$"%Shepherd".move_vector = direction
 
-func toggle_shepherd_magnet():
-	$"%Shepherd".toggle_magnet()
+func toggle_shepherd_equipped():
+	$"%Shepherd".toggle_equipped()
+
+func swap_shepherd_equipped():
+	$"%Shepherd".swap()
 
 func set_shepherd_destination(destination : Vector2):
 	destination *= $"%Shepherd".get_current_zoom()
@@ -142,16 +145,18 @@ func _on_sheep_starved(sheep_instance : Sheep):
 
 func _on_sheep_pathing(sheep_instance : Sheep):
 	var sheep_tile_position = $AStarTileMap.get_nearest_tile_position(sheep_instance.position)
-	var shepherd_tile_position = $AStarTileMap.get_nearest_tile_position($"%Shepherd".position)
+	var target_position = $"%Shepherd".position
+	if $"%Shepherd".is_repeller_active():
+		target_position = sheep_instance.position + (sheep_instance.position - target_position)
+	var shepherd_tile_position = $AStarTileMap.get_nearest_tile_position(target_position)
 	var path_points = $AStarTileMap.get_world_path_avoiding_points(sheep_tile_position, shepherd_tile_position)
 	if path_points.size() < 2:
-		sheep_instance.next_path_point_to_shepherd = $"%Shepherd".position
+		sheep_instance.next_path_point_to_shepherd = target_position
 		return
-	if $"%Shepherd".magnet_flag and randf() < sheep_path_visible_probability:
+	if $"%Shepherd".is_magnet_active() and randf() < sheep_path_visible_probability:
 		var sheep_color = sheep_instance.collar_color
 		sheep_color.a = 0.8
 		$PathsSpawner.add_path(path_points, sheep_tile_position, shepherd_tile_position, sheep_instance.collar_color)
-	var next_path_point = path_points[1]
 	sheep_instance.next_path_point_to_shepherd = path_points[1]
 
 func _on_Shepherd_parts_assembled():
