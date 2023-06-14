@@ -108,8 +108,11 @@ func move_shepherd(direction : Vector2):
 		direction = direction.normalized()
 	$"%Shepherd".move_vector = direction
 
-func toggle_shepherd_magnet():
-	$"%Shepherd".toggle_magnet()
+func toggle_shepherd_equipped():
+	$"%Shepherd".toggle_equipped()
+
+func swap_shepherd_equipped():
+	$"%Shepherd".swap()
 
 func set_shepherd_destination(destination : Vector2):
 	destination *= $"%Shepherd".get_current_zoom()
@@ -147,7 +150,7 @@ func _on_sheep_pathing(sheep_instance : Sheep):
 	if path_points.size() < 2:
 		sheep_instance.next_path_point_to_shepherd = $"%Shepherd".position
 		return
-	if $"%Shepherd".magnet_flag and randf() < sheep_path_visible_probability:
+	if $"%Shepherd".is_magnet_active() and randf() < sheep_path_visible_probability:
 		var sheep_color = sheep_instance.collar_color
 		sheep_color.a = 0.8
 		$PathsSpawner.add_path(path_points, sheep_tile_position, shepherd_tile_position, sheep_instance.collar_color)

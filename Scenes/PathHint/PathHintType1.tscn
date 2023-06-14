@@ -8,9 +8,6 @@
 start_marker_texture = ExtResource( 2 )
 end_marker_texture = ExtResource( 3 )
 
-[node name="Path" parent="." index="0"]
-width = 1.0
-
 [node name="StartMarker" parent="." index="1"]
 texture = ExtResource( 2 )
 

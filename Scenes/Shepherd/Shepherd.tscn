@@ -1,6 +1,6 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=41 format=2]
 
-[ext_resource path="res://Assets/Original/Sprites/shepard_master.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Original/Sprites/shepard_master_magnet.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Shepherd/Shepherd.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/StreamCycler/StreamCycler2D.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Original/SFX/SFX_PlayerStep_1.ogg" type="AudioStream" id=4]
@@ -12,7 +12,8 @@
 [ext_resource path="res://Assets/Original/SFX/SFX_MagnetCycle_2.ogg" type="AudioStream" id=10]
 [ext_resource path="res://Assets/Original/SFX/SFX_MagnetCycle_1.ogg" type="AudioStream" id=11]
 [ext_resource path="res://Assets/Original/Sprites/horseshoe_magnet.png" type="Texture" id=12]
-[ext_resource path="res://Assets/Original/Sprites/shepard_master_no_magnet.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Original/Sprites/shepard_master.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Original/Sprites/shepard_master_repeller.png" type="Texture" id=14]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 6.0
@@ -398,8 +399,9 @@ script = ExtResource( 2 )
 acceleration = 450
 max_speed = 45
 friction = 500
-shepherd_and_magnet = ExtResource( 1 )
-shepherd_no_magnet = ExtResource( 13 )
+shepherd_texture = ExtResource( 13 )
+shepherd_with_attractor = ExtResource( 1 )
+shepherd_with_repeller = ExtResource( 14 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 4 )
