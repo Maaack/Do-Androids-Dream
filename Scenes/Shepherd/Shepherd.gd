@@ -12,7 +12,6 @@ enum Equipped{
 	ATTRACTOR
 }
 
-
 onready var animation_tree = $AnimationTree
 onready var animation_state = animation_tree.get("parameters/playback")
 
@@ -25,10 +24,8 @@ export(Texture) var shepherd_with_repeller : Texture
 
 var velocity = Vector2.ZERO
 var move_vector : Vector2 = Vector2.ZERO setget set_move_vector
-var magnet_flag : bool = false
 var magnet_factor = 1 # this factor will be multiplied in the sheep logic to decide if it should prioritize to follow the shepherd
-var parts_collected = 0
-var has_magnet : bool = false
+var parts_collected : int = 0
 var equipped_states : Array = [Equipped.NOTHING]
 var equipped_state_iter : int = 0
 var equipment_active : bool = false
@@ -72,7 +69,7 @@ func set_magnet_state(state : bool):
 		$MagnetStreamCycler2D.stop()
 
 func _update_equipped_active():
-	set_magnet_state(is_magnet_active())
+	set_magnet_state(equipment_active)
 
 func toggle_equipped():
 	if is_nothing_equipped():
@@ -122,6 +119,14 @@ func collect_magnet() -> bool:
 	remove_nothing_equip_state()
 	if not Equipped.ATTRACTOR in equipped_states:
 		equipped_states.append(Equipped.ATTRACTOR)
+		equipped_state_iter = equipped_states.size() - 1
+		_update_shepherd_texture()
+	return true
+
+func collect_repeller() -> bool:
+	remove_nothing_equip_state()
+	if not Equipped.REPELLER in equipped_states:
+		equipped_states.append(Equipped.REPELLER)
 		equipped_state_iter = equipped_states.size() - 1
 		_update_shepherd_texture()
 	return true
