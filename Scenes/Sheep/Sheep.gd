@@ -1,3 +1,4 @@
+tool
 extends KinematicBody2D
 class_name Sheep
 
@@ -25,6 +26,7 @@ export var wait_time : float = 5
 export var wait_time_randomness : float = 2
 export(int) var daily_food_required : int = 2
 export(bool) var hunger_meter_visible : bool = true
+export(bool) var powered : bool = true setget set_powered
 var hunger = 0 # number of grass patches the sheep need to eat -> 0 means it's full and does not need to eat anymore
 var direction = Vector2.ZERO # direction to move to
 var velocity = Vector2.ZERO
@@ -45,6 +47,8 @@ func _set_blend_positions(input_vector : Vector2):
 	animation_tree.set("parameters/Run/blend_position", input_vector)
 	animation_tree.set("parameters/Explode/blend_position", input_vector)
 	animation_tree.set("parameters/Eat/blend_position", input_vector)
+	animation_tree.set("parameters/PowerUp/blend_position", input_vector.x)
+	animation_tree.set("parameters/PoweredDown/blend_position", input_vector.x)
 
 func _walk(delta):
 	if not is_moving:
@@ -158,11 +162,18 @@ func target_grass():
 		targeted_grass = closest_grass
 		
 	return targeted_grass != null
-		
 
 func _assemble_animation():
 	animation_state.travel("Assemble")
 	$AssemblyStreamPlayer2D.play()
+
+func _power_up_animation():
+	$AnimationTree.get("parameters/playback").travel("PowerUp")
+	$PowerUpStreamPlayer2D.play()
+
+func _powered_down_animation():
+	print("powering down")
+	$AnimationTree.get("parameters/playback").travel("PoweredDown")
 
 func _eat_animation():
 	$EatStreamPlayer2D.play()
@@ -238,6 +249,17 @@ func assemble():
 	_stop_moving()
 	_assemble_animation()
 
+func _unpower():
+	_stop_moving()
+	_powered_down_animation()
+
+func set_powered(value : bool):
+	powered = value
+	if powered:
+		_power_up_animation()
+	else:
+		_unpower()
+
 func _on_DetectionArea_body_entered(body):
 	if body.is_in_group("sheeps"):
 		nearby_sheep.append(body)
@@ -283,6 +305,7 @@ func _ready():
 	reset_hunger()
 	set_sheep_name(sheep_name)
 	set_collar_color(collar_color)
+	set_powered(powered)
 
 func _on_Sheep_mouse_entered():
 	show_hunger_meter(true)
