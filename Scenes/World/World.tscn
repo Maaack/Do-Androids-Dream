@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=2]
+[gd_scene load_steps=83 format=2]
 
 [ext_resource path="res://Scenes/World/SheepPartsTilemap.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Shepherd/Shepherd.tscn" type="PackedScene" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Scenes/PathManager/PathManager.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/PathHint/PathsSpawner.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Scenes/MagnetPickup/RepellerPickup.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/MagnetPickup/BatteryPickup.tscn" type="PackedScene" id=16]
 
 [sub_resource type="TileSet" id=9]
 0/name = "grass_tileset.png 0"
@@ -680,6 +681,9 @@ position = Vector2( -890, 408 )
 
 [node name="RepellerPickup" parent="YSort" instance=ExtResource( 15 )]
 position = Vector2( -1002, 520 )
+
+[node name="BatteryPickup" parent="YSort" instance=ExtResource( 16 )]
+position = Vector2( -1098, 328 )
 
 [node name="DayNightCycle" type="CanvasModulate" parent="."]
 unique_name_in_owner = true
