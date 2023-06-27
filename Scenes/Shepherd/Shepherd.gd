@@ -9,7 +9,8 @@ const MAGNET_ON = 5
 enum Equipped{
 	NOTHING,
 	REPELLER,
-	ATTRACTOR
+	ATTRACTOR,
+	BATTERY,
 }
 
 onready var animation_tree = $AnimationTree
@@ -21,6 +22,7 @@ export var friction = 600
 export(Texture) var shepherd_texture : Texture
 export(Texture) var shepherd_with_attractor : Texture
 export(Texture) var shepherd_with_repeller : Texture
+export(Texture) var shepherd_with_battery : Texture
 
 var velocity = Vector2.ZERO
 var move_vector : Vector2 = Vector2.ZERO setget set_move_vector
@@ -42,6 +44,8 @@ func _update_shepherd_texture():
 			$Sprite.texture = shepherd_with_attractor
 		Equipped.REPELLER:
 			$Sprite.texture = shepherd_with_repeller
+		Equipped.BATTERY:
+			$Sprite.texture = shepherd_with_battery
 
 func is_nothing_equipped():
 	return get_equipped_state() == Equipped.NOTHING
@@ -117,7 +121,7 @@ func remove_nothing_equip_state():
 func collect_item(item_id : int):
 	remove_nothing_equip_state()
 	if item_id in equipped_states:
-		return true
+		return false
 	equipment_active = false
 	equipped_states.append(item_id)
 	equipped_state_iter = equipped_states.size() - 1
@@ -132,6 +136,9 @@ func collect_magnet() -> bool:
 
 func collect_repeller() -> bool:
 	return collect_item(Equipped.REPELLER)
+
+func collect_battery() -> bool:
+	return collect_item(Equipped.BATTERY)
 
 func swap():
 	var new_equipped_state_iter = equipped_state_iter + 1
