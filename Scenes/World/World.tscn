@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=2]
+[gd_scene load_steps=84 format=2]
 
 [ext_resource path="res://Scenes/World/SheepPartsTilemap.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Shepherd/Shepherd.tscn" type="PackedScene" id=2]
@@ -15,6 +15,8 @@
 [ext_resource path="res://Scenes/PathManager/PathManager.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/PathHint/PathsSpawner.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Scenes/MagnetPickup/RepellerPickup.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/MagnetPickup/BatteryPickup.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scenes/Sheep/Sheep.tscn" type="PackedScene" id=17]
 
 [sub_resource type="TileSet" id=9]
 0/name = "grass_tileset.png 0"
@@ -619,6 +621,7 @@ extents = Vector2( 50, 500 )
 position = Vector2( 2, 0 )
 script = ExtResource( 4 )
 sheep_path_visible_probability = 0.1
+charge_color = Color( 0, 0.905882, 1, 0.498039 )
 
 [node name="PathManager2D" parent="." instance=ExtResource( 13 )]
 point_proximity_margin = 4.0
@@ -680,6 +683,25 @@ position = Vector2( -890, 408 )
 
 [node name="RepellerPickup" parent="YSort" instance=ExtResource( 15 )]
 position = Vector2( -1002, 520 )
+
+[node name="BatteryPickup" parent="YSort" instance=ExtResource( 16 )]
+position = Vector2( -1098, 328 )
+
+[node name="Sheep" parent="YSort" instance=ExtResource( 17 )]
+position = Vector2( -1034, 296 )
+powered = false
+
+[node name="Sheep2" parent="YSort" instance=ExtResource( 17 )]
+position = Vector2( -970, 376 )
+powered = false
+
+[node name="Sheep3" parent="YSort" instance=ExtResource( 17 )]
+position = Vector2( -970, 256 )
+powered = false
+
+[node name="Sheep4" parent="YSort" instance=ExtResource( 17 )]
+position = Vector2( -1138, 272 )
+powered = false
 
 [node name="DayNightCycle" type="CanvasModulate" parent="."]
 unique_name_in_owner = true

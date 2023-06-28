@@ -22,6 +22,7 @@ var day_events : Array = []
 var day_starting_sheep_count : int = 0
 var sheep_editor_packed = preload("res://Scenes/SheepEditor/SheepEditor.tscn")
 var input_mode : int = InputModes.MOUSE
+var recent_new_sheep : Array = []
 
 func _end_day():
 	if day_ended:
@@ -83,6 +84,9 @@ func add_explode_sheep_event(sheep_instance : Sheep):
 func add_build_sheep_event(sheep_instance : Sheep):
 	add_event(EventData.EVENT_TYPES.BUILD, sheep_instance.sheep_name, sheep_instance.custom_sheep_name)
 
+func add_power_sheep_event(sheep_instance : Sheep):
+	add_event(EventData.EVENT_TYPES.POWER, sheep_instance.sheep_name, sheep_instance.custom_sheep_name)
+
 func add_sheep_starved_event(sheep_instance : Sheep):
 	add_event(EventData.EVENT_TYPES.STARVE, sheep_instance.sheep_name, sheep_instance.custom_sheep_name)
 
@@ -135,8 +139,12 @@ func _on_World_sheep_exploded(sheep_instance : Sheep):
 	add_explode_sheep_event(sheep_instance)
 
 func _on_World_sheep_assembled(sheep_instance : Sheep):
-	_show_sheep_editor([sheep_instance])
+	recent_new_sheep.append(sheep_instance)
 	add_build_sheep_event(sheep_instance)
+
+func _on_World_sheep_powered(sheep_instance):
+	recent_new_sheep.append(sheep_instance)
+	add_power_sheep_event(sheep_instance)
 
 func _on_World_sheep_starved(sheep_instance : Sheep):
 	add_sheep_starved_event(sheep_instance)
@@ -158,6 +166,9 @@ func _get_camera_center():
 	return get_viewport_rect().size / 2
 
 func _process(delta):
+	if recent_new_sheep.size() > 0:
+		_show_sheep_editor(recent_new_sheep)
+		recent_new_sheep = []
 	match(input_mode):
 		InputModes.MOUSE:
 			if Input.is_action_pressed("interact"):

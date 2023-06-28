@@ -4,6 +4,7 @@ signal sheep_ate_normal_grass(sheep_instance)
 signal sheep_ate_volatile_grass(sheep_instance)
 signal sheep_exploded(sheep_instance)
 signal sheep_assembled(sheep_instance)
+signal sheep_powered(sheep_instance)
 signal sheep_starved(sheep_instance)
 signal sheep_part_collected
 signal magnet_collected
@@ -12,6 +13,7 @@ signal shepherd_entered_area(area_name)
 export(float, 0, 1000) var spawn_range : float = 200
 export(Vector2) var spawn_offset : Vector2 = Vector2.ZERO
 export(float, 0, 1) var sheep_path_visible_probability : float = 0
+export(Color) var charge_color : Color
 
 onready var shepherd_node = $YSort/Shepherd
 var sheep_scene = preload("res://Scenes/Sheep/Sheep.tscn")
@@ -20,10 +22,28 @@ var sheep_instances : Array = []
 var current_sheep_names : Array = []
 var extra_sheep_names : Array = []
 
+func _connect_sheep_signals(sheep_instance : Sheep):
+	sheep_instance.connect("normal_grass_eaten", self, "_on_sheep_ate_normal_grass", [sheep_instance])
+	sheep_instance.connect("volatile_grass_eaten", self, "_on_sheep_ate_volatile_grass", [sheep_instance])
+	sheep_instance.connect("exploded", self, "_on_sheep_exploded", [sheep_instance])
+	sheep_instance.connect("assembled", self, "_on_sheep_assembled", [sheep_instance])
+	sheep_instance.connect("powered", self, "_on_sheep_powered", [sheep_instance])
+	sheep_instance.connect("starved", self, "_on_sheep_starved", [sheep_instance])
+	sheep_instance.connect("pathing", self, "_on_sheep_pathing", [sheep_instance])
+
+func _name_sheep(sheep_instance : Sheep):
+	var sheep_name = extra_sheep_names.pop_back()
+	sheep_instance.sheep_name = sheep_name
+	current_sheep_names.append(sheep_name)
+
 func _ready():
 	randomize()
 	extra_sheep_names = SheepConstants.NAMES.duplicate()
 	extra_sheep_names.shuffle()
+	for body in $YSort.get_children():
+		if body is Sheep:
+			_name_sheep(body)
+			_connect_sheep_signals(body)
 
 func set_day_length(day_length : float):
 	$"DayNightCycle".day_length = day_length
@@ -61,19 +81,12 @@ func _get_random_sheep_position():
 	return shepherd_node.position + spawn_range_vector + spawn_offset
 
 func add_sheep(sheep_position : Vector2 = _get_random_sheep_position()) -> Node2D:
-	var sheep_name = extra_sheep_names.pop_back()
 	var sheep_instance = sheep_scene.instance()
 	sheep_instance.position = sheep_position
-	sheep_instance.sheep_name = sheep_name
-	sheep_instance.connect("normal_grass_eaten", self, "_on_sheep_ate_normal_grass", [sheep_instance])
-	sheep_instance.connect("volatile_grass_eaten", self, "_on_sheep_ate_volatile_grass", [sheep_instance])
-	sheep_instance.connect("exploded", self, "_on_sheep_exploded", [sheep_instance])
-	sheep_instance.connect("assembled", self, "_on_sheep_assembled", [sheep_instance])
-	sheep_instance.connect("starved", self, "_on_sheep_starved", [sheep_instance])
-	sheep_instance.connect("pathing", self, "_on_sheep_pathing", [sheep_instance])
+	_name_sheep(sheep_instance)
+	_connect_sheep_signals(sheep_instance)
 	$YSort.call_deferred("add_child", sheep_instance)
 	sheep_instances.append(sheep_instance)
-	current_sheep_names.append(sheep_name)
 	return sheep_instance
 
 func add_sheep_part(sheep_part_position : Vector2) -> Node2D:
@@ -139,6 +152,9 @@ func _on_sheep_exploded(sheep_instance : Sheep):
 func _on_sheep_assembled(sheep_instance : Sheep):
 	emit_signal("sheep_assembled", sheep_instance)
 
+func _on_sheep_powered(sheep_instance : Sheep):
+	emit_signal("sheep_powered", sheep_instance)
+
 func _on_sheep_starved(sheep_instance : Sheep):
 	_on_sheep_death(sheep_instance.sheep_name, 1)
 	emit_signal("sheep_starved", sheep_instance)
@@ -156,7 +172,9 @@ func _on_sheep_pathing(sheep_instance : Sheep):
 	if $"%Shepherd".is_magnet_active() and randf() < sheep_path_visible_probability:
 		var sheep_color = sheep_instance.collar_color
 		sheep_color.a = 0.8
-		$PathsSpawner.add_path(path_points, sheep_tile_position, shepherd_tile_position, sheep_instance.collar_color)
+		$PathsSpawner.add_path(path_points, sheep_tile_position, shepherd_tile_position, sheep_color)
+	if $"%Shepherd".is_battery_equipped() and not sheep_instance.powered:
+		$PathsSpawner.add_path(path_points, shepherd_tile_position, sheep_tile_position, charge_color)
 	sheep_instance.next_path_point_to_shepherd = path_points[1]
 
 func _on_Shepherd_parts_assembled():

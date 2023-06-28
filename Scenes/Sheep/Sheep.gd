@@ -5,6 +5,7 @@ signal normal_grass_eaten
 signal volatile_grass_eaten
 signal exploded
 signal assembled
+signal powered
 signal starved
 signal pathing
 
@@ -25,6 +26,7 @@ export var wait_time : float = 5
 export var wait_time_randomness : float = 2
 export(int) var daily_food_required : int = 2
 export(bool) var hunger_meter_visible : bool = true
+export(bool) var powered : bool = true setget set_powered
 var hunger = 0 # number of grass patches the sheep need to eat -> 0 means it's full and does not need to eat anymore
 var direction = Vector2.ZERO # direction to move to
 var velocity = Vector2.ZERO
@@ -45,6 +47,8 @@ func _set_blend_positions(input_vector : Vector2):
 	animation_tree.set("parameters/Run/blend_position", input_vector)
 	animation_tree.set("parameters/Explode/blend_position", input_vector)
 	animation_tree.set("parameters/Eat/blend_position", input_vector)
+	animation_tree.set("parameters/PowerUp/blend_position", input_vector.x)
+	animation_tree.set("parameters/PoweredDown/blend_position", input_vector.x)
 
 func _walk(delta):
 	if not is_moving:
@@ -158,11 +162,17 @@ func target_grass():
 		targeted_grass = closest_grass
 		
 	return targeted_grass != null
-		
 
 func _assemble_animation():
 	animation_state.travel("Assemble")
 	$AssemblyStreamPlayer2D.play()
+
+func _power_up_animation():
+	$AnimationTree.get("parameters/playback").travel("PowerUp")
+	$PowerUpStreamPlayer2D.play()
+
+func _powered_down_animation():
+	$AnimationTree.get("parameters/playback").travel("PoweredDown")
 
 func _eat_animation():
 	$EatStreamPlayer2D.play()
@@ -230,36 +240,75 @@ func eat_grass():
 	_start_moving()
 	_finish_eating(grass_was_volatile)
 
-func _finish_assembly():
-	emit_signal("assembled")
-	_start_moving()
-
 func assemble():
 	_stop_moving()
 	_assemble_animation()
+	
+func _finish_assembly():
+	if is_moving:
+		return
+	emit_signal("assembled")
+	_start_moving()
 
-func _on_DetectionArea_body_entered(body):
+func _power_up():
+	_power_up_animation()
+	if is_visible_in_tree():
+		$CheckChargeTimer.stop()
+
+func _finish_power_up():
+	if is_moving:
+		return
+	emit_signal("powered")
+	_start_moving()
+
+func _power_down():
+	_stop_moving()
+	_powered_down_animation()
+	if is_visible_in_tree():
+		$CheckChargeTimer.start()
+
+func set_powered(value : bool):
+	powered = value
+	if powered:
+		_power_up()
+	else:
+		_power_down()
+
+func _charge_sheep():
+	if powered:
+		return
+	set_powered(true)
+
+func _on_FarDetectionArea_body_entered(body : Node2D):
 	if body.is_in_group("sheeps"):
 		nearby_sheep.append(body)
 	elif body.is_in_group("shepherds"):
 		shepherd = body
 
-func _on_DetectionArea_body_exited(body):
+func _on_FarDetectionArea_body_exited(body):
 	if body.is_in_group("sheeps"):
 		nearby_sheep.erase(body)
 	elif body.is_in_group("shepherds"):
 		shepherd = null
 
-func _on_GrassDetectionArea_area_entered(area):
+func _on_NearDetectionArea_area_entered(area):
 	if area.is_in_group("grass"):
 		nearby_grass.append(area)
 
-func _on_GrassDetectionArea_area_exited(area):
+func _on_NearDetectionArea_area_exited(area):
 	if area.is_in_group("grass"):
 		nearby_grass.erase(area)
 		if area == targeted_grass:
 			targeted_grass = null
 
+func _on_NearDetectionArea_body_entered(body):
+	if body.is_in_group("shepherds") and body.has_signal("sheep_charged"):
+		body.connect("sheep_charged", self, "_charge_sheep")
+
+func _on_NearDetectionArea_body_exited(body):
+	if body.is_in_group("shepherds") and body.is_connected("sheep_charged", self, "_charge_sheep"):
+		body.disconnect("sheep_charged", self, "_charge_sheep")
+			
 func _update_direction():
 	emit_signal("pathing")
 	direction = (
@@ -275,14 +324,26 @@ func _on_UpdateMovementTimer_timeout():
 	_update_direction()
 	$UpdateMovementTimer.wait_time = wait_time + rand_range(-wait_time_randomness, wait_time_randomness)
 
+func _on_CheckChargeTimer_timeout():
+	if not powered and shepherd != null and shepherd.is_connected("sheep_charged", self, "_charge_sheep"):
+		emit_signal("pathing")
+
 func reset_hunger():
 	hunger = daily_food_required
 	_update_hunger()
+
+func _get_plus_or_minus_one():
+	return (randi() % 2) * 2 - 1
 
 func _ready():
 	reset_hunger()
 	set_sheep_name(sheep_name)
 	set_collar_color(collar_color)
+	set_powered(powered)
+	if not powered:
+		var random_direction = _get_plus_or_minus_one()
+		animation_tree.set("parameters/PoweredDown/blend_position", random_direction)
+		animation_tree.set("parameters/PowerUp/blend_position", random_direction)
 
 func _on_Sheep_mouse_entered():
 	show_hunger_meter(true)

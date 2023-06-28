@@ -3,13 +3,15 @@ extends KinematicBody2D
 signal parts_assembled
 signal part_collected
 signal magnet_collected
+signal sheep_charged
 # the magnet_factor to apply whent the magnet is on or off
 const MAGNET_OFF = 1
 const MAGNET_ON = 5
 enum Equipped{
 	NOTHING,
 	REPELLER,
-	ATTRACTOR
+	ATTRACTOR,
+	BATTERY,
 }
 
 onready var animation_tree = $AnimationTree
@@ -21,6 +23,7 @@ export var friction = 600
 export(Texture) var shepherd_texture : Texture
 export(Texture) var shepherd_with_attractor : Texture
 export(Texture) var shepherd_with_repeller : Texture
+export(Texture) var shepherd_with_battery : Texture
 
 var velocity = Vector2.ZERO
 var move_vector : Vector2 = Vector2.ZERO setget set_move_vector
@@ -42,6 +45,8 @@ func _update_shepherd_texture():
 			$Sprite.texture = shepherd_with_attractor
 		Equipped.REPELLER:
 			$Sprite.texture = shepherd_with_repeller
+		Equipped.BATTERY:
+			$Sprite.texture = shepherd_with_battery
 
 func is_nothing_equipped():
 	return get_equipped_state() == Equipped.NOTHING
@@ -58,6 +63,9 @@ func is_repeller_equipped():
 func is_repeller_active():
 	return is_repeller_equipped() and equipment_active
 
+func is_battery_equipped():
+	return get_equipped_state() == Equipped.BATTERY
+
 func set_magnet_state(state : bool):
 	if state:
 		magnet_factor = MAGNET_ON
@@ -73,6 +81,10 @@ func _update_equipped_active():
 
 func toggle_equipped():
 	if is_nothing_equipped():
+		return
+	if is_battery_equipped():
+		emit_signal("sheep_charged")
+		remove_battery_equip_state()
 		return
 	equipment_active = !(equipment_active)
 	_update_equipped_active()
@@ -112,12 +124,18 @@ func collect_part() -> bool:
 
 func remove_nothing_equip_state():
 	if Equipped.NOTHING in equipped_states:
-		equipped_states.remove(Equipped.NOTHING)
+		equipped_states.erase(Equipped.NOTHING)
+		swap()
+
+func remove_battery_equip_state():
+	if Equipped.BATTERY in equipped_states:
+		equipped_states.erase(Equipped.BATTERY)
+		swap()
 
 func collect_item(item_id : int):
-	remove_nothing_equip_state()
+	#remove_nothing_equip_state()
 	if item_id in equipped_states:
-		return true
+		return false
 	equipment_active = false
 	equipped_states.append(item_id)
 	equipped_state_iter = equipped_states.size() - 1
@@ -132,6 +150,9 @@ func collect_magnet() -> bool:
 
 func collect_repeller() -> bool:
 	return collect_item(Equipped.REPELLER)
+
+func collect_battery() -> bool:
+	return collect_item(Equipped.BATTERY)
 
 func swap():
 	var new_equipped_state_iter = equipped_state_iter + 1
