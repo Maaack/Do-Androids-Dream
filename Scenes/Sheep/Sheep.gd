@@ -1,4 +1,3 @@
-tool
 extends KinematicBody2D
 class_name Sheep
 
@@ -172,7 +171,6 @@ func _power_up_animation():
 	$PowerUpStreamPlayer2D.play()
 
 func _powered_down_animation():
-	print("powering down")
 	$AnimationTree.get("parameters/playback").travel("PoweredDown")
 
 func _eat_animation():
@@ -260,17 +258,26 @@ func set_powered(value : bool):
 	else:
 		_unpower()
 
-func _on_DetectionArea_body_entered(body):
+func _charge_sheep():
+	if powered:
+		return
+	set_powered(true)
+
+func _on_DetectionArea_body_entered(body : Node2D):
 	if body.is_in_group("sheeps"):
 		nearby_sheep.append(body)
 	elif body.is_in_group("shepherds"):
 		shepherd = body
+		if body.has_signal("sheep_charged"):
+			body.connect("sheep_charged", self, "_charge_sheep")
 
 func _on_DetectionArea_body_exited(body):
 	if body.is_in_group("sheeps"):
 		nearby_sheep.erase(body)
 	elif body.is_in_group("shepherds"):
 		shepherd = null
+		if body.has_signal("sheep_charged") and body.is_connected("sheep_charged", self, "_charge_sheep"):
+			body.disconnect("sheep_charged", self, "_charge_sheep")
 
 func _on_GrassDetectionArea_area_entered(area):
 	if area.is_in_group("grass"):

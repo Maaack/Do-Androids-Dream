@@ -3,6 +3,7 @@ extends KinematicBody2D
 signal parts_assembled
 signal part_collected
 signal magnet_collected
+signal sheep_charged
 # the magnet_factor to apply whent the magnet is on or off
 const MAGNET_OFF = 1
 const MAGNET_ON = 5
@@ -62,6 +63,9 @@ func is_repeller_equipped():
 func is_repeller_active():
 	return is_repeller_equipped() and equipment_active
 
+func is_battery_equipped():
+	return get_equipped_state() == Equipped.BATTERY
+
 func set_magnet_state(state : bool):
 	if state:
 		magnet_factor = MAGNET_ON
@@ -77,6 +81,10 @@ func _update_equipped_active():
 
 func toggle_equipped():
 	if is_nothing_equipped():
+		return
+	if is_battery_equipped():
+		emit_signal("sheep_charged")
+		remove_battery_equip_state()
 		return
 	equipment_active = !(equipment_active)
 	_update_equipped_active()
@@ -116,10 +124,16 @@ func collect_part() -> bool:
 
 func remove_nothing_equip_state():
 	if Equipped.NOTHING in equipped_states:
-		equipped_states.remove(Equipped.NOTHING)
+		equipped_states.erase(Equipped.NOTHING)
+		swap()
+
+func remove_battery_equip_state():
+	if Equipped.BATTERY in equipped_states:
+		equipped_states.erase(Equipped.BATTERY)
+		swap()
 
 func collect_item(item_id : int):
-	remove_nothing_equip_state()
+	#remove_nothing_equip_state()
 	if item_id in equipped_states:
 		return false
 	equipment_active = false
