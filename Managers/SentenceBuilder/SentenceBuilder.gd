@@ -5,6 +5,7 @@ const EAT_VOLATILE_GRASS_MESSAGE = "The robot sheep %s grazed on volatile grass.
 const EXPLODED_MESSAGE = "The robot sheep %s grazed on volatile grass and experienced rapid uncontrolled disassembly.\n"
 const STARVE_MESSAGE = "The robot sheep %s didn't get enough grass, and broke down in the night.\n"
 const BUILD_MESSAGE = "The shepherd assembled new robot sheep and welcomed %s into the world.\n"
+const POWER_MESSAGE = "The shepherd restored power to robot sheep and welcomed %s into the world.\n"
 const MUSE_MESSAGE = "The shepherd mused, \"%s\".\n"
 const ENTER_AREA_MESSAGE = "The shepherd entered %s.\n"
 
@@ -14,6 +15,7 @@ const CONCATENATE_CONTENT_EVENTS : Array = [
 	EventData.EVENT_TYPES.EXPLODE,
 	EventData.EVENT_TYPES.STARVE,
 	EventData.EVENT_TYPES.BUILD,
+	EventData.EVENT_TYPES.POWER,
 	EventData.EVENT_TYPES.ENTER_AREA,
 ]
 
@@ -46,6 +48,8 @@ func _get_sentence_for_event_type(event_type : int, contents : Array):
 			return STARVE_MESSAGE % content_part
 		EventData.EVENT_TYPES.BUILD:
 			return BUILD_MESSAGE % content_part
+		EventData.EVENT_TYPES.POWER:
+			return POWER_MESSAGE % content_part
 		EventData.EVENT_TYPES.MUSE:
 			return MUSE_MESSAGE % content_part
 		EventData.EVENT_TYPES.ENTER_AREA:
