@@ -20,10 +20,27 @@ var sheep_instances : Array = []
 var current_sheep_names : Array = []
 var extra_sheep_names : Array = []
 
+func _connect_sheep_signals(sheep_instance : Sheep):
+	sheep_instance.connect("normal_grass_eaten", self, "_on_sheep_ate_normal_grass", [sheep_instance])
+	sheep_instance.connect("volatile_grass_eaten", self, "_on_sheep_ate_volatile_grass", [sheep_instance])
+	sheep_instance.connect("exploded", self, "_on_sheep_exploded", [sheep_instance])
+	sheep_instance.connect("assembled", self, "_on_sheep_assembled", [sheep_instance])
+	sheep_instance.connect("starved", self, "_on_sheep_starved", [sheep_instance])
+	sheep_instance.connect("pathing", self, "_on_sheep_pathing", [sheep_instance])
+
+func _name_sheep(sheep_instance : Sheep):
+	var sheep_name = extra_sheep_names.pop_back()
+	sheep_instance.sheep_name = sheep_name
+	current_sheep_names.append(sheep_name)
+
 func _ready():
 	randomize()
 	extra_sheep_names = SheepConstants.NAMES.duplicate()
 	extra_sheep_names.shuffle()
+	for body in $YSort.get_children():
+		if body is Sheep:
+			_name_sheep(body)
+			_connect_sheep_signals(body)
 
 func set_day_length(day_length : float):
 	$"DayNightCycle".day_length = day_length
@@ -61,19 +78,12 @@ func _get_random_sheep_position():
 	return shepherd_node.position + spawn_range_vector + spawn_offset
 
 func add_sheep(sheep_position : Vector2 = _get_random_sheep_position()) -> Node2D:
-	var sheep_name = extra_sheep_names.pop_back()
 	var sheep_instance = sheep_scene.instance()
 	sheep_instance.position = sheep_position
-	sheep_instance.sheep_name = sheep_name
-	sheep_instance.connect("normal_grass_eaten", self, "_on_sheep_ate_normal_grass", [sheep_instance])
-	sheep_instance.connect("volatile_grass_eaten", self, "_on_sheep_ate_volatile_grass", [sheep_instance])
-	sheep_instance.connect("exploded", self, "_on_sheep_exploded", [sheep_instance])
-	sheep_instance.connect("assembled", self, "_on_sheep_assembled", [sheep_instance])
-	sheep_instance.connect("starved", self, "_on_sheep_starved", [sheep_instance])
-	sheep_instance.connect("pathing", self, "_on_sheep_pathing", [sheep_instance])
+	_name_sheep(sheep_instance)
+	_connect_sheep_signals(sheep_instance)
 	$YSort.call_deferred("add_child", sheep_instance)
 	sheep_instances.append(sheep_instance)
-	current_sheep_names.append(sheep_name)
 	return sheep_instance
 
 func add_sheep_part(sheep_part_position : Vector2) -> Node2D:
