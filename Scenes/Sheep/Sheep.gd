@@ -5,6 +5,7 @@ signal normal_grass_eaten
 signal volatile_grass_eaten
 signal exploded
 signal assembled
+signal powered
 signal starved
 signal pathing
 
@@ -239,18 +240,26 @@ func eat_grass():
 	_start_moving()
 	_finish_eating(grass_was_volatile)
 
-func _finish_assembly():
-	emit_signal("assembled")
-	_start_moving()
-
 func assemble():
 	_stop_moving()
 	_assemble_animation()
+	
+func _finish_assembly():
+	if is_moving:
+		return
+	emit_signal("assembled")
+	_start_moving()
 
 func _power_up():
 	_power_up_animation()
 	if is_visible_in_tree():
 		$CheckChargeTimer.stop()
+
+func _finish_power_up():
+	if is_moving:
+		return
+	emit_signal("powered")
+	_start_moving()
 
 func _power_down():
 	_stop_moving()
@@ -323,11 +332,18 @@ func reset_hunger():
 	hunger = daily_food_required
 	_update_hunger()
 
+func _get_plus_or_minus_one():
+	return (randi() % 2) * 2 - 1
+
 func _ready():
 	reset_hunger()
 	set_sheep_name(sheep_name)
 	set_collar_color(collar_color)
 	set_powered(powered)
+	if not powered:
+		var random_direction = _get_plus_or_minus_one()
+		animation_tree.set("parameters/PoweredDown/blend_position", random_direction)
+		animation_tree.set("parameters/PowerUp/blend_position", random_direction)
 
 func _on_Sheep_mouse_entered():
 	show_hunger_meter(true)

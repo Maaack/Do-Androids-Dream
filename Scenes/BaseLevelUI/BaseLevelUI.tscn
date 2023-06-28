@@ -268,6 +268,7 @@ anims/RESET = SubResource( 4 )
 [connection signal="sheep_ate_normal_grass" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_ate_normal_grass"]
 [connection signal="sheep_ate_volatile_grass" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_ate_volatile_grass"]
 [connection signal="sheep_exploded" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_exploded"]
+[connection signal="sheep_powered" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_powered"]
 [connection signal="sheep_starved" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_starved"]
 [connection signal="timeout" from="MarginContainer/Control/VBoxContainer2/CenterContainer/Clock" to="." method="_on_Clock_timeout"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer2/EndDayButton" to="." method="_on_EndDayButton_pressed"]

@@ -929,7 +929,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id=79]
 resource_name = "PowerUpLeft"
-length = 1.17
+length = 1.169
 step = 0.167
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -967,36 +967,36 @@ tracks/2/keys = {
 "update": 1,
 "values": [ false, true ]
 }
-tracks/3/type = "method"
-tracks/3/path = NodePath(".")
+tracks/3/type = "value"
+tracks/3/path = NodePath("CollarSprite:flip_h")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 1.169 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "_finish_assembly"
-} ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("CollarSprite:flip_h")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = false
+tracks/4/keys = {
+"times": PoolRealArray( 1.169 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_finish_power_up"
+} ]
 }
 
 [sub_resource type="Animation" id=78]
 resource_name = "PowerUpRight"
-length = 1.17
+length = 1.169
 step = 0.167
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -1034,31 +1034,31 @@ tracks/2/keys = {
 "update": 1,
 "values": [ false, true ]
 }
-tracks/3/type = "method"
-tracks/3/path = NodePath(".")
+tracks/3/type = "value"
+tracks/3/path = NodePath("CollarSprite:flip_h")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 1.169 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "_finish_assembly"
-} ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("CollarSprite:flip_h")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = false
+tracks/4/keys = {
+"times": PoolRealArray( 1.169 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_finish_power_up"
+} ]
 }
 
 [sub_resource type="Animation" id=80]
@@ -1926,7 +1926,7 @@ states/Walk/node = SubResource( 25 )
 states/Walk/position = Vector2( 492, 100 )
 transitions = [ "Idle", "Walk", SubResource( 26 ), "Walk", "Idle", SubResource( 27 ), "Walk", "Run", SubResource( 45 ), "Run", "Walk", SubResource( 46 ), "Walk", "Eat", SubResource( 57 ), "Eat", "Walk", SubResource( 58 ), "Run", "Eat", SubResource( 59 ), "Eat", "Run", SubResource( 60 ), "Idle", "Eat", SubResource( 61 ), "Eat", "Idle", SubResource( 62 ), "Idle", "Explode", SubResource( 63 ), "Walk", "Explode", SubResource( 64 ), "Run", "Explode", SubResource( 65 ), "Eat", "Explode", SubResource( 66 ), "Assemble", "Idle", SubResource( 71 ), "Idle", "Assemble", SubResource( 72 ), "PowerUp", "Idle", SubResource( 88 ), "PoweredDown", "PowerUp", SubResource( 89 ), "Idle", "PoweredDown", SubResource( 90 ) ]
 start_node = "Idle"
-graph_offset = Vector2( -372.998, 24.2264 )
+graph_offset = Vector2( -442.325, 24.2264 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=20]
 

@@ -4,6 +4,7 @@ signal sheep_ate_normal_grass(sheep_instance)
 signal sheep_ate_volatile_grass(sheep_instance)
 signal sheep_exploded(sheep_instance)
 signal sheep_assembled(sheep_instance)
+signal sheep_powered(sheep_instance)
 signal sheep_starved(sheep_instance)
 signal sheep_part_collected
 signal magnet_collected
@@ -26,6 +27,7 @@ func _connect_sheep_signals(sheep_instance : Sheep):
 	sheep_instance.connect("volatile_grass_eaten", self, "_on_sheep_ate_volatile_grass", [sheep_instance])
 	sheep_instance.connect("exploded", self, "_on_sheep_exploded", [sheep_instance])
 	sheep_instance.connect("assembled", self, "_on_sheep_assembled", [sheep_instance])
+	sheep_instance.connect("powered", self, "_on_sheep_powered", [sheep_instance])
 	sheep_instance.connect("starved", self, "_on_sheep_starved", [sheep_instance])
 	sheep_instance.connect("pathing", self, "_on_sheep_pathing", [sheep_instance])
 
@@ -149,6 +151,9 @@ func _on_sheep_exploded(sheep_instance : Sheep):
 
 func _on_sheep_assembled(sheep_instance : Sheep):
 	emit_signal("sheep_assembled", sheep_instance)
+
+func _on_sheep_powered(sheep_instance : Sheep):
+	emit_signal("sheep_powered", sheep_instance)
 
 func _on_sheep_starved(sheep_instance : Sheep):
 	_on_sheep_death(sheep_instance.sheep_name, 1)

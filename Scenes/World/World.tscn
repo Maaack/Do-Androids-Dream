@@ -691,6 +691,18 @@ position = Vector2( -1098, 328 )
 position = Vector2( -1034, 296 )
 powered = false
 
+[node name="Sheep2" parent="YSort" instance=ExtResource( 17 )]
+position = Vector2( -970, 376 )
+powered = false
+
+[node name="Sheep3" parent="YSort" instance=ExtResource( 17 )]
+position = Vector2( -970, 256 )
+powered = false
+
+[node name="Sheep4" parent="YSort" instance=ExtResource( 17 )]
+position = Vector2( -1138, 272 )
+powered = false
+
 [node name="DayNightCycle" type="CanvasModulate" parent="."]
 unique_name_in_owner = true
 script = ExtResource( 9 )
