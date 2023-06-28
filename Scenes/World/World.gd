@@ -12,6 +12,7 @@ signal shepherd_entered_area(area_name)
 export(float, 0, 1000) var spawn_range : float = 200
 export(Vector2) var spawn_offset : Vector2 = Vector2.ZERO
 export(float, 0, 1) var sheep_path_visible_probability : float = 0
+export(Color) var charge_color : Color
 
 onready var shepherd_node = $YSort/Shepherd
 var sheep_scene = preload("res://Scenes/Sheep/Sheep.tscn")
@@ -166,7 +167,9 @@ func _on_sheep_pathing(sheep_instance : Sheep):
 	if $"%Shepherd".is_magnet_active() and randf() < sheep_path_visible_probability:
 		var sheep_color = sheep_instance.collar_color
 		sheep_color.a = 0.8
-		$PathsSpawner.add_path(path_points, sheep_tile_position, shepherd_tile_position, sheep_instance.collar_color)
+		$PathsSpawner.add_path(path_points, sheep_tile_position, shepherd_tile_position, sheep_color)
+	if $"%Shepherd".is_battery_equipped() and not sheep_instance.powered:
+		$PathsSpawner.add_path(path_points, shepherd_tile_position, sheep_tile_position, charge_color)
 	sheep_instance.next_path_point_to_shepherd = path_points[1]
 
 func _on_Shepherd_parts_assembled():

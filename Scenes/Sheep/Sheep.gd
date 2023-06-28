@@ -247,48 +247,59 @@ func assemble():
 	_stop_moving()
 	_assemble_animation()
 
-func _unpower():
+func _power_up():
+	_power_up_animation()
+	if is_visible_in_tree():
+		$CheckChargeTimer.stop()
+
+func _power_down():
 	_stop_moving()
 	_powered_down_animation()
+	if is_visible_in_tree():
+		$CheckChargeTimer.start()
 
 func set_powered(value : bool):
 	powered = value
 	if powered:
-		_power_up_animation()
+		_power_up()
 	else:
-		_unpower()
+		_power_down()
 
 func _charge_sheep():
 	if powered:
 		return
 	set_powered(true)
 
-func _on_DetectionArea_body_entered(body : Node2D):
+func _on_FarDetectionArea_body_entered(body : Node2D):
 	if body.is_in_group("sheeps"):
 		nearby_sheep.append(body)
 	elif body.is_in_group("shepherds"):
 		shepherd = body
-		if body.has_signal("sheep_charged"):
-			body.connect("sheep_charged", self, "_charge_sheep")
 
-func _on_DetectionArea_body_exited(body):
+func _on_FarDetectionArea_body_exited(body):
 	if body.is_in_group("sheeps"):
 		nearby_sheep.erase(body)
 	elif body.is_in_group("shepherds"):
 		shepherd = null
-		if body.has_signal("sheep_charged") and body.is_connected("sheep_charged", self, "_charge_sheep"):
-			body.disconnect("sheep_charged", self, "_charge_sheep")
 
-func _on_GrassDetectionArea_area_entered(area):
+func _on_NearDetectionArea_area_entered(area):
 	if area.is_in_group("grass"):
 		nearby_grass.append(area)
 
-func _on_GrassDetectionArea_area_exited(area):
+func _on_NearDetectionArea_area_exited(area):
 	if area.is_in_group("grass"):
 		nearby_grass.erase(area)
 		if area == targeted_grass:
 			targeted_grass = null
 
+func _on_NearDetectionArea_body_entered(body):
+	if body.is_in_group("shepherds") and body.has_signal("sheep_charged"):
+		body.connect("sheep_charged", self, "_charge_sheep")
+
+func _on_NearDetectionArea_body_exited(body):
+	if body.is_in_group("shepherds") and body.is_connected("sheep_charged", self, "_charge_sheep"):
+		body.disconnect("sheep_charged", self, "_charge_sheep")
+			
 func _update_direction():
 	emit_signal("pathing")
 	direction = (
@@ -303,6 +314,10 @@ func _update_direction():
 func _on_UpdateMovementTimer_timeout():
 	_update_direction()
 	$UpdateMovementTimer.wait_time = wait_time + rand_range(-wait_time_randomness, wait_time_randomness)
+
+func _on_CheckChargeTimer_timeout():
+	if not powered and shepherd != null and shepherd.is_connected("sheep_charged", self, "_charge_sheep"):
+		emit_signal("pathing")
 
 func reset_hunger():
 	hunger = daily_food_required
