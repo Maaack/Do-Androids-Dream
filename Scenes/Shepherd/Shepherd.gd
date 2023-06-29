@@ -139,11 +139,11 @@ func collect_item(item_id : int):
 	#remove_nothing_equip_state()
 	if item_id in equipped_states:
 		return false
-	equipment_active = false
 	equipped_states.append(item_id)
-	equipped_state_iter = equipped_states.size() - 1
-	_update_equipped_active()
-	_update_shepherd_texture()
+	if is_nothing_equipped():
+		equipped_state_iter = equipped_states.size() - 1
+		_update_equipped_active()
+		_update_shepherd_texture()
 	return true
 	
 
