@@ -621,7 +621,7 @@ extents = Vector2( 50, 500 )
 position = Vector2( 2, 0 )
 script = ExtResource( 4 )
 sheep_path_visible_probability = 0.1
-charge_color = Color( 0, 0.905882, 1, 0.498039 )
+charge_color = Color( 0.976471, 0.639216, 0.105882, 0.498039 )
 
 [node name="PathManager2D" parent="." instance=ExtResource( 13 )]
 point_proximity_margin = 4.0
