@@ -140,3 +140,10 @@ func _on_World_new_sheep(sheep_instance : Sheep):
 		return
 	complete_oneshot("new_sheep")
 	InGameMenuController.open_menu(new_sheep_screen)
+	$GrassExplanationTimer.start()
+
+func _on_GrassExplanationTimer_timeout():
+	if is_oneshot_completed("grass_explanation"):
+		return
+	complete_oneshot("grass_explanation")
+	InGameMenuController.open_menu(grasses_explanation_screen)

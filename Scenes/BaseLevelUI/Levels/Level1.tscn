@@ -39,8 +39,13 @@ anims/Intro = SubResource( 1 )
 [node name="NewSheepTimer" parent="." index="8"]
 wait_time = 0.1
 
+[node name="GrassExplanationTimer" type="Timer" parent="." index="10"]
+pause_mode = 1
+wait_time = 2.0
+
 [connection signal="battery_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_battery_collected"]
 [connection signal="magnet_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_magnet_collected"]
 [connection signal="repeller_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_repeller_collected"]
 [connection signal="sheep_part_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_part_collected"]
 [connection signal="shepherd_entered_area" from="ViewportContainer/Viewport/World" to="." method="_on_World_shepherd_entered_area"]
+[connection signal="timeout" from="GrassExplanationTimer" to="." method="_on_GrassExplanationTimer_timeout"]

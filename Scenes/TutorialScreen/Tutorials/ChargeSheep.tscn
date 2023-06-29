@@ -20,13 +20,12 @@ margin_bottom = 231.0
 
 [node name="TutorialText" parent="Control/NinePatchRect/MarginContainer/PanelContainer" index="0"]
 margin_bottom = 175.0
-text = "You are in range of unpowered sheep with a battery.
+text = "You can discharge the battery into nearby sheep here.
 
 
 
-Double click or double tap the shepherd to activate it.
 
-This will use up your battery."
+Double click or double tap the shepherd to activate it."
 
 [node name="TextureRect" type="TextureRect" parent="Control/NinePatchRect/MarginContainer/PanelContainer/TutorialText" index="0"]
 anchor_left = 0.5
@@ -34,9 +33,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -32.0
-margin_top = -50.0
+margin_top = -32.0
 margin_right = 32.0
-margin_bottom = 14.0
+margin_bottom = 32.0
 texture = SubResource( 1 )
 expand = true
 
