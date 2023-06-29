@@ -55,13 +55,13 @@ func reset_level() -> void:
 	_start_day()
 
 func _show_sheep_editor(sheep_list : Array):
+	if sheep_list.size() == 0:
+		return
 	var sheep_editor = InGameMenuController.open_menu(sheep_editor_packed)
 	sheep_editor.sheep_list = sheep_list
 
 func _ready():
 	reset_level()
-	yield(get_tree().create_timer(0.1), "timeout")
-	_show_sheep_editor($"%World".sheep_instances)
 
 func add_event(event_type : int, content : String, readable_content : String = "") -> void:
 	var event : EventData = EventData.new(event_type, content, readable_content)

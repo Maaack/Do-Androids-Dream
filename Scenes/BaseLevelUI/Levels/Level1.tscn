@@ -23,7 +23,7 @@ tracks/0/keys = {
 
 [node name="Level1" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-starting_sheep_count = 8
+starting_sheep_count = 0
 game_days = 5
 musing_start_day = 1
 
