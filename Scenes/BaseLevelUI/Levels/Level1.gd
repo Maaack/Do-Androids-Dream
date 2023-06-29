@@ -97,11 +97,6 @@ func _on_World_shepherd_entered_area(area_name):
 			elif not is_oneshot_completed("charge_sheep") and battery_equipped:
 				complete_oneshot("charge_sheep")
 				InGameMenuController.open_menu(charge_sheep_screen)
-		"grasses_explanation":
-			if is_oneshot_completed("grasses_explanation"):
-				return
-			complete_oneshot("grasses_explanation")
-			InGameMenuController.open_menu(grasses_explanation_screen)
 
 func _on_World_sheep_ate_volatile_grass(sheep_instance):
 	if is_oneshot_completed("sheep_poisoned"):
