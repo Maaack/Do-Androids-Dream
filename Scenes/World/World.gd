@@ -124,7 +124,9 @@ func starve_hungry_sheep():
 	for hungry_sheep in hungry_sheep_instances:
 		hungry_sheep.starve()
 
-func move_shepherd(direction : Vector2):
+func move_shepherd(direction : Vector2, manual : bool = true):
+	if manual:
+		$PathManager2D.reset()
 	if direction != Vector2.ZERO:
 		direction = direction.normalized()
 	$"%Shepherd".move_vector = direction
@@ -247,10 +249,10 @@ func _on_Shepherd_repeller_collected():
 	emit_signal("repeller_collected")
 
 func _on_PathManager2D_move(direction):
-	move_shepherd(direction)
+	move_shepherd(direction, false)
 
 func _on_PathManager2D_destination_reached():
-	move_shepherd(Vector2.ZERO)
+	move_shepherd(Vector2.ZERO, false)
 
 func _on_SheepParts_add_sheep_part(part_position):
 	add_sheep_part(part_position)

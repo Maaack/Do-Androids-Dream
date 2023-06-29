@@ -23,6 +23,7 @@ var day_starting_sheep_count : int = 0
 var sheep_editor_packed = preload("res://Scenes/SheepEditor/SheepEditor.tscn")
 var input_mode : int = InputModes.MOUSE
 var recent_new_sheep : Array = []
+var pause_mouse_input : bool = false
 
 func _end_day():
 	if day_ended:
@@ -178,7 +179,9 @@ func _get_camera_center():
 func _process(delta):
 	match(input_mode):
 		InputModes.MOUSE:
-			if Input.is_action_pressed("interact"):
+			if pause_mouse_input:
+				return
+			elif Input.is_action_pressed("interact"):
 				$"%World".move_shepherd(get_local_mouse_position() - _get_camera_center())
 			elif Input.is_action_just_released("interact"):
 				$"%World".move_shepherd(Vector2.ZERO)
@@ -196,6 +199,8 @@ func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		input_mode = InputModes.MOUSE
 		if  event.is_action_pressed("interact") and event.doubleclick:
+			pause_mouse_input = true
+			$PauseMouseTimer.start()
 			var direction = event.position - _get_camera_center()
 			if direction.length() > TOGGLE_ACTION_RADIUS:
 				$"%World".set_shepherd_destination(event.position - _get_camera_center())
@@ -207,3 +212,7 @@ func _unhandled_input(event):
 		input_mode = InputModes.KEYBOARD
 		if event.is_action_pressed("interact"):
 			$"%World".toggle_shepherd_equipped()
+
+
+func _on_PauseMouseTimer_timeout():
+	pause_mouse_input = false

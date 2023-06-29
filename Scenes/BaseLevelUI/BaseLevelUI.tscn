@@ -260,6 +260,11 @@ pause_mode = 1
 wait_time = 40.0
 one_shot = true
 
+[node name="PauseMouseTimer" type="Timer" parent="."]
+pause_mode = 1
+wait_time = 0.25
+one_shot = true
+
 [node name="MuseClient" parent="." instance=ExtResource( 9 )]
 
 [node name="BottomPanelAnimationPlayer" type="AnimationPlayer" parent="."]
@@ -283,4 +288,5 @@ anims/RESET = SubResource( 4 )
 [connection signal="shepherd_dreamed" from="ScoringScreen" to="." method="_on_ScoringScreen_shepherd_dreamed"]
 [connection signal="timeout" from="NewSheepTimer" to="." method="_on_NewSheepTimer_timeout"]
 [connection signal="timeout" from="MuseTimer" to="." method="_on_MuseTimer_timeout"]
+[connection signal="timeout" from="PauseMouseTimer" to="." method="_on_PauseMouseTimer_timeout"]
 [connection signal="musing_shared" from="MuseClient" to="." method="_on_MuseClient_musing_shared"]

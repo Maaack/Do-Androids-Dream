@@ -30,7 +30,7 @@ func get_current_point_proximity(position : Vector2):
 func in_range_of_current_point(position : Vector2):
 	return get_current_point_proximity(position) < point_proximity_margin
 
-func _reset():
+func reset():
 	path_iter = 0
 	path = []
 	is_active = false
@@ -43,7 +43,7 @@ func move_to_next_point(position : Vector2):
 		path_iter += 1
 	if path_iter >= path.size():
 		emit_signal("destination_reached")
-		_reset()
+		reset()
 		return
 	var next_point = get_current_point()
 	var move_direction = (next_point - position).normalized()
