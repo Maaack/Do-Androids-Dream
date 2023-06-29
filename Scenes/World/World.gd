@@ -106,6 +106,12 @@ func assemble_sheep():
 func get_sheep_count():
 	return sheep_instances.size()
 
+func get_powered_sheep_count():
+	var powered_sheep : int = 0
+	for sheep in sheep_instances:
+		powered_sheep += int(sheep.powered())
+	return powered_sheep
+
 func get_hungry_sheep():
 	var hungry_sheep_instances : Array = []
 	for sheep_instance in sheep_instances:

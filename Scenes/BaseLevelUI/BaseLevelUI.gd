@@ -40,7 +40,7 @@ func _start_day():
 	day_events.clear()
 	get_tree().paused = false
 	day_ended = false
-	day_starting_sheep_count = $"%World".get_sheep_count()
+	day_starting_sheep_count = $"%World".get_powered_sheep_count()
 	$"%Clock".start()
 	$"%World".reset_day()
 	$"%DaysLeftLabel".text = "Days Left: %d" % _get_days_left()
@@ -98,7 +98,7 @@ func show_scoring_screen():
 	$DreamMusic.play()
 	$ScoringScreen.show()
 	$ScoringScreen.last_dream_flag = game_is_over()
-	$ScoringScreen.start_dream_request(day_starting_sheep_count, $"%World".get_sheep_count(), day_events)
+	$ScoringScreen.start_dream_request(day_starting_sheep_count, $"%World".get_powered_sheep_count(), day_events)
 
 func hide_scoring_screen():
 	$BackgroundMusic.play()
