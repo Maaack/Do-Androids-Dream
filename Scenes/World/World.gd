@@ -5,9 +5,12 @@ signal sheep_ate_volatile_grass(sheep_instance)
 signal sheep_exploded(sheep_instance)
 signal sheep_assembled(sheep_instance)
 signal sheep_powered(sheep_instance)
+signal sheep_joined(sheep_instance)
 signal sheep_starved(sheep_instance)
 signal sheep_part_collected
 signal magnet_collected
+signal battery_collected
+signal repeller_collected
 signal shepherd_entered_area(area_name)
 
 export(float, 0, 1000) var spawn_range : float = 200
@@ -127,6 +130,9 @@ func toggle_shepherd_equipped():
 func swap_shepherd_equipped():
 	$"%Shepherd".swap()
 
+func get_shepherd():
+	return $"%Shepherd"
+
 func set_shepherd_destination(destination : Vector2):
 	destination *= $"%Shepherd".get_current_zoom()
 	destination += $"%Shepherd".position
@@ -221,11 +227,21 @@ func _on_VolatilePasturesArea2D_shepherd_entered():
 func _on_WindingCircuitArea2D_shepherd_entered():
 	emit_signal("shepherd_entered_area", "winding_circuit")
 
+func _on_UnpoweredSheepArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "unpowered_sheep")
+
 func _on_Shepherd_magnet_collected():
 	emit_signal("magnet_collected")
+
+func _on_Shepherd_battery_collected():
+	emit_signal("battery_collected")
+
+func _on_Shepherd_repeller_collected():
+	emit_signal("repeller_collected")
 
 func _on_PathManager2D_move(direction):
 	move_shepherd(direction)
 
 func _on_PathManager2D_destination_reached():
 	move_shepherd(Vector2.ZERO)
+

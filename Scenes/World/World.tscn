@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=2]
+[gd_scene load_steps=85 format=2]
 
 [ext_resource path="res://Scenes/World/SheepPartsTilemap.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Shepherd/Shepherd.tscn" type="PackedScene" id=2]
@@ -584,6 +584,9 @@ extents = Vector2( 50, 100 )
 [sub_resource type="RectangleShape2D" id=65]
 extents = Vector2( 20, 80 )
 
+[sub_resource type="RectangleShape2D" id=73]
+extents = Vector2( 50, 50 )
+
 [sub_resource type="RectangleShape2D" id=67]
 extents = Vector2( 20, 100 )
 
@@ -717,6 +720,10 @@ collider_shape = SubResource( 61 )
 position = Vector2( -10, 152 )
 collider_shape = SubResource( 65 )
 
+[node name="UnpoweredSheepArea2D" parent="." instance=ExtResource( 10 )]
+position = Vector2( -1002, 312 )
+collider_shape = SubResource( 73 )
+
 [node name="CrossroadsArea2D" parent="." instance=ExtResource( 10 )]
 position = Vector2( -256, 402 )
 collider_shape = SubResource( 67 )
@@ -763,11 +770,14 @@ collider_shape = SubResource( 63 )
 
 [connection signal="destination_reached" from="PathManager2D" to="." method="_on_PathManager2D_destination_reached"]
 [connection signal="move" from="PathManager2D" to="." method="_on_PathManager2D_move"]
+[connection signal="battery_collected" from="YSort/Shepherd" to="." method="_on_Shepherd_battery_collected"]
 [connection signal="magnet_collected" from="YSort/Shepherd" to="." method="_on_Shepherd_magnet_collected"]
 [connection signal="part_collected" from="YSort/Shepherd" to="." method="_on_Shepherd_part_collected"]
 [connection signal="parts_assembled" from="YSort/Shepherd" to="." method="_on_Shepherd_parts_assembled"]
+[connection signal="repeller_collected" from="YSort/Shepherd" to="." method="_on_Shepherd_repeller_collected"]
 [connection signal="shepherd_entered" from="WestLandDetectorArea2D" to="." method="_on_WestLandDetectorArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="WestLandDetectorArea2D2" to="." method="_on_WestLandDetectorArea2D_shepherd_entered"]
+[connection signal="shepherd_entered" from="UnpoweredSheepArea2D" to="." method="_on_UnpoweredSheepArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="CrossroadsArea2D" to="." method="_on_CrossroadsArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="FirstCampDetectorArea2D" to="." method="_on_FirstCampDetectorArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="WindingCircuitArea2D" to="." method="_on_WindingCircuitArea2D_shepherd_entered"]

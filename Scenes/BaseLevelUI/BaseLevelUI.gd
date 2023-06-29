@@ -138,13 +138,18 @@ func _on_World_sheep_ate_volatile_grass(sheep_instance : Sheep):
 func _on_World_sheep_exploded(sheep_instance : Sheep):
 	add_explode_sheep_event(sheep_instance)
 
-func _on_World_sheep_assembled(sheep_instance : Sheep):
+func _on_World_new_sheep(sheep_instance : Sheep):
 	recent_new_sheep.append(sheep_instance)
+	if $NewSheepTimer.is_stopped():
+		$NewSheepTimer.start()
+
+func _on_World_sheep_assembled(sheep_instance : Sheep):
 	add_build_sheep_event(sheep_instance)
+	_on_World_new_sheep(sheep_instance)
 
 func _on_World_sheep_powered(sheep_instance):
-	recent_new_sheep.append(sheep_instance)
 	add_power_sheep_event(sheep_instance)
+	_on_World_new_sheep(sheep_instance)
 
 func _on_World_sheep_starved(sheep_instance : Sheep):
 	add_sheep_starved_event(sheep_instance)
@@ -158,6 +163,11 @@ func _on_Clock_timeout():
 func _on_MuseTimer_timeout():
 	$MuseClient.request_musing()
 
+func _on_NewSheepTimer_timeout():
+	if recent_new_sheep.size() > 0:
+		_show_sheep_editor(recent_new_sheep)
+		recent_new_sheep = []
+
 func _on_MuseClient_musing_shared(musing_text):
 	add_event(EventData.EVENT_TYPES.MUSE, musing_text)
 	show_musing(musing_text)
@@ -166,9 +176,6 @@ func _get_camera_center():
 	return get_viewport_rect().size / 2
 
 func _process(delta):
-	if recent_new_sheep.size() > 0:
-		_show_sheep_editor(recent_new_sheep)
-		recent_new_sheep = []
 	match(input_mode):
 		InputModes.MOUSE:
 			if Input.is_action_pressed("interact"):

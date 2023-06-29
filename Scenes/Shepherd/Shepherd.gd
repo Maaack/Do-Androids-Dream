@@ -1,8 +1,11 @@
 extends KinematicBody2D
+class_name Shepherd
 
 signal parts_assembled
 signal part_collected
 signal magnet_collected
+signal battery_collected
+signal repeller_collected
 signal sheep_charged
 # the magnet_factor to apply whent the magnet is on or off
 const MAGNET_OFF = 1
@@ -149,9 +152,11 @@ func collect_magnet() -> bool:
 	return collect_item(Equipped.ATTRACTOR)
 
 func collect_repeller() -> bool:
+	emit_signal("repeller_collected")
 	return collect_item(Equipped.REPELLER)
 
 func collect_battery() -> bool:
+	emit_signal("battery_collected")
 	return collect_item(Equipped.BATTERY)
 
 func swap():
