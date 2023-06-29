@@ -109,7 +109,7 @@ func get_sheep_count():
 func get_powered_sheep_count():
 	var powered_sheep : int = 0
 	for sheep in sheep_instances:
-		powered_sheep += int(sheep.powered())
+		powered_sheep += int(sheep.powered)
 	return powered_sheep
 
 func get_hungry_sheep():
