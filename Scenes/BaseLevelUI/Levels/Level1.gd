@@ -15,6 +15,7 @@ var repeller_pickup_screen = preload("res://Scenes/TutorialScreen/Tutorials/Repe
 var unpowered_sheep_screen = preload("res://Scenes/TutorialScreen/Tutorials/UnpoweredSheep.tscn")
 var charge_sheep_screen = preload("res://Scenes/TutorialScreen/Tutorials/ChargeSheep.tscn")
 var grasses_explanation_screen = preload("res://Scenes/TutorialScreen/Tutorials/GrassesExplanation.tscn")
+var goal_explanation_screen = preload("res://Scenes/TutorialScreen/Tutorials/GoalExplanation.tscn")
 var new_sheep_screen = preload("res://Scenes/TutorialScreen/Tutorials/NewSheepInFlock.tscn")
 
 var oneshots_completed : Array = []
@@ -147,3 +148,10 @@ func _on_GrassExplanationTimer_timeout():
 		return
 	complete_oneshot("grass_explanation")
 	InGameMenuController.open_menu(grasses_explanation_screen)
+	$GoalExplanationTimer.start()
+
+func _on_GoalTimer_timeout():
+	if is_oneshot_completed("goal_explanation"):
+		return
+	complete_oneshot("goal_explanation")
+	InGameMenuController.open_menu(goal_explanation_screen)
