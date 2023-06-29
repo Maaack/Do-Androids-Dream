@@ -7,9 +7,7 @@ signal magnet_collected
 signal battery_collected
 signal repeller_collected
 signal sheep_charged
-# the magnet_factor to apply whent the magnet is on or off
-const MAGNET_OFF = 1
-const MAGNET_ON = 5
+
 enum Equipped{
 	NOTHING,
 	REPELLER,
@@ -30,7 +28,6 @@ export(Texture) var shepherd_with_battery : Texture
 
 var velocity = Vector2.ZERO
 var move_vector : Vector2 = Vector2.ZERO setget set_move_vector
-var magnet_factor = 1 # this factor will be multiplied in the sheep logic to decide if it should prioritize to follow the shepherd
 var parts_collected : int = 0
 var equipped_states : Array = [Equipped.NOTHING]
 var equipped_state_iter : int = 0
@@ -71,11 +68,9 @@ func is_battery_equipped():
 
 func set_magnet_state(state : bool):
 	if state:
-		magnet_factor = MAGNET_ON
 		$MagnetSprite.show()
 		$MagnetStreamCycler2D.play()
 	else:
-		magnet_factor = MAGNET_OFF
 		$MagnetSprite.hide()
 		$MagnetStreamCycler2D.stop()
 
