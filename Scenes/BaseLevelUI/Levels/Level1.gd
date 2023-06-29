@@ -27,6 +27,7 @@ var area_names_map : Dictionary = {
 	"barren_limit" : "The Barren Limit",
 	"volatile_pastures" : "Volatile Pastures",
 	"winding_circuit" : "The Winding Circuit",
+	"watchers_gate" : "Watchers Gate",
 }
 
 func play_welcome_screen():
