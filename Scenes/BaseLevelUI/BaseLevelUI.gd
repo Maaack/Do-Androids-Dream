@@ -23,6 +23,7 @@ var day_starting_sheep_count : int = 0
 var sheep_editor_packed = preload("res://Scenes/SheepEditor/SheepEditor.tscn")
 var input_mode : int = InputModes.MOUSE
 var recent_new_sheep : Array = []
+var pause_mouse_input : bool = false
 
 func _end_day():
 	if day_ended:
@@ -40,7 +41,7 @@ func _start_day():
 	day_events.clear()
 	get_tree().paused = false
 	day_ended = false
-	day_starting_sheep_count = $"%World".get_sheep_count()
+	day_starting_sheep_count = $"%World".get_powered_sheep_count()
 	$"%Clock".start()
 	$"%World".reset_day()
 	$"%DaysLeftLabel".text = "Days Left: %d" % _get_days_left()
@@ -55,13 +56,13 @@ func reset_level() -> void:
 	_start_day()
 
 func _show_sheep_editor(sheep_list : Array):
+	if sheep_list.size() == 0:
+		return
 	var sheep_editor = InGameMenuController.open_menu(sheep_editor_packed)
 	sheep_editor.sheep_list = sheep_list
 
 func _ready():
 	reset_level()
-	yield(get_tree().create_timer(0.1), "timeout")
-	_show_sheep_editor($"%World".sheep_instances)
 
 func add_event(event_type : int, content : String, readable_content : String = "") -> void:
 	var event : EventData = EventData.new(event_type, content, readable_content)
@@ -98,7 +99,7 @@ func show_scoring_screen():
 	$DreamMusic.play()
 	$ScoringScreen.show()
 	$ScoringScreen.last_dream_flag = game_is_over()
-	$ScoringScreen.start_dream_request(day_starting_sheep_count, $"%World".get_sheep_count(), day_events)
+	$ScoringScreen.start_dream_request(day_starting_sheep_count, $"%World".get_powered_sheep_count(), day_events)
 
 func hide_scoring_screen():
 	$BackgroundMusic.play()
@@ -138,13 +139,18 @@ func _on_World_sheep_ate_volatile_grass(sheep_instance : Sheep):
 func _on_World_sheep_exploded(sheep_instance : Sheep):
 	add_explode_sheep_event(sheep_instance)
 
-func _on_World_sheep_assembled(sheep_instance : Sheep):
+func _on_World_new_sheep(sheep_instance : Sheep):
 	recent_new_sheep.append(sheep_instance)
+	if $NewSheepTimer.is_stopped():
+		$NewSheepTimer.start()
+
+func _on_World_sheep_assembled(sheep_instance : Sheep):
 	add_build_sheep_event(sheep_instance)
+	_on_World_new_sheep(sheep_instance)
 
 func _on_World_sheep_powered(sheep_instance):
-	recent_new_sheep.append(sheep_instance)
 	add_power_sheep_event(sheep_instance)
+	_on_World_new_sheep(sheep_instance)
 
 func _on_World_sheep_starved(sheep_instance : Sheep):
 	add_sheep_starved_event(sheep_instance)
@@ -158,6 +164,11 @@ func _on_Clock_timeout():
 func _on_MuseTimer_timeout():
 	$MuseClient.request_musing()
 
+func _on_NewSheepTimer_timeout():
+	if recent_new_sheep.size() > 0:
+		_show_sheep_editor(recent_new_sheep)
+		recent_new_sheep = []
+
 func _on_MuseClient_musing_shared(musing_text):
 	add_event(EventData.EVENT_TYPES.MUSE, musing_text)
 	show_musing(musing_text)
@@ -166,12 +177,11 @@ func _get_camera_center():
 	return get_viewport_rect().size / 2
 
 func _process(delta):
-	if recent_new_sheep.size() > 0:
-		_show_sheep_editor(recent_new_sheep)
-		recent_new_sheep = []
 	match(input_mode):
 		InputModes.MOUSE:
-			if Input.is_action_pressed("interact"):
+			if pause_mouse_input:
+				return
+			elif Input.is_action_pressed("interact"):
 				$"%World".move_shepherd(get_local_mouse_position() - _get_camera_center())
 			elif Input.is_action_just_released("interact"):
 				$"%World".move_shepherd(Vector2.ZERO)
@@ -189,6 +199,8 @@ func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		input_mode = InputModes.MOUSE
 		if  event.is_action_pressed("interact") and event.doubleclick:
+			pause_mouse_input = true
+			$PauseMouseTimer.start()
 			var direction = event.position - _get_camera_center()
 			if direction.length() > TOGGLE_ACTION_RADIUS:
 				$"%World".set_shepherd_destination(event.position - _get_camera_center())
@@ -200,3 +212,7 @@ func _unhandled_input(event):
 		input_mode = InputModes.KEYBOARD
 		if event.is_action_pressed("interact"):
 			$"%World".toggle_shepherd_equipped()
+
+
+func _on_PauseMouseTimer_timeout():
+	pause_mouse_input = false

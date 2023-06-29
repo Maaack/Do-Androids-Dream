@@ -4,7 +4,7 @@
 [ext_resource path="res://Assets/Original/Sprites/healthy_grass.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/TutorialScreen/TutorialScreen.tscn" type="PackedScene" id=3]
 
-[node name="Intro1Screen" instance=ExtResource( 3 )]
+[node name="GrassesExplanationScreen" instance=ExtResource( 3 )]
 
 [node name="NinePatchRect" parent="Control" index="0"]
 margin_left = 145.0
@@ -12,12 +12,11 @@ margin_right = 450.0
 margin_bottom = 143.0
 
 [node name="PanelContainer" parent="Control/NinePatchRect/MarginContainer" index="0"]
-margin_bottom = 262.0
+margin_bottom = 261.0
 
 [node name="TutorialText" parent="Control/NinePatchRect/MarginContainer/PanelContainer" index="0"]
-margin_bottom = 206.0
-text = "Welcome to the electric pastures!
-Herd your sheep to graze on electric grass.
+margin_bottom = 205.0
+text = "Herd your sheep to graze on electric grass.
 
 
 
@@ -33,9 +32,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -48.0
-margin_top = -33.0
+margin_top = -47.0
 margin_right = 48.0
-margin_bottom = -1.0
+margin_bottom = -15.0
 texture = ExtResource( 2 )
 expand = true
 
@@ -45,12 +44,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -48.0
-margin_top = 42.0
+margin_top = 28.0
 margin_right = 48.0
-margin_bottom = 74.0
+margin_bottom = 60.0
 texture = ExtResource( 1 )
 expand = true
 
 [node name="ResumeButton" parent="Control/NinePatchRect/MarginContainer/PanelContainer" index="1"]
-margin_top = 214.0
-margin_bottom = 254.0
+margin_top = 213.0
+margin_bottom = 253.0

@@ -5,9 +5,12 @@ signal sheep_ate_volatile_grass(sheep_instance)
 signal sheep_exploded(sheep_instance)
 signal sheep_assembled(sheep_instance)
 signal sheep_powered(sheep_instance)
+signal sheep_joined(sheep_instance)
 signal sheep_starved(sheep_instance)
 signal sheep_part_collected
 signal magnet_collected
+signal battery_collected
+signal repeller_collected
 signal shepherd_entered_area(area_name)
 
 export(float, 0, 1000) var spawn_range : float = 200
@@ -40,10 +43,6 @@ func _ready():
 	randomize()
 	extra_sheep_names = SheepConstants.NAMES.duplicate()
 	extra_sheep_names.shuffle()
-	for body in $YSort.get_children():
-		if body is Sheep:
-			_name_sheep(body)
-			_connect_sheep_signals(body)
 
 func set_day_length(day_length : float):
 	$"DayNightCycle".day_length = day_length
@@ -58,6 +57,8 @@ func reset_world(target_sheep_count : int = 1):
 	for sheep in sheep_instances:
 		if is_instance_valid(sheep):
 			sheep.queue_free()
+	sheep_instances.empty()
+	$SheepParts.load_scenes()
 	for i in range(target_sheep_count):
 		add_sheep()
 	reset_day()
@@ -80,9 +81,10 @@ func _get_random_sheep_position():
 	var spawn_range_vector = Vector2(rand_range(-spawn_range,spawn_range),rand_range(-spawn_range,spawn_range))
 	return shepherd_node.position + spawn_range_vector + spawn_offset
 
-func add_sheep(sheep_position : Vector2 = _get_random_sheep_position()) -> Node2D:
+func add_sheep(sheep_position : Vector2 = _get_random_sheep_position(), powered : bool = true) -> Node2D:
 	var sheep_instance = sheep_scene.instance()
 	sheep_instance.position = sheep_position
+	sheep_instance.powered = powered
 	_name_sheep(sheep_instance)
 	_connect_sheep_signals(sheep_instance)
 	$YSort.call_deferred("add_child", sheep_instance)
@@ -104,6 +106,12 @@ func assemble_sheep():
 func get_sheep_count():
 	return sheep_instances.size()
 
+func get_powered_sheep_count():
+	var powered_sheep : int = 0
+	for sheep in sheep_instances:
+		powered_sheep += int(sheep.powered)
+	return powered_sheep
+
 func get_hungry_sheep():
 	var hungry_sheep_instances : Array = []
 	for sheep_instance in sheep_instances:
@@ -116,7 +124,9 @@ func starve_hungry_sheep():
 	for hungry_sheep in hungry_sheep_instances:
 		hungry_sheep.starve()
 
-func move_shepherd(direction : Vector2):
+func move_shepherd(direction : Vector2, manual : bool = true):
+	if manual:
+		$PathManager2D.reset()
 	if direction != Vector2.ZERO:
 		direction = direction.normalized()
 	$"%Shepherd".move_vector = direction
@@ -126,6 +136,9 @@ func toggle_shepherd_equipped():
 
 func swap_shepherd_equipped():
 	$"%Shepherd".swap()
+
+func get_shepherd():
+	return $"%Shepherd"
 
 func set_shepherd_destination(destination : Vector2):
 	destination *= $"%Shepherd".get_current_zoom()
@@ -156,7 +169,6 @@ func _on_sheep_powered(sheep_instance : Sheep):
 	emit_signal("sheep_powered", sheep_instance)
 
 func _on_sheep_starved(sheep_instance : Sheep):
-	_on_sheep_death(sheep_instance.sheep_name, 1)
 	emit_signal("sheep_starved", sheep_instance)
 
 func _on_sheep_pathing(sheep_instance : Sheep):
@@ -171,7 +183,7 @@ func _on_sheep_pathing(sheep_instance : Sheep):
 		return
 	if $"%Shepherd".is_magnet_active() and randf() < sheep_path_visible_probability:
 		var sheep_color = sheep_instance.collar_color
-		sheep_color.a = 0.8
+		sheep_color.a = 0.5
 		$PathsSpawner.add_path(path_points, sheep_tile_position, shepherd_tile_position, sheep_color)
 	if $"%Shepherd".is_battery_equipped() and not sheep_instance.powered:
 		$PathsSpawner.add_path(path_points, shepherd_tile_position, sheep_tile_position, charge_color)
@@ -221,11 +233,29 @@ func _on_VolatilePasturesArea2D_shepherd_entered():
 func _on_WindingCircuitArea2D_shepherd_entered():
 	emit_signal("shepherd_entered_area", "winding_circuit")
 
+func _on_UnpoweredSheepArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "unpowered_sheep")
+
+func _on_WatchersGateArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "watchers_gate")
+
 func _on_Shepherd_magnet_collected():
 	emit_signal("magnet_collected")
 
+func _on_Shepherd_battery_collected():
+	emit_signal("battery_collected")
+
+func _on_Shepherd_repeller_collected():
+	emit_signal("repeller_collected")
+
 func _on_PathManager2D_move(direction):
-	move_shepherd(direction)
+	move_shepherd(direction, false)
 
 func _on_PathManager2D_destination_reached():
-	move_shepherd(Vector2.ZERO)
+	move_shepherd(Vector2.ZERO, false)
+
+func _on_SheepParts_add_sheep_part(part_position):
+	add_sheep_part(part_position)
+
+func _on_SheepParts_add_unpowered_sheep(sheep_position):
+	add_sheep(sheep_position, false)

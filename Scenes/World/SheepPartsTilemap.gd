@@ -1,23 +1,21 @@
 extends TileMap
 
-
-var sheep_part_scene = preload("res://Scenes/SheepPart/SheepPart.tscn")
+signal add_sheep_part(position)
+signal add_unpowered_sheep(position)
 
 var loaded_scenes = false
 
-func _load_scenes():
+func load_scenes():
 	if loaded_scenes:
 		return
 	loaded_scenes = true
 	var cell_offset = cell_size / 2
 	for cell_position in get_used_cells():
 		var cell = get_cellv(cell_position)
-		if cell < 0:
-			return
-		var sheep_part_instance = sheep_part_scene.instance()
-		sheep_part_instance.position = cell_offset + map_to_world(cell_position) * scale
-		add_child(sheep_part_instance)
-		set_cellv(cell_position, -1)
-
-func _ready():
-	_load_scenes()
+		match(cell):
+			0:
+				emit_signal("add_sheep_part", cell_offset + map_to_world(cell_position) * scale)
+				set_cellv(cell_position, -1)
+			1:
+				emit_signal("add_unpowered_sheep", cell_offset + map_to_world(cell_position) * scale)
+				set_cellv(cell_position, -1)

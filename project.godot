@@ -53,6 +53,11 @@ _global_script_classes=[ {
 "class": "SheepConstants",
 "language": "GDScript",
 "path": "res://Constants/Sheep.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Shepherd",
+"language": "GDScript",
+"path": "res://Scenes/Shepherd/Shepherd.gd"
 } ]
 _global_script_class_icons={
 "AStarTileMap": "",
@@ -63,7 +68,8 @@ _global_script_class_icons={
 "EventData": "",
 "GameLog": "",
 "Sheep": "",
-"SheepConstants": ""
+"SheepConstants": "",
+"Shepherd": ""
 }
 
 [application]
@@ -81,6 +87,7 @@ AppLogger="*res://Scripts/AppLogger.gd"
 
 [display]
 
+window/size/fullscreen=true
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 

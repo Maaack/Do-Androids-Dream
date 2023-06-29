@@ -5,7 +5,7 @@
 
 [sub_resource type="Animation" id=1]
 resource_name = "Intro"
-length = 7.0
+length = 3.5
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
 tracks/0/interp = 1
@@ -13,23 +13,17 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 3.5, 4.5, 7 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 3.5 ),
+"transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "play_tutorial_1"
-}, {
-"args": [  ],
-"method": "play_tutorial_2"
-}, {
-"args": [  ],
-"method": "play_tutorial_3"
+"method": "play_welcome_screen"
 } ]
 }
 
 [node name="Level1" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-starting_sheep_count = 8
+starting_sheep_count = 0
 game_days = 5
 musing_start_day = 1
 
@@ -42,6 +36,21 @@ pause_mode = 1
 autoplay = "Intro"
 anims/Intro = SubResource( 1 )
 
+[node name="NewSheepTimer" parent="." index="8"]
+wait_time = 0.1
+
+[node name="GrassExplanationTimer" type="Timer" parent="." index="10"]
+pause_mode = 1
+wait_time = 2.0
+
+[node name="GoalExplanationTimer" type="Timer" parent="." index="11"]
+pause_mode = 1
+wait_time = 10.0
+
+[connection signal="battery_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_battery_collected"]
 [connection signal="magnet_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_magnet_collected"]
+[connection signal="repeller_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_repeller_collected"]
 [connection signal="sheep_part_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_part_collected"]
 [connection signal="shepherd_entered_area" from="ViewportContainer/Viewport/World" to="." method="_on_World_shepherd_entered_area"]
+[connection signal="timeout" from="GrassExplanationTimer" to="." method="_on_GrassExplanationTimer_timeout"]
+[connection signal="timeout" from="GoalExplanationTimer" to="." method="_on_GoalTimer_timeout"]

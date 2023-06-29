@@ -20,6 +20,7 @@ export var avg_dir_factor = 1 # priority of the common direction
 export var grass_factor = 10 # priority of the direction to targeted grass patch
 export var shepherd_factor = 3 # priority of the direction to shepherd
 export var shepherd_avoid_factor = 5 # priority of the direction to avoid getting to close to the shepherd
+export var magnet_factor = 15 # priority of the sheep to follow the magnet
 export var poisoned_sheep_avoid_factor = 40 # priority of the direction to avoid getting to close to the shepherd
 export var laziness = 3
 export var wait_time : float = 5
@@ -72,7 +73,7 @@ func _physics_process(delta):
 	_walk(delta)
 
 func is_hungry() -> bool:
-	return hunger > 0
+	return powered and hunger > 0
 
 func _update_sheep_name():
 	if is_inside_tree():
@@ -100,7 +101,8 @@ func set_collar_color(new_value : Color):
 func calc_direction_to_center_of_mass_nearby():
 	var center = Vector2.ZERO
 	for sheep in nearby_sheep:
-		center += sheep.position
+		if sheep.powered:
+			center += sheep.position
 	center /= nearby_sheep.size()
 	
 	return position.direction_to(center) * center_factor
@@ -134,9 +136,12 @@ func calc_direction_to_nearest_grass():
 # calculate direction to the shepherd (player), the shepherd.magnet_factor will cahnge depending iif the player is using the magnet or not
 func calc_direction_to_shepherd():
 	if shepherd:
+		var final_factor = shepherd_factor
+		if shepherd.is_magnet_active():
+			final_factor += magnet_factor
 		if next_path_point_to_shepherd == null:
 			next_path_point_to_shepherd = shepherd.position
-		return position.direction_to(next_path_point_to_shepherd) * shepherd_factor * shepherd.magnet_factor
+		return position.direction_to(next_path_point_to_shepherd) * final_factor
 	else:
 		return Vector2.ZERO
 
@@ -181,10 +186,13 @@ func _eat_animation():
 func _stop_moving():
 	is_moving = false
 	$UpdateMovementTimer.paused = true
+	$BahStreamCycler2D.stop()
 
 func _start_moving():
 	is_moving = true
 	$UpdateMovementTimer.paused = false
+	$BahStreamCycler2D.play()
+
 
 func _explode():
 	_stop_moving()
@@ -222,9 +230,8 @@ func _finish_eating(grass_was_volatile : bool = false):
 		emit_signal("normal_grass_eaten")
 
 func starve():
-	_stop_moving()
+	set_powered(false)
 	emit_signal("starved")
-	queue_free()
 
 func eat_grass():
 	var grass_was_volatile : bool = targeted_grass.is_volatile
