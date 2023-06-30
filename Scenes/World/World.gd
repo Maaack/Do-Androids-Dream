@@ -37,6 +37,7 @@ func _connect_sheep_signals(sheep_instance : Sheep):
 func _name_sheep(sheep_instance : Sheep):
 	var sheep_name = extra_sheep_names.pop_back()
 	sheep_instance.sheep_name = sheep_name
+	sheep_instance.collar_color = SheepConstants.COLORS[randi() % SheepConstants.COLORS.size()]
 	current_sheep_names.append(sheep_name)
 
 func _ready():
