@@ -46,3 +46,14 @@ const NAMES : Array = [
 	"Zelda",
 	"Zoey",
 ]
+
+const COLORS : Array = [
+	Color("b4202a"),
+	Color("b45120"),
+	Color("afb420"),
+	Color("4eb420"),
+	Color("20b456"),
+	Color("20b4b4"),
+	Color("2022b4"),
+	Color("b420b2"),
+]
