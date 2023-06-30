@@ -75,6 +75,7 @@ margin_right = 132.0
 margin_bottom = 64.0
 
 [node name="ColorPickerButton" type="ColorPickerButton" parent="MarginContainer/VBoxContainer/HBoxContainer/CenterContainer"]
+unique_name_in_owner = true
 margin_top = 22.0
 margin_right = 44.0
 margin_bottom = 42.0

@@ -2,14 +2,15 @@
 ## Collaborators
 
 ### Team Lead
-[Marek](https://maaack.itch.io/) 
+[Marek (Maaack)](https://maaack.itch.io/) 
 
-### Programmers
+### Programming
 Tomy
 Marek
 
 ### Pixel Art
 Michael Estie  
+Marek
 
 ### Music and SFX
 Mike

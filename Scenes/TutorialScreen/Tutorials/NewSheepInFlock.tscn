@@ -20,7 +20,7 @@ text = "New sheep have joined your flock!
 
 
 
-Give them a unique name and pick a collar color."
+Give them unique names and pick their collar colors."
 
 [node name="TextureRect" type="TextureRect" parent="Control/NinePatchRect/MarginContainer/PanelContainer/TutorialText" index="0"]
 anchor_left = 0.5
