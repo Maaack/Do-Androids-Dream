@@ -20,20 +20,17 @@ modulate = Color( 0, 0, 0, 0.54902 )
 position = Vector2( -1, 0 )
 texture = ExtResource( 3 )
 hframes = 3
-frame = 1
 region_rect = Rect2( 512, 192, 64, 64 )
 
 [node name="NormalSprite" type="Sprite" parent="."]
 texture = ExtResource( 3 )
 hframes = 3
-frame = 1
 region_rect = Rect2( 512, 192, 64, 64 )
 
 [node name="VolatileSprite" type="Sprite" parent="."]
 visible = false
 texture = ExtResource( 2 )
 hframes = 3
-frame = 1
 region_rect = Rect2( 512, 192, 64, 64 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

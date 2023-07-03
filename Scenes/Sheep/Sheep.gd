@@ -41,6 +41,7 @@ var custom_sheep_name : String setget set_custom_sheep_name
 export(Color) var collar_color : Color setget set_collar_color
 var is_moving : bool = true
 var is_poisoned : bool = false
+var eaten_grass_is_volatile : bool = false
 
 func _set_blend_positions(input_vector : Vector2):
 	animation_tree.set("parameters/Idle/blend_position", input_vector)
@@ -193,7 +194,6 @@ func _start_moving():
 	$UpdateMovementTimer.paused = false
 	$BahStreamCycler2D.play()
 
-
 func _explode():
 	_stop_moving()
 	is_poisoned = true
@@ -219,11 +219,13 @@ func _update_hunger(delta : int = 0) -> void:
 	$HungerMeter/MeterSprite1.frame = int(hunger < 2)
 	$HungerMeter/MeterSprite2.frame = int(hunger < 1)
 
-func _finish_eating(grass_was_volatile : bool = false):
-	targeted_grass.queue_free()
+func finish_eating():
+	_start_moving()
+	if is_instance_valid(targeted_grass):
+		targeted_grass.queue_free()
 	targeted_grass = null
 	_update_hunger(-1)
-	if grass_was_volatile:
+	if eaten_grass_is_volatile:
 		emit_signal("volatile_grass_eaten")
 		_explode()
 	elif hunger == 0:
@@ -234,18 +236,10 @@ func starve():
 	emit_signal("starved")
 
 func eat_grass():
-	var grass_was_volatile : bool = targeted_grass.is_volatile
+	eaten_grass_is_volatile = targeted_grass.is_volatile
 	# play eating animation
 	_stop_moving()
 	_eat_animation()
-	# wait a certain amount of time
-	$AnimationEventTimer.start(0.5)
-	yield($AnimationEventTimer, "timeout")
-	show_hunger_meter()
-	$AnimationEventTimer.start(1.5)
-	yield($AnimationEventTimer, "timeout")
-	_start_moving()
-	_finish_eating(grass_was_volatile)
 
 func assemble():
 	_stop_moving()
