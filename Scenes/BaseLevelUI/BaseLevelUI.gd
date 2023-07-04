@@ -29,10 +29,9 @@ func _end_day():
 	if day_ended:
 		return
 	day_ended = true
-	current_day += 1
-	get_tree().paused = true
-	$"%World".starve_hungry_sheep()
-	show_scoring_screen()
+	$"%EndDayButton".disabled = true
+	$"%World".snooze_sheep()
+	$EndDayDelayTimer.start()
 
 func _get_days_left():
 	return game_days - current_day
@@ -47,6 +46,7 @@ func _start_day():
 	$"%DaysLeftLabel".text = "Days Left: %d" % _get_days_left()
 	if current_day >= musing_start_day:
 		$MuseTimer.start()
+	$"%EndDayButton".disabled = false
 
 func reset_level() -> void:
 	game_events.clear()
@@ -213,6 +213,11 @@ func _unhandled_input(event):
 		if event.is_action_pressed("interact"):
 			$"%World".toggle_shepherd_equipped()
 
-
 func _on_PauseMouseTimer_timeout():
 	pause_mouse_input = false
+
+func _on_EndDayDelayTimer_timeout():
+	current_day += 1
+	get_tree().paused = true
+	$"%World".starve_hungry_sheep()
+	show_scoring_screen()

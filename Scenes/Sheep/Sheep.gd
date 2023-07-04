@@ -41,6 +41,7 @@ var custom_sheep_name : String setget set_custom_sheep_name
 export(Color) var collar_color : Color setget set_collar_color
 var is_moving : bool = true
 var is_poisoned : bool = false
+var is_snoozing : bool = false
 var eaten_grass_is_volatile : bool = false
 
 func _set_blend_positions(input_vector : Vector2):
@@ -190,6 +191,8 @@ func _stop_moving():
 	$BahStreamCycler2D.stop()
 
 func _start_moving():
+	if is_snoozing:
+		return
 	is_moving = true
 	$UpdateMovementTimer.paused = false
 	$BahStreamCycler2D.play()
@@ -279,6 +282,19 @@ func _charge_sheep():
 	if powered:
 		return
 	set_powered(true)
+
+func snooze():
+	if is_snoozing:
+		return
+	is_snoozing = true
+	animation_state.travel("Idle")
+	_stop_moving()
+
+func wake():
+	if not powered or not is_snoozing:
+		return
+	is_snoozing = false
+	_start_moving()
 
 func _on_FarDetectionArea_body_entered(body : Node2D):
 	if body.is_in_group("sheeps"):
