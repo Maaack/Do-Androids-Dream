@@ -1,24 +1,24 @@
 tool
 extends Node2D
 
-enum Direction {
+enum Directions {
 	UP,
 	RIGHT,
 	DOWN,
 	LEFT
 }
 
-export(Direction) var direction : int = Direction.UP setget set_direction
+export(Directions) var direction : int = Directions.UP setget set_direction
 
 func set_direction(value : int):
 	direction = value
 	if is_visible_in_tree():
 		match(direction):
-			Direction.UP:
+			Directions.UP:
 				$AnimationPlayer.play("PointUp")
-			Direction.RIGHT:
+			Directions.RIGHT:
 				$AnimationPlayer.play("PointRight")
-			Direction.DOWN:
+			Directions.DOWN:
 				$AnimationPlayer.play("PointDown")
-			Direction.LEFT:
+			Directions.LEFT:
 				$AnimationPlayer.play("PointLeft")
