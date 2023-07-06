@@ -66,16 +66,33 @@ func is_repeller_active():
 func is_battery_equipped():
 	return get_equipped_state() == Equipped.BATTERY
 
-func set_magnet_state(state : bool):
-	if state:
-		$MagnetSprite.show()
+func _update_item_animation():
+	var equipped_state : int = get_equipped_state()
+	match(equipped_state):
+		Equipped.NOTHING:
+			$ItemAnimationPlayer.play("None")
+		Equipped.ATTRACTOR:
+			if equipment_active:
+				$ItemAnimationPlayer.play("MagnetOn")
+			else:
+				$ItemAnimationPlayer.play("MagnetOff")
+		Equipped.REPELLER:
+			if equipment_active:
+				$ItemAnimationPlayer.play("RepellerOn")
+			else:
+				$ItemAnimationPlayer.play("RepellerOff")
+		Equipped.BATTERY:
+			$ItemAnimationPlayer.play("BatteryOff")
+
+func _update_item_sfx():
+	if equipment_active:
 		$MagnetStreamCycler2D.play()
 	else:
-		$MagnetSprite.hide()
 		$MagnetStreamCycler2D.stop()
 
 func _update_equipped_active():
-	set_magnet_state(equipment_active)
+	_update_item_animation()
+	_update_item_sfx()
 
 func toggle_equipped():
 	if is_nothing_equipped():
