@@ -34,8 +34,8 @@ func point_to(value : Vector2):
 	var closest_direction : int = 0
 	var closest_angle : float = PI * 2
 	for key in direction_map:
-		if abs(direction_map[key].angle() - value.angle()) < closest_angle:
-			closest_angle = abs(direction_map[key].angle() - value.angle())
+		if abs(value.angle_to(direction_map[key])) < closest_angle:
+			closest_angle = abs(value.angle_to(direction_map[key]))
 			closest_direction = key
 	self.direction = closest_direction
 
