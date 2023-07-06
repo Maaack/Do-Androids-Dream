@@ -109,7 +109,7 @@ func remove_chargeable_sheep(name : String):
 func toggle_equipped():
 	if is_nothing_equipped():
 		return
-	if is_battery_equipped():
+	if is_battery_equipped() and chargeable_sheep.size() > 0:
 		for sheep_name in chargeable_sheep:
 			var sheep_instance = chargeable_sheep[sheep_name]
 			sheep_instance.charge()
