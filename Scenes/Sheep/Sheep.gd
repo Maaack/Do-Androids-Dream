@@ -311,7 +311,7 @@ func _on_NearDetectionArea_area_exited(area):
 			targeted_grass = null
 
 func _on_NearDetectionArea_body_entered(body):
-	if body is Shepherd:
+	if body is Shepherd and not powered:
 		body.add_chargeable_sheep(sheep_name, self)
 
 func _on_NearDetectionArea_body_exited(body):

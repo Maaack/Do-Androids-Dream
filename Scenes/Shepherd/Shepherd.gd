@@ -113,6 +113,7 @@ func toggle_equipped():
 		for sheep_name in chargeable_sheep:
 			var sheep_instance = chargeable_sheep[sheep_name]
 			sheep_instance.charge()
+		chargeable_sheep.clear()
 		remove_battery_equip_state()
 		return
 	equipment_active = !(equipment_active)
