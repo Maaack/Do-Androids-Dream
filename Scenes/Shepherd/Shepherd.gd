@@ -6,7 +6,6 @@ signal part_collected
 signal magnet_collected
 signal battery_collected
 signal repeller_collected
-signal sheep_charged
 
 enum Equipped{
 	NOTHING,
@@ -32,6 +31,7 @@ var parts_collected : int = 0
 var equipped_states : Array = [Equipped.NOTHING]
 var equipped_state_iter : int = 0
 var equipment_active : bool = false
+var chargeable_sheep : Dictionary = {}
 
 func get_equipped_state():
 	return equipped_states[equipped_state_iter]
@@ -66,22 +66,54 @@ func is_repeller_active():
 func is_battery_equipped():
 	return get_equipped_state() == Equipped.BATTERY
 
-func set_magnet_state(state : bool):
-	if state:
-		$MagnetSprite.show()
+func _update_item_animation():
+	var equipped_state : int = get_equipped_state()
+	match(equipped_state):
+		Equipped.NOTHING:
+			$ItemAnimationPlayer.play("None")
+		Equipped.ATTRACTOR:
+			if equipment_active:
+				$ItemAnimationPlayer.play("MagnetOn")
+			else:
+				$ItemAnimationPlayer.play("MagnetOff")
+		Equipped.REPELLER:
+			if equipment_active:
+				$ItemAnimationPlayer.play("RepellerOn")
+			else:
+				$ItemAnimationPlayer.play("RepellerOff")
+		Equipped.BATTERY:
+			if chargeable_sheep.size() > 0:
+				$ItemAnimationPlayer.play("BatteryOn")
+			else:
+				$ItemAnimationPlayer.play("BatteryOff")
+
+func _update_item_sfx():
+	if equipment_active:
 		$MagnetStreamCycler2D.play()
 	else:
-		$MagnetSprite.hide()
 		$MagnetStreamCycler2D.stop()
 
 func _update_equipped_active():
-	set_magnet_state(equipment_active)
+	_update_item_animation()
+	_update_item_sfx()
+
+func add_chargeable_sheep(name : String, instance : Node2D):
+	chargeable_sheep[name] = instance
+	_update_item_animation()
+
+func remove_chargeable_sheep(name : String):
+	if name in chargeable_sheep:
+		chargeable_sheep.erase(name)
+		_update_item_animation()
 
 func toggle_equipped():
 	if is_nothing_equipped():
 		return
-	if is_battery_equipped():
-		emit_signal("sheep_charged")
+	if is_battery_equipped() and chargeable_sheep.size() > 0:
+		for sheep_name in chargeable_sheep:
+			var sheep_instance = chargeable_sheep[sheep_name]
+			sheep_instance.charge()
+		chargeable_sheep.clear()
 		remove_battery_equip_state()
 		return
 	equipment_active = !(equipment_active)
