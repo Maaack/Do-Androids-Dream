@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/TutorialScreen/TutorialScreen.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Assets/Original/Sprites/horseshoe_magnet.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Original/Sprites/repeller.png" type="Texture" id=2]
 
 [node name="RepellerPickupScreen" instance=ExtResource( 1 )]
 __meta__ = {
@@ -27,7 +27,6 @@ text = "You found a sheep repeller!
 Activate it to repel sheep from dangerous areas."
 
 [node name="TextureRect" type="TextureRect" parent="Control/NinePatchRect/MarginContainer/PanelContainer/TutorialText" index="0"]
-modulate = Color( 1, 0.172549, 0.172549, 1 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
