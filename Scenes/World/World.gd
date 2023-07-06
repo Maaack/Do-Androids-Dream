@@ -17,6 +17,8 @@ export(float, 0, 1000) var spawn_range : float = 200
 export(Vector2) var spawn_offset : Vector2 = Vector2.ZERO
 export(float, 0, 1) var sheep_path_visible_probability : float = 0
 export(Color) var charge_color : Color
+export(Vector2) var goal_position : Vector2 setget set_goal_position
+export(Array, NodePath) var goal_posts : Array
 
 onready var shepherd_node = $YSort/Shepherd
 var sheep_scene = preload("res://Scenes/Sheep/Sheep.tscn")
@@ -24,6 +26,7 @@ var sheep_part_scene = preload("res://Scenes/SheepPart/SheepPart.tscn")
 var sheep_instances : Array = []
 var current_sheep_names : Array = []
 var extra_sheep_names : Array = []
+var current_goal : int = 0
 
 func _connect_sheep_signals(sheep_instance : Sheep):
 	sheep_instance.connect("normal_grass_eaten", self, "_on_sheep_ate_normal_grass", [sheep_instance])
@@ -44,6 +47,7 @@ func _ready():
 	randomize()
 	extra_sheep_names = SheepConstants.NAMES.duplicate()
 	extra_sheep_names.shuffle()
+	self.goal_position = $"%GoalHalo".position
 
 func set_day_length(day_length : float):
 	$"DayNightCycle".day_length = day_length
@@ -237,6 +241,9 @@ func _on_WindingCircuitArea2D_shepherd_entered():
 func _on_UnpoweredSheepArea2D_shepherd_entered():
 	emit_signal("shepherd_entered_area", "unpowered_sheep")
 
+func _on_PowerSheepArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "power_sheep")
+
 func _on_WatchersGateArea2D_shepherd_entered():
 	emit_signal("shepherd_entered_area", "watchers_gate")
 
@@ -260,3 +267,20 @@ func _on_SheepParts_add_sheep_part(part_position):
 
 func _on_SheepParts_add_unpowered_sheep(sheep_position):
 	add_sheep(sheep_position, false)
+
+func set_goal_position(value : Vector2):
+	goal_position = value
+	$"%GoalHalo".position = goal_position
+
+func get_goal_relative_position():
+	return goal_position - $"%Shepherd".position
+
+func next_goal():
+	current_goal += 1
+	if current_goal >= goal_posts.size():
+		current_goal
+	var goal_post_node : Node2D = get_node_or_null(goal_posts[current_goal])
+	if goal_post_node == null:
+		return
+	self.goal_position = goal_post_node.position
+

@@ -33,6 +33,8 @@ var area_names_map : Dictionary = {
 
 func play_welcome_screen():
 	InGameMenuController.open_menu(welcome_screen)
+	goal_active = true
+
 
 func is_oneshot_completed(oneshot : String):
 	return oneshots_completed.has(oneshot)
@@ -90,13 +92,16 @@ func _on_World_shepherd_entered_area(area_name):
 			complete_oneshot("well_fed_hint")
 			InGameMenuController.open_menu(tutorial_well_fed)
 		"unpowered_sheep":
-			var battery_equipped : bool = $"%World".get_shepherd().is_battery_equipped() 
 			if not is_oneshot_completed("unpowered_sheep"):
 				complete_oneshot("unpowered_sheep")
 				InGameMenuController.open_menu(unpowered_sheep_screen)
-			elif not is_oneshot_completed("charge_sheep") and battery_equipped:
+		"power_sheep":
+			var battery_equipped : bool = $"%World".get_shepherd().is_battery_equipped() 
+			if not is_oneshot_completed("charge_sheep") and battery_equipped:
 				complete_oneshot("charge_sheep")
 				InGameMenuController.open_menu(charge_sheep_screen)
+				$"%World".next_goal()
+				goal_active = false
 
 func _on_World_sheep_ate_volatile_grass(sheep_instance):
 	if is_oneshot_completed("sheep_poisoned"):
@@ -123,6 +128,7 @@ func _on_World_battery_collected():
 		return
 	complete_oneshot("battery_collected")
 	InGameMenuController.open_menu(battery_pickup_screen)
+	$"%World".next_goal()
 
 func _on_World_repeller_collected():
 	if is_oneshot_completed("repeller_collected"):
