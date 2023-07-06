@@ -692,7 +692,7 @@ connect_point_mode = 2
 [node name="YSort" type="YSort" parent="."]
 
 [node name="StartingPosition2D" type="Position2D" parent="YSort"]
-position = Vector2( -2296, 408 )
+position = Vector2( -2296, 400 )
 
 [node name="Goal1Position2D" type="Position2D" parent="YSort"]
 position = Vector2( -1456, 392 )
@@ -708,7 +708,7 @@ position = Vector2( 5752, 376 )
 
 [node name="Shepherd" parent="YSort" instance=ExtResource( 2 )]
 unique_name_in_owner = true
-position = Vector2( -2296, 408 )
+position = Vector2( -2296, 400 )
 max_speed = 70
 
 [node name="GoalHalo" parent="YSort" instance=ExtResource( 17 )]
