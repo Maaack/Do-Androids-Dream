@@ -261,6 +261,7 @@ func _power_up():
 	_power_up_animation()
 	if is_visible_in_tree():
 		$CheckChargeTimer.stop()
+		$UpdateMovementTimer.start()
 
 func _finish_power_up():
 	if is_moving:
@@ -273,6 +274,7 @@ func _power_down():
 	_powered_down_animation()
 	if is_visible_in_tree():
 		$CheckChargeTimer.start()
+		$UpdateMovementTimer.stop()
 
 func set_powered(value : bool):
 	powered = value
@@ -281,7 +283,7 @@ func set_powered(value : bool):
 	else:
 		_power_down()
 
-func _charge_sheep():
+func charge():
 	if powered:
 		return
 	set_powered(true)
@@ -289,13 +291,13 @@ func _charge_sheep():
 func _on_FarDetectionArea_body_entered(body : Node2D):
 	if body.is_in_group("sheeps"):
 		nearby_sheep.append(body)
-	elif body.is_in_group("shepherds"):
+	elif body is Shepherd:
 		shepherd = body
 
 func _on_FarDetectionArea_body_exited(body):
 	if body.is_in_group("sheeps"):
 		nearby_sheep.erase(body)
-	elif body.is_in_group("shepherds"):
+	elif body is Shepherd:
 		shepherd = null
 
 func _on_NearDetectionArea_area_entered(area):
@@ -309,14 +311,16 @@ func _on_NearDetectionArea_area_exited(area):
 			targeted_grass = null
 
 func _on_NearDetectionArea_body_entered(body):
-	if body.is_in_group("shepherds") and body.has_signal("sheep_charged"):
-		body.connect("sheep_charged", self, "_charge_sheep")
+	if body is Shepherd:
+		body.add_chargeable_sheep(sheep_name, self)
 
 func _on_NearDetectionArea_body_exited(body):
-	if body.is_in_group("shepherds") and body.is_connected("sheep_charged", self, "_charge_sheep"):
-		body.disconnect("sheep_charged", self, "_charge_sheep")
-			
+	if body is Shepherd:
+		body.remove_chargeable_sheep(sheep_name)
+
 func _update_direction():
+	if not powered or not is_moving:
+		return
 	emit_signal("pathing")
 	direction = (
 		calc_direction_to_center_of_mass_nearby() +
@@ -332,7 +336,7 @@ func _on_UpdateMovementTimer_timeout():
 	$UpdateMovementTimer.wait_time = wait_time + rand_range(-wait_time_randomness, wait_time_randomness)
 
 func _on_CheckChargeTimer_timeout():
-	if not powered and shepherd != null and shepherd.is_connected("sheep_charged", self, "_charge_sheep"):
+	if not powered and shepherd != null and shepherd is Shepherd and sheep_name in shepherd.chargeable_sheep:
 		emit_signal("pathing")
 
 func reset_hunger():
