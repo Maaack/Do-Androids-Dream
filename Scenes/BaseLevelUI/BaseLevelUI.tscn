@@ -107,6 +107,7 @@ mouse_filter = 2
 theme = ExtResource( 8 )
 script = ExtResource( 1 )
 day_length = 120.0
+min_goal_arrow_distance = 280.0
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
