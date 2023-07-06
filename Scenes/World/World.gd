@@ -47,7 +47,7 @@ func _ready():
 	randomize()
 	extra_sheep_names = SheepConstants.NAMES.duplicate()
 	extra_sheep_names.shuffle()
-	self.goal_position = $"%GoalHalo".position
+	set_current_goal()
 
 func set_day_length(day_length : float):
 	$"DayNightCycle".day_length = day_length
@@ -275,12 +275,15 @@ func set_goal_position(value : Vector2):
 func get_goal_relative_position():
 	return goal_position - $"%Shepherd".position
 
-func next_goal():
-	current_goal += 1
-	if current_goal >= goal_posts.size():
-		current_goal
+func set_current_goal():
 	var goal_post_node : Node2D = get_node_or_null(goal_posts[current_goal])
 	if goal_post_node == null:
 		return
 	self.goal_position = goal_post_node.position
+
+func next_goal():
+	current_goal += 1
+	if current_goal >= goal_posts.size():
+		current_goal
+	set_current_goal()
 
