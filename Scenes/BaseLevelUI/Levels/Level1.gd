@@ -122,6 +122,7 @@ func _on_World_magnet_collected():
 		return
 	complete_oneshot("magnet_collected")
 	InGameMenuController.open_menu(magnet_pickup_screen)
+	$"%World".next_goal()
 
 func _on_World_battery_collected():
 	if is_oneshot_completed("battery_collected"):
@@ -156,3 +157,4 @@ func _on_GoalTimer_timeout():
 		return
 	complete_oneshot("goal_explanation")
 	InGameMenuController.open_menu(goal_explanation_screen)
+	goal_active = true
