@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scenes/BaseLevelUI/BaseLevelUI.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/World/World.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Scenes/APIClient/Wrappers/MuseClient.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Themes/GameFont32px.tres" type="DynamicFont" id=10]
 [ext_resource path="res://Themes/GameAreaFont48px.tres" type="DynamicFont" id=11]
+[ext_resource path="res://Scenes/BaseLevelUI/GoalArrowControl.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Muse"
@@ -106,6 +107,7 @@ mouse_filter = 2
 theme = ExtResource( 8 )
 script = ExtResource( 1 )
 day_length = 120.0
+min_goal_arrow_distance = 280.0
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
@@ -229,6 +231,27 @@ align = 1
 valign = 1
 autowrap = true
 percent_visible = 0.0
+
+[node name="MarginContainer3" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 48
+custom_constants/margin_top = 48
+custom_constants/margin_left = 48
+custom_constants/margin_bottom = 48
+
+[node name="Control" type="Control" parent="MarginContainer3"]
+margin_left = 48.0
+margin_top = 48.0
+margin_right = 976.0
+margin_bottom = 552.0
+mouse_filter = 2
+
+[node name="GoalArrowControl" parent="MarginContainer3/Control" instance=ExtResource( 12 )]
+pause_mode = 1
+unique_name_in_owner = true
+mouse_filter = 2
 
 [node name="ScoringScreen" parent="." instance=ExtResource( 3 )]
 visible = false

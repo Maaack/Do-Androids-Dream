@@ -13,6 +13,8 @@ export(int) var starting_sheep_count : int = 6
 export(float) var day_length : float = 100
 export(int, 1, 12) var game_days : int = 3
 export(int, 0, 12) var musing_start_day : int = 0
+export(float, 0, 1000) var min_goal_arrow_distance : float = 300
+export(bool) var goal_active : bool = false
 
 var day_ended : bool = false
 var destination_reached : bool = false
@@ -194,6 +196,12 @@ func _process(delta):
 				$"%World".move_shepherd(Vector2.ZERO)
 				return
 			$"%World".move_shepherd(input_vector)
+	var goal_relative_position : Vector2 = $"%World".get_goal_relative_position()
+	$"%GoalArrowControl".point_to(goal_relative_position)
+	if goal_active and goal_relative_position.length() > min_goal_arrow_distance:
+		$"%GoalArrowControl".show()
+	else:
+		$"%GoalArrowControl".hide()
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:

@@ -36,7 +36,7 @@ pause_mode = 1
 autoplay = "Intro"
 anims/Intro = SubResource( 1 )
 
-[node name="NewSheepTimer" parent="." index="8"]
+[node name="NewSheepTimer" parent="." index="9"]
 wait_time = 0.1
 
 [node name="GrassExplanationTimer" type="Timer" parent="." index="10"]
