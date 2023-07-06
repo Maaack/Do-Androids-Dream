@@ -31,6 +31,13 @@ var area_names_map : Dictionary = {
 	"watchers_gate" : "Watchers Gate",
 }
 
+enum Goals {
+	GET_BATTERY,
+	POWER_SHEEP,
+	GET_MAGNET,
+	GO_TO_DELTA,
+}
+
 func play_welcome_screen():
 	InGameMenuController.open_menu(welcome_screen)
 	goal_active = true
@@ -100,7 +107,7 @@ func _on_World_shepherd_entered_area(area_name):
 			if not is_oneshot_completed("charge_sheep") and battery_equipped:
 				complete_oneshot("charge_sheep")
 				InGameMenuController.open_menu(charge_sheep_screen)
-				$"%World".next_goal()
+				$"%World".set_current_goal(Goals.GET_MAGNET)
 				goal_active = false
 
 func _on_World_sheep_ate_volatile_grass(sheep_instance):
@@ -122,14 +129,14 @@ func _on_World_magnet_collected():
 		return
 	complete_oneshot("magnet_collected")
 	InGameMenuController.open_menu(magnet_pickup_screen)
-	$"%World".next_goal()
+	$"%World".set_current_goal(Goals.GO_TO_DELTA)
 
 func _on_World_battery_collected():
 	if is_oneshot_completed("battery_collected"):
 		return
 	complete_oneshot("battery_collected")
 	InGameMenuController.open_menu(battery_pickup_screen)
-	$"%World".next_goal()
+	$"%World".set_current_goal(Goals.POWER_SHEEP)
 
 func _on_World_repeller_collected():
 	if is_oneshot_completed("repeller_collected"):
