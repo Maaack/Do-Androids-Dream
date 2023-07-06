@@ -361,7 +361,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0.498039 ) ]
+"values": [ Color( 1, 1, 1, 0.247059 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("ItemSprite:texture")
@@ -453,7 +453,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0.498039 ) ]
+"values": [ Color( 1, 1, 1, 0.247059 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("ItemSprite:texture")
@@ -576,7 +576,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0.498039 ) ]
+"values": [ Color( 1, 1, 1, 0.247059 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("ItemSprite:texture")
@@ -726,8 +726,9 @@ vframes = 6
 
 [node name="ItemSprite" type="Sprite" parent="."]
 visible = false
+modulate = Color( 1, 1, 1, 0.247059 )
 position = Vector2( 0, -28 )
-texture = ExtResource( 17 )
+texture = ExtResource( 16 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
