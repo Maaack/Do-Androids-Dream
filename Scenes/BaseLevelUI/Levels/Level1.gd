@@ -111,14 +111,12 @@ func _on_World_shepherd_entered_area(area_name):
 				complete_oneshot("charge_sheep")
 				InGameMenuController.open_menu(charge_sheep_screen)
 				$"%World".get_shepherd().equipped_activation_enabled = true
-				$"%World".set_current_goal(Goals.GET_MAGNET)
-				goal_active = false
 		"catch_runaway":
-			if not is_oneshot_completed("catch_runaway") and not is_oneshot_completed("charge_sheep"):
+			if not is_oneshot_completed("catch_runaway") and not is_oneshot_completed("new_sheep"):
 				complete_oneshot("catch_runaway")
 				InGameMenuController.open_menu(catch_runaway_screen)
 		"warp_back":
-			if not is_oneshot_completed("charge_sheep"):
+			if not is_oneshot_completed("new_sheep"):
 				$"%World".warp_back_shepherd()
 				InGameMenuController.open_menu(glitch_in_matrix_screen)
 
@@ -166,6 +164,8 @@ func _on_World_new_sheep(sheep_instance : Sheep):
 		return
 	complete_oneshot("new_sheep")
 	InGameMenuController.open_menu(new_sheep_screen)
+	goal_active = false
+	$"%World".set_current_goal(Goals.GET_MAGNET)
 	$GrassExplanationTimer.start()
 
 func _on_GrassExplanationTimer_timeout():
