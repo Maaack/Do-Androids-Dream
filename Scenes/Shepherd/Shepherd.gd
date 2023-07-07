@@ -24,6 +24,7 @@ export(Texture) var shepherd_texture : Texture
 export(Texture) var shepherd_with_attractor : Texture
 export(Texture) var shepherd_with_repeller : Texture
 export(Texture) var shepherd_with_battery : Texture
+export(bool) var item_activation_ability_enabled : bool = false
 
 var velocity = Vector2.ZERO
 var move_vector : Vector2 = Vector2.ZERO setget set_move_vector
@@ -32,6 +33,7 @@ var equipped_states : Array = [Equipped.NOTHING]
 var equipped_state_iter : int = 0
 var equipment_active : bool = false
 var chargeable_sheep : Dictionary = {}
+var retoggle_equipped_enabled : bool = true
 
 func get_equipped_state():
 	return equipped_states[equipped_state_iter]
@@ -65,6 +67,15 @@ func is_repeller_active():
 
 func is_battery_equipped():
 	return get_equipped_state() == Equipped.BATTERY
+
+func can_toggle_equipped():
+	if is_nothing_equipped():
+		return false
+	var combined_flag : bool = retoggle_equipped_enabled and item_activation_ability_enabled
+	if is_battery_equipped():
+		return chargeable_sheep.size() > 0 and combined_flag
+	else:
+		return retoggle_equipped_enabled and combined_flag
 
 func _update_item_animation():
 	var equipped_state : int = get_equipped_state()
@@ -106,9 +117,15 @@ func remove_chargeable_sheep(name : String):
 		chargeable_sheep.erase(name)
 		_update_item_animation()
 
+func delay_toggle_equipped():
+	retoggle_equipped_enabled = false
+	$RetoggleEquippedTimer.start()
+
 func toggle_equipped():
-	if is_nothing_equipped():
+	if not can_toggle_equipped():
 		return
+	$ActivationAnimationPlayer.play("Stop")
+	delay_toggle_equipped()
 	if is_battery_equipped() and chargeable_sheep.size() > 0:
 		for sheep_name in chargeable_sheep:
 			var sheep_instance = chargeable_sheep[sheep_name]
@@ -118,6 +135,15 @@ func toggle_equipped():
 		return
 	equipment_active = !(equipment_active)
 	_update_equipped_active()
+
+func start_toggling_equipped():
+	if not can_toggle_equipped():
+		return
+	$ActivationAnimationPlayer.play("Activate")
+
+func stop_toggling_equipped():
+	$ActivationAnimationPlayer.play("Stop")
+	retoggle_equipped_enabled = true
 
 func set_move_vector(value : Vector2):
 	move_vector = value.normalized()
@@ -203,3 +229,5 @@ func _ready():
 func get_current_zoom():
 	return $Camera2D.zoom
 
+func _on_RetoggleEquippedTimer_timeout():
+	retoggle_equipped_enabled = true
