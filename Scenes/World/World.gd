@@ -283,5 +283,11 @@ func set_current_goal(current_goal):
 		return
 	self.goal_position = goal_post_node.position
 
+func warp_back_shepherd():
+	$"%Shepherd".position = $"%WarpBackPosition2D".position
+
 func _on_CatchRunawayArea2D_shepherd_entered():
 	emit_signal("shepherd_entered_area", "catch_runaway")
+
+func _on_WarpBackArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "warp_back")

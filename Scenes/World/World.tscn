@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=2]
+[gd_scene load_steps=89 format=2]
 
 [ext_resource path="res://Scenes/World/SheepPartsTilemap.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Shepherd/Shepherd.tscn" type="PackedScene" id=2]
@@ -611,6 +611,9 @@ extents = Vector2( 16, 100 )
 [sub_resource type="RectangleShape2D" id=76]
 extents = Vector2( 16, 100 )
 
+[sub_resource type="RectangleShape2D" id=77]
+extents = Vector2( 16, 100 )
+
 [sub_resource type="RectangleShape2D" id=62]
 extents = Vector2( 20, 120 )
 
@@ -697,6 +700,10 @@ connect_point_mode = 2
 [node name="StartingPosition2D" type="Position2D" parent="YSort"]
 position = Vector2( -2296, 400 )
 
+[node name="WarpBackPosition2D" type="Position2D" parent="YSort"]
+unique_name_in_owner = true
+position = Vector2( -1512, 400 )
+
 [node name="Goal1Position2D" type="Position2D" parent="YSort"]
 position = Vector2( -1456, 392 )
 
@@ -768,6 +775,10 @@ collider_shape = SubResource( 75 )
 position = Vector2( -810, 400 )
 collider_shape = SubResource( 76 )
 
+[node name="WarpBackArea2D" parent="." instance=ExtResource( 10 )]
+position = Vector2( -578, 400 )
+collider_shape = SubResource( 77 )
+
 [node name="FirstCampDetectorArea2D" parent="." instance=ExtResource( 10 )]
 position = Vector2( 542, 386 )
 collider_shape = SubResource( 62 )
@@ -823,6 +834,7 @@ collider_shape = SubResource( 63 )
 [connection signal="shepherd_entered" from="WatchersGateArea2D" to="." method="_on_WatchersGateArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="CrossroadsArea2D" to="." method="_on_CrossroadsArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="CatchRunawayArea2D" to="." method="_on_CatchRunawayArea2D_shepherd_entered"]
+[connection signal="shepherd_entered" from="WarpBackArea2D" to="." method="_on_WarpBackArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="FirstCampDetectorArea2D" to="." method="_on_FirstCampDetectorArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="WindingCircuitArea2D" to="." method="_on_WindingCircuitArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="AlphaPastureArea2D" to="." method="_on_AlphaPastureArea2D_shepherd_entered"]
