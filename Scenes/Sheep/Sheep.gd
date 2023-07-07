@@ -50,8 +50,12 @@ func _set_blend_positions(input_vector : Vector2):
 	animation_tree.set("parameters/Run/blend_position", input_vector)
 	animation_tree.set("parameters/Explode/blend_position", input_vector)
 	animation_tree.set("parameters/Eat/blend_position", input_vector)
-	animation_tree.set("parameters/PowerUp/blend_position", input_vector.x)
-	animation_tree.set("parameters/PoweredDown/blend_position", input_vector.x)
+	# Workaround to avoid having two animations play at once.
+	var input_x_quantized = 1
+	if input_vector.x < 0:
+		input_x_quantized = -1
+	animation_tree.set("parameters/PowerUp/blend_position", input_x_quantized)
+	animation_tree.set("parameters/PoweredDown/blend_position", input_x_quantized)
 
 func _walk(delta):
 	if not is_moving:
