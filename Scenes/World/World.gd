@@ -58,7 +58,16 @@ func reset_sheep_hunger():
 	for sheep in sheep_instances:
 		if is_instance_valid(sheep):
 			sheep.reset_hunger()
+
+func wake_sheep():
+	for sheep in sheep_instances:
+		if is_instance_valid(sheep):
 			sheep.wake()
+
+func start_day():
+	reset_sheep_hunger()
+	wake_sheep()
+	$"%Shepherd".start_day()
 
 func reset_day():
 	$"DayNightCycle".enabled = true
@@ -135,6 +144,10 @@ func snooze_sheep():
 	var powered_sheep_instances : Array = get_powered_sheep()
 	for powered_sheep in powered_sheep_instances:
 		powered_sheep.snooze()
+
+func snooze_all():
+	snooze_sheep()
+	$"%Shepherd".start_snooze()
 
 func get_hungry_sheep():
 	var hungry_sheep_instances : Array = []

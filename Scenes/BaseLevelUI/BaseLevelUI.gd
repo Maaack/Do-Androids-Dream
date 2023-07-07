@@ -33,7 +33,7 @@ func _end_day():
 		return
 	day_ended = true
 	$"%EndDayButton".disabled = true
-	$"%World".snooze_sheep()
+	$"%World".snooze_all()
 	$EndDayDelayTimer.start()
 
 func _get_days_left():
@@ -51,7 +51,7 @@ func _start_day(start_clock_flag : bool = true):
 	day_starting_sheep_count = $"%World".get_powered_sheep_count()
 	if start_clock_flag:
 		_start_day_clock()
-	$"%World".reset_sheep_hunger()
+	$"%World".start_day()
 	$"%DaysLeftLabel".text = "Days Left: %d" % _get_days_left()
 	if current_day >= musing_start_day:
 		$MuseTimer.start()

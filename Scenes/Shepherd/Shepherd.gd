@@ -245,3 +245,9 @@ func get_current_zoom():
 
 func _on_RetoggleEquippedTimer_timeout():
 	retoggle_equipped_enabled = true
+
+func start_snooze():
+	pass
+
+func start_day():
+	_update_equipped_active()
