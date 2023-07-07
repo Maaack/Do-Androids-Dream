@@ -1,42 +1,37 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/TutorialScreen/TutorialScreen.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Assets/Original/Sprites/repeller.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Original/Sprites/sheep_four_directions.png" type="Texture" id=2]
 
-[node name="RepellerPickupScreen" instance=ExtResource( 1 )]
-__meta__ = {
-"_edit_horizontal_guides_": [ 300.0 ],
-"_edit_vertical_guides_": [ 512.0 ]
-}
+[node name="GlitchInMatrixScreen" instance=ExtResource( 1 )]
 
 [node name="NinePatchRect" parent="Control" index="0"]
-margin_left = 145.0
-margin_top = -92.0
-margin_right = 450.0
-margin_bottom = 93.0
+margin_left = -152.0
+margin_top = 85.0
+margin_right = 153.0
+margin_bottom = 270.0
 
 [node name="PanelContainer" parent="Control/NinePatchRect/MarginContainer" index="0"]
 margin_bottom = 177.0
 
 [node name="TutorialText" parent="Control/NinePatchRect/MarginContainer/PanelContainer" index="0"]
 margin_bottom = 121.0
-text = "You found a sheep repeller!
+text = "What just happened?
 
 
 
-Activate it to repel sheep from dangerous areas."
+Déjà vu? A glitch in my neural net?"
 
 [node name="TextureRect" type="TextureRect" parent="Control/NinePatchRect/MarginContainer/PanelContainer/TutorialText" index="0"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -16.0
-margin_top = -24.0
-margin_right = 16.0
-margin_bottom = 8.0
+margin_left = -64.0
+margin_top = -16.0
+margin_right = 64.0
+margin_bottom = 16.0
 texture = ExtResource( 2 )
-expand = true
 
 [node name="ResumeButton" parent="Control/NinePatchRect/MarginContainer/PanelContainer" index="1"]
 margin_top = 129.0

@@ -17,6 +17,9 @@ var charge_sheep_screen = preload("res://Scenes/TutorialScreen/Tutorials/ChargeS
 var grasses_explanation_screen = preload("res://Scenes/TutorialScreen/Tutorials/GrassesExplanation.tscn")
 var goal_explanation_screen = preload("res://Scenes/TutorialScreen/Tutorials/GoalExplanation.tscn")
 var new_sheep_screen = preload("res://Scenes/TutorialScreen/Tutorials/NewSheepInFlock.tscn")
+var swapping_explanation_screen = preload("res://Scenes/TutorialScreen/Tutorials/SwappingExplanation.tscn")
+var catch_runaway_screen = preload("res://Scenes/TutorialScreen/Tutorials/CatchRunaway.tscn")
+var glitch_in_matrix_screen = preload("res://Scenes/TutorialScreen/Tutorials/GlitchInMatrix.tscn")
 
 var oneshots_completed : Array = []
 var sheep_exploded_count : int = 0
@@ -31,8 +34,17 @@ var area_names_map : Dictionary = {
 	"watchers_gate" : "Watchers Gate",
 }
 
+enum Goals {
+	GET_BATTERY,
+	POWER_SHEEP,
+	GET_MAGNET,
+	GO_TO_DELTA,
+}
+
 func play_welcome_screen():
 	InGameMenuController.open_menu(welcome_screen)
+	goal_active = true
+
 
 func is_oneshot_completed(oneshot : String):
 	return oneshots_completed.has(oneshot)
@@ -90,13 +102,25 @@ func _on_World_shepherd_entered_area(area_name):
 			complete_oneshot("well_fed_hint")
 			InGameMenuController.open_menu(tutorial_well_fed)
 		"unpowered_sheep":
-			var battery_equipped : bool = $"%World".get_shepherd().is_battery_equipped() 
 			if not is_oneshot_completed("unpowered_sheep"):
 				complete_oneshot("unpowered_sheep")
 				InGameMenuController.open_menu(unpowered_sheep_screen)
-			elif not is_oneshot_completed("charge_sheep") and battery_equipped:
+		"power_sheep":
+			var battery_equipped : bool = $"%World".get_shepherd().is_battery_equipped() 
+			if not is_oneshot_completed("charge_sheep") and battery_equipped:
 				complete_oneshot("charge_sheep")
 				InGameMenuController.open_menu(charge_sheep_screen)
+				$"%World".get_shepherd().equipped_activation_enabled = true
+				$"%World".set_current_goal(Goals.GET_MAGNET)
+				goal_active = false
+		"catch_runaway":
+			if not is_oneshot_completed("catch_runaway") and not is_oneshot_completed("charge_sheep"):
+				complete_oneshot("catch_runaway")
+				InGameMenuController.open_menu(catch_runaway_screen)
+		"warp_back":
+			if not is_oneshot_completed("charge_sheep"):
+				$"%World".warp_back_shepherd()
+				InGameMenuController.open_menu(glitch_in_matrix_screen)
 
 func _on_World_sheep_ate_volatile_grass(sheep_instance):
 	if is_oneshot_completed("sheep_poisoned"):
@@ -117,18 +141,24 @@ func _on_World_magnet_collected():
 		return
 	complete_oneshot("magnet_collected")
 	InGameMenuController.open_menu(magnet_pickup_screen)
+	$"%World".set_current_goal(Goals.GO_TO_DELTA)
+	$SwappingExplanationTimer.start()
 
 func _on_World_battery_collected():
 	if is_oneshot_completed("battery_collected"):
+		# Battery already collected once
+		$SwappingExplanationTimer.start()
 		return
 	complete_oneshot("battery_collected")
 	InGameMenuController.open_menu(battery_pickup_screen)
+	$"%World".set_current_goal(Goals.POWER_SHEEP)
 
 func _on_World_repeller_collected():
 	if is_oneshot_completed("repeller_collected"):
 		return
 	complete_oneshot("repeller_collected")
 	InGameMenuController.open_menu(repeller_pickup_screen)
+	$SwappingExplanationTimer.start()
 
 func _on_World_new_sheep(sheep_instance : Sheep):
 	._on_World_new_sheep(sheep_instance)
@@ -150,3 +180,13 @@ func _on_GoalTimer_timeout():
 		return
 	complete_oneshot("goal_explanation")
 	InGameMenuController.open_menu(goal_explanation_screen)
+	$"%World".set_current_goal(Goals.GET_MAGNET)
+	goal_active = true
+	_start_day_clock()
+
+func _on_SwappingExplanationTimer_timeout():
+	if is_oneshot_completed("swapping_explanation"):
+		return
+	complete_oneshot("swapping_explanation")
+	InGameMenuController.open_menu(swapping_explanation_screen)
+	$"%World".get_shepherd().equipped_swapping_enabled = true

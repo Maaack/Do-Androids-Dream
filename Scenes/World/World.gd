@@ -17,6 +17,8 @@ export(float, 0, 1000) var spawn_range : float = 200
 export(Vector2) var spawn_offset : Vector2 = Vector2.ZERO
 export(float, 0, 1) var sheep_path_visible_probability : float = 0
 export(Color) var charge_color : Color
+export(Vector2) var goal_position : Vector2 setget set_goal_position
+export(Array, NodePath) var goal_posts : Array
 
 onready var shepherd_node = $YSort/Shepherd
 var sheep_scene = preload("res://Scenes/Sheep/Sheep.tscn")
@@ -44,16 +46,20 @@ func _ready():
 	randomize()
 	extra_sheep_names = SheepConstants.NAMES.duplicate()
 	extra_sheep_names.shuffle()
+	set_current_goal(0)
 
 func set_day_length(day_length : float):
 	$"DayNightCycle".day_length = day_length
 
-func reset_day():
-	$"DayNightCycle".reset_time()
+func reset_sheep_hunger():
 	for sheep in sheep_instances:
 		if is_instance_valid(sheep):
 			sheep.reset_hunger()
 			sheep.wake()
+
+func reset_day():
+	$"DayNightCycle".enabled = true
+	$"DayNightCycle".reset_time()
 
 func reset_world(target_sheep_count : int = 1):
 	for sheep in sheep_instances:
@@ -63,6 +69,7 @@ func reset_world(target_sheep_count : int = 1):
 	$SheepParts.load_scenes()
 	for i in range(target_sheep_count):
 		add_sheep()
+	reset_sheep_hunger()
 	reset_day()
 
 func get_sheep_instance(sheep_name : String):
@@ -145,9 +152,12 @@ func move_shepherd(direction : Vector2, manual : bool = true):
 		direction = direction.normalized()
 	$"%Shepherd".move_vector = direction
 
-func toggle_shepherd_equipped():
-	$"%Shepherd".toggle_equipped()
+func start_toggling_shepherd_equipped():
+	$"%Shepherd".start_toggling_equipped()
 
+func stop_toggling_shepherd_equipped():
+	$"%Shepherd".stop_toggling_equipped()
+	
 func swap_shepherd_equipped():
 	$"%Shepherd".swap()
 
@@ -250,6 +260,9 @@ func _on_WindingCircuitArea2D_shepherd_entered():
 func _on_UnpoweredSheepArea2D_shepherd_entered():
 	emit_signal("shepherd_entered_area", "unpowered_sheep")
 
+func _on_PowerSheepArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "power_sheep")
+
 func _on_WatchersGateArea2D_shepherd_entered():
 	emit_signal("shepherd_entered_area", "watchers_gate")
 
@@ -273,3 +286,25 @@ func _on_SheepParts_add_sheep_part(part_position):
 
 func _on_SheepParts_add_unpowered_sheep(sheep_position):
 	add_sheep(sheep_position, false)
+
+func set_goal_position(value : Vector2):
+	goal_position = value
+	$"%GoalHalo".position = goal_position
+
+func get_goal_relative_position():
+	return goal_position - $"%Shepherd".position
+
+func set_current_goal(current_goal):
+	var goal_post_node : Node2D = get_node_or_null(goal_posts[current_goal])
+	if goal_post_node == null:
+		return
+	self.goal_position = goal_post_node.position
+
+func warp_back_shepherd():
+	$"%Shepherd".position = $"%WarpBackPosition2D".position
+
+func _on_CatchRunawayArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "catch_runaway")
+
+func _on_WarpBackArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "warp_back")

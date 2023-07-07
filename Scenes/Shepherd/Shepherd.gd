@@ -6,7 +6,6 @@ signal part_collected
 signal magnet_collected
 signal battery_collected
 signal repeller_collected
-signal sheep_charged
 
 enum Equipped{
 	NOTHING,
@@ -25,6 +24,8 @@ export(Texture) var shepherd_texture : Texture
 export(Texture) var shepherd_with_attractor : Texture
 export(Texture) var shepherd_with_repeller : Texture
 export(Texture) var shepherd_with_battery : Texture
+export(bool) var equipped_activation_enabled : bool = false
+export(bool) var equipped_swapping_enabled : bool = false
 
 var velocity = Vector2.ZERO
 var move_vector : Vector2 = Vector2.ZERO setget set_move_vector
@@ -32,6 +33,8 @@ var parts_collected : int = 0
 var equipped_states : Array = [Equipped.NOTHING]
 var equipped_state_iter : int = 0
 var equipment_active : bool = false
+var chargeable_sheep : Dictionary = {}
+var retoggle_equipped_enabled : bool = true
 
 func get_equipped_state():
 	return equipped_states[equipped_state_iter]
@@ -66,26 +69,82 @@ func is_repeller_active():
 func is_battery_equipped():
 	return get_equipped_state() == Equipped.BATTERY
 
-func set_magnet_state(state : bool):
-	if state:
-		$MagnetSprite.show()
+func can_toggle_equipped():
+	if is_nothing_equipped():
+		return false
+	var combined_flag : bool = retoggle_equipped_enabled and equipped_activation_enabled
+	if is_battery_equipped():
+		return chargeable_sheep.size() > 0 and combined_flag
+	else:
+		return retoggle_equipped_enabled and combined_flag
+
+func _update_item_animation():
+	var equipped_state : int = get_equipped_state()
+	match(equipped_state):
+		Equipped.NOTHING:
+			$ItemAnimationPlayer.play("None")
+		Equipped.ATTRACTOR:
+			if equipment_active:
+				$ItemAnimationPlayer.play("MagnetOn")
+			else:
+				$ItemAnimationPlayer.play("MagnetOff")
+		Equipped.REPELLER:
+			if equipment_active:
+				$ItemAnimationPlayer.play("RepellerOn")
+			else:
+				$ItemAnimationPlayer.play("RepellerOff")
+		Equipped.BATTERY:
+			if chargeable_sheep.size() > 0:
+				$ItemAnimationPlayer.play("BatteryOn")
+			else:
+				$ItemAnimationPlayer.play("BatteryOff")
+
+func _update_item_sfx():
+	if equipment_active:
 		$MagnetStreamCycler2D.play()
 	else:
-		$MagnetSprite.hide()
 		$MagnetStreamCycler2D.stop()
 
 func _update_equipped_active():
-	set_magnet_state(equipment_active)
+	_update_item_animation()
+	_update_item_sfx()
+
+func add_chargeable_sheep(name : String, instance : Node2D):
+	chargeable_sheep[name] = instance
+	_update_item_animation()
+
+func remove_chargeable_sheep(name : String):
+	if name in chargeable_sheep:
+		chargeable_sheep.erase(name)
+		_update_item_animation()
+
+func delay_toggle_equipped():
+	retoggle_equipped_enabled = false
+	$RetoggleEquippedTimer.start()
 
 func toggle_equipped():
-	if is_nothing_equipped():
+	if not can_toggle_equipped():
 		return
-	if is_battery_equipped():
-		emit_signal("sheep_charged")
+	$ActivationAnimationPlayer.play("Stop")
+	delay_toggle_equipped()
+	if is_battery_equipped() and chargeable_sheep.size() > 0:
+		for sheep_name in chargeable_sheep:
+			var sheep_instance = chargeable_sheep[sheep_name]
+			sheep_instance.charge()
+		chargeable_sheep.clear()
 		remove_battery_equip_state()
 		return
 	equipment_active = !(equipment_active)
 	_update_equipped_active()
+
+func start_toggling_equipped():
+	if not can_toggle_equipped():
+		return
+	$ActivationAnimationPlayer.play("Activate")
+
+func stop_toggling_equipped():
+	$ActivationAnimationPlayer.play("Stop")
+	retoggle_equipped_enabled = true
 
 func set_move_vector(value : Vector2):
 	move_vector = value.normalized()
@@ -123,12 +182,12 @@ func collect_part() -> bool:
 func remove_nothing_equip_state():
 	if Equipped.NOTHING in equipped_states:
 		equipped_states.erase(Equipped.NOTHING)
-		swap()
+		_force_swap()
 
 func remove_battery_equip_state():
 	if Equipped.BATTERY in equipped_states:
 		equipped_states.erase(Equipped.BATTERY)
-		swap()
+		_force_swap()
 
 func collect_item(item_id : int):
 	#remove_nothing_equip_state()
@@ -140,7 +199,6 @@ func collect_item(item_id : int):
 		_update_equipped_active()
 		_update_shepherd_texture()
 	return true
-	
 
 func collect_magnet() -> bool:
 	emit_signal("magnet_collected")
@@ -154,7 +212,10 @@ func collect_battery() -> bool:
 	emit_signal("battery_collected")
 	return collect_item(Equipped.BATTERY)
 
-func swap():
+func can_swap():
+	return equipped_swapping_enabled
+
+func _force_swap():
 	var new_equipped_state_iter = equipped_state_iter + 1
 	if new_equipped_state_iter >= equipped_states.size():
 		new_equipped_state_iter = 0
@@ -165,9 +226,16 @@ func swap():
 	_update_equipped_active()
 	_update_shepherd_texture()
 
+func swap():
+	if not can_swap():
+		return
+	_force_swap()
+
 func _ready():
 	_update_shepherd_texture()
 
 func get_current_zoom():
 	return $Camera2D.zoom
 
+func _on_RetoggleEquippedTimer_timeout():
+	retoggle_equipped_enabled = true

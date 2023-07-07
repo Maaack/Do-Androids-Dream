@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scenes/BaseLevelUI/BaseLevelUI.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/World/World.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Scenes/APIClient/Wrappers/MuseClient.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Themes/GameFont32px.tres" type="DynamicFont" id=10]
 [ext_resource path="res://Themes/GameAreaFont48px.tres" type="DynamicFont" id=11]
+[ext_resource path="res://Scenes/BaseLevelUI/GoalArrowControl.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Muse"
@@ -106,6 +107,7 @@ mouse_filter = 2
 theme = ExtResource( 8 )
 script = ExtResource( 1 )
 day_length = 120.0
+min_goal_arrow_distance = 280.0
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
@@ -143,7 +145,9 @@ margin_right = 1016.0
 margin_bottom = 592.0
 mouse_filter = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/Control"]
+[node name="DayTimeContainer" type="VBoxContainer" parent="MarginContainer/Control"]
+unique_name_in_owner = true
+visible = false
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -152,18 +156,17 @@ margin_left = -97.0
 margin_top = -135.0
 custom_constants/separation = 16
 
-[node name="DaysLeftLabel" type="Label" parent="MarginContainer/Control/VBoxContainer2"]
+[node name="DaysLeftLabel" type="Label" parent="MarginContainer/Control/DayTimeContainer"]
 unique_name_in_owner = true
 margin_right = 97.0
 margin_bottom = 16.0
 text = "Days Left: 3"
 
-[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/Control/VBoxContainer2"]
-margin_top = 32.0
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/Control/DayTimeContainer"]
 margin_right = 97.0
-margin_bottom = 97.0
+margin_bottom = 65.0
 
-[node name="Clock" parent="MarginContainer/Control/VBoxContainer2/CenterContainer" instance=ExtResource( 7 )]
+[node name="Clock" parent="MarginContainer/Control/DayTimeContainer/CenterContainer" instance=ExtResource( 7 )]
 pause_mode = 1
 unique_name_in_owner = true
 margin_left = 16.0
@@ -172,11 +175,11 @@ margin_bottom = 65.0
 rect_min_size = Vector2( 65, 65 )
 wait_time = 100.0
 
-[node name="EndDayButton" type="Button" parent="MarginContainer/Control/VBoxContainer2"]
+[node name="EndDayButton" type="Button" parent="MarginContainer/Control/DayTimeContainer"]
 unique_name_in_owner = true
-margin_top = 113.0
+margin_top = 81.0
 margin_right = 97.0
-margin_bottom = 133.0
+margin_bottom = 101.0
 text = "End Day"
 
 [node name="AreaNameLabel" type="Label" parent="MarginContainer/Control"]
@@ -230,6 +233,27 @@ align = 1
 valign = 1
 autowrap = true
 percent_visible = 0.0
+
+[node name="MarginContainer3" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 48
+custom_constants/margin_top = 48
+custom_constants/margin_left = 48
+custom_constants/margin_bottom = 48
+
+[node name="Control" type="Control" parent="MarginContainer3"]
+margin_left = 48.0
+margin_top = 48.0
+margin_right = 976.0
+margin_bottom = 552.0
+mouse_filter = 2
+
+[node name="GoalArrowControl" parent="MarginContainer3/Control" instance=ExtResource( 12 )]
+pause_mode = 1
+unique_name_in_owner = true
+mouse_filter = 2
 
 [node name="ScoringScreen" parent="." instance=ExtResource( 3 )]
 visible = false
@@ -287,8 +311,8 @@ anims/RESET = SubResource( 4 )
 [connection signal="sheep_exploded" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_exploded"]
 [connection signal="sheep_powered" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_powered"]
 [connection signal="sheep_starved" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_starved"]
-[connection signal="timeout" from="MarginContainer/Control/VBoxContainer2/CenterContainer/Clock" to="." method="_on_Clock_timeout"]
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer2/EndDayButton" to="." method="_on_EndDayButton_pressed"]
+[connection signal="timeout" from="MarginContainer/Control/DayTimeContainer/CenterContainer/Clock" to="." method="_on_Clock_timeout"]
+[connection signal="pressed" from="MarginContainer/Control/DayTimeContainer/EndDayButton" to="." method="_on_EndDayButton_pressed"]
 [connection signal="done_pressed" from="ScoringScreen" to="." method="_on_ScoringScreen_done_pressed"]
 [connection signal="restart_pressed" from="ScoringScreen" to="." method="_on_ScoringScreen_restart_pressed"]
 [connection signal="shepherd_dreamed" from="ScoringScreen" to="." method="_on_ScoringScreen_shepherd_dreamed"]
