@@ -69,12 +69,18 @@ func is_repeller_active():
 func is_battery_equipped():
 	return get_equipped_state() == Equipped.BATTERY
 
+func has_unpowered_chargeable_sheep() -> bool:
+	for sheep_instance in chargeable_sheep.values():
+		if not sheep_instance.powered:
+			return true
+	return false
+
 func can_toggle_equipped():
 	if is_nothing_equipped():
 		return false
 	var combined_flag : bool = retoggle_equipped_enabled and equipped_activation_enabled
 	if is_battery_equipped():
-		return chargeable_sheep.size() > 0 and combined_flag
+		return has_unpowered_chargeable_sheep() and combined_flag
 	else:
 		return retoggle_equipped_enabled and combined_flag
 
@@ -94,7 +100,7 @@ func _update_item_animation():
 			else:
 				$ItemAnimationPlayer.play("RepellerOff")
 		Equipped.BATTERY:
-			if chargeable_sheep.size() > 0:
+			if has_unpowered_chargeable_sheep():
 				$ItemAnimationPlayer.play("BatteryOn")
 			else:
 				$ItemAnimationPlayer.play("BatteryOff")
@@ -127,7 +133,7 @@ func toggle_equipped():
 		return
 	$ActivationAnimationPlayer.play("Stop")
 	delay_toggle_equipped()
-	if is_battery_equipped() and chargeable_sheep.size() > 0:
+	if is_battery_equipped() and has_unpowered_chargeable_sheep():
 		for sheep_name in chargeable_sheep:
 			var sheep_instance = chargeable_sheep[sheep_name]
 			sheep_instance.charge()
