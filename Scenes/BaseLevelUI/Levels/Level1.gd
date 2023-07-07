@@ -20,6 +20,7 @@ var new_sheep_screen = preload("res://Scenes/TutorialScreen/Tutorials/NewSheepIn
 var swapping_explanation_screen = preload("res://Scenes/TutorialScreen/Tutorials/SwappingExplanation.tscn")
 var catch_runaway_screen = preload("res://Scenes/TutorialScreen/Tutorials/CatchRunaway.tscn")
 var glitch_in_matrix_screen = preload("res://Scenes/TutorialScreen/Tutorials/GlitchInMatrix.tscn")
+var end_of_day_screen = preload("res://Scenes/TutorialScreen/Tutorials/EndOfDay.tscn")
 
 var oneshots_completed : Array = []
 var sheep_exploded_count : int = 0
@@ -44,7 +45,6 @@ enum Goals {
 func play_welcome_screen():
 	InGameMenuController.open_menu(welcome_screen)
 	goal_active = true
-
 
 func is_oneshot_completed(oneshot : String):
 	return oneshots_completed.has(oneshot)
@@ -190,3 +190,10 @@ func _on_SwappingExplanationTimer_timeout():
 	complete_oneshot("swapping_explanation")
 	InGameMenuController.open_menu(swapping_explanation_screen)
 	$"%World".get_shepherd().equipped_swapping_enabled = true
+
+func _end_day():
+	._end_day()
+	if is_oneshot_completed("first_day_ended"):
+		return
+	complete_oneshot("first_day_ended")
+	InGameMenuController.open_menu(end_of_day_screen)

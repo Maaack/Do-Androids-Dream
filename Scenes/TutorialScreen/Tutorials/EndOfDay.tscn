@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/TutorialScreen/TutorialScreen.tscn" type="PackedScene" id=3]
+
+[node name="WelcomeScreen" instance=ExtResource( 3 )]
+
+[node name="NinePatchRect" parent="Control" index="0"]
+margin_left = 145.0
+margin_right = 450.0
+margin_bottom = 143.0
+
+[node name="PanelContainer" parent="Control/NinePatchRect/MarginContainer" index="0"]
+margin_bottom = 261.0
+
+[node name="TutorialText" parent="Control/NinePatchRect/MarginContainer/PanelContainer" index="0"]
+margin_bottom = 205.0
+text = "Your sheep-y are getting sleepy!
+
+You and them should rest until morning.
+
+What will you dream about?
+Electric sheep?
+
+Bah."
+
+[node name="ResumeButton" parent="Control/NinePatchRect/MarginContainer/PanelContainer" index="1"]
+margin_top = 213.0
+margin_bottom = 253.0
