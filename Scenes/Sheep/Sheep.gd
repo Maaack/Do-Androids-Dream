@@ -195,7 +195,7 @@ func _stop_moving():
 	$BahStreamCycler2D.stop()
 
 func _start_moving():
-	if is_snoozing:
+	if is_snoozing or not powered:
 		return
 	is_moving = true
 	$UpdateMovementTimer.paused = false
@@ -297,7 +297,7 @@ func snooze():
 	_stop_moving()
 
 func wake():
-	if not powered or not is_snoozing:
+	if not is_snoozing:
 		return
 	is_snoozing = false
 	_start_moving()
