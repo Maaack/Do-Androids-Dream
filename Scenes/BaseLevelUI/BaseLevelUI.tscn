@@ -292,7 +292,7 @@ one_shot = true
 
 [node name="EndDayDelayTimer" type="Timer" parent="."]
 pause_mode = 1
-wait_time = 2.5
+wait_time = 5.0
 one_shot = true
 
 [node name="MuseClient" parent="." instance=ExtResource( 9 )]
