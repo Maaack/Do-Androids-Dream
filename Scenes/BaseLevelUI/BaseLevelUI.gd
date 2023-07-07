@@ -15,6 +15,7 @@ export(int, 1, 12) var game_days : int = 3
 export(int, 0, 12) var musing_start_day : int = 0
 export(float, 0, 1000) var min_goal_arrow_distance : float = 300
 export(bool) var goal_active : bool = false
+export(bool) var dreaming_enabled : bool = true
 
 var day_ended : bool = false
 var destination_reached : bool = false
@@ -238,8 +239,14 @@ func _unhandled_input(event):
 func _on_PauseMouseTimer_timeout():
 	pause_mouse_input = false
 
-func _on_EndDayDelayTimer_timeout():
+func _start_night():
 	current_day += 1
 	get_tree().paused = true
 	$"%World".starve_hungry_sheep()
-	show_scoring_screen()
+	if dreaming_enabled:
+		show_scoring_screen()
+	else:
+		_start_day()
+
+func _on_EndDayDelayTimer_timeout():
+	_start_night()

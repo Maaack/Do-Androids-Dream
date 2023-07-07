@@ -19,6 +19,7 @@ export(float, 0, 1) var sheep_path_visible_probability : float = 0
 export(Color) var charge_color : Color
 export(Vector2) var goal_position : Vector2 setget set_goal_position
 export(Array, NodePath) var goal_posts : Array
+export(bool) var shepherd_warped : bool = false
 
 onready var shepherd_node = $YSort/Shepherd
 var sheep_scene = preload("res://Scenes/Sheep/Sheep.tscn")
@@ -47,6 +48,8 @@ func _ready():
 	extra_sheep_names = SheepConstants.NAMES.duplicate()
 	extra_sheep_names.shuffle()
 	set_current_goal(0)
+	if shepherd_warped:
+		warp_back_shepherd()
 
 func set_day_length(day_length : float):
 	$"DayNightCycle".day_length = day_length
