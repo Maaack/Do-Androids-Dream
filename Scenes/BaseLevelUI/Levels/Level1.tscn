@@ -42,10 +42,21 @@ wait_time = 0.1
 [node name="GrassExplanationTimer" type="Timer" parent="." index="10"]
 pause_mode = 1
 wait_time = 2.0
+one_shot = true
 
 [node name="GoalExplanationTimer" type="Timer" parent="." index="11"]
 pause_mode = 1
 wait_time = 10.0
+one_shot = true
+
+[node name="SwappingExplanationTimer" type="Timer" parent="." index="12"]
+pause_mode = 1
+wait_time = 2.0
+one_shot = true
+
+[node name="GlitchInMatrixTimer" type="Timer" parent="." index="13"]
+pause_mode = 1
+one_shot = true
 
 [connection signal="battery_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_battery_collected"]
 [connection signal="magnet_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_magnet_collected"]
@@ -54,3 +65,5 @@ wait_time = 10.0
 [connection signal="shepherd_entered_area" from="ViewportContainer/Viewport/World" to="." method="_on_World_shepherd_entered_area"]
 [connection signal="timeout" from="GrassExplanationTimer" to="." method="_on_GrassExplanationTimer_timeout"]
 [connection signal="timeout" from="GoalExplanationTimer" to="." method="_on_GoalTimer_timeout"]
+[connection signal="timeout" from="SwappingExplanationTimer" to="." method="_on_SwappingExplanationTimer_timeout"]
+[connection signal="timeout" from="GlitchInMatrixTimer" to="." method="_on_SwappingExplanationTimer_timeout"]

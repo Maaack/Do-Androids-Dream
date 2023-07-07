@@ -51,11 +51,14 @@ func _ready():
 func set_day_length(day_length : float):
 	$"DayNightCycle".day_length = day_length
 
-func reset_day():
-	$"DayNightCycle".reset_time()
+func reset_sheep_hunger():
 	for sheep in sheep_instances:
 		if is_instance_valid(sheep) and sheep.has_method("reset_hunger"):
 			sheep.reset_hunger()
+
+func reset_day():
+	$"DayNightCycle".enabled = true
+	$"DayNightCycle".reset_time()
 
 func reset_world(target_sheep_count : int = 1):
 	for sheep in sheep_instances:
@@ -65,6 +68,7 @@ func reset_world(target_sheep_count : int = 1):
 	$SheepParts.load_scenes()
 	for i in range(target_sheep_count):
 		add_sheep()
+	reset_sheep_hunger()
 	reset_day()
 
 func get_sheep_instance(sheep_name : String):
@@ -282,3 +286,12 @@ func set_current_goal(current_goal):
 	if goal_post_node == null:
 		return
 	self.goal_position = goal_post_node.position
+
+func warp_back_shepherd():
+	$"%Shepherd".position = $"%WarpBackPosition2D".position
+
+func _on_CatchRunawayArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "catch_runaway")
+
+func _on_WarpBackArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "warp_back")

@@ -24,7 +24,8 @@ export(Texture) var shepherd_texture : Texture
 export(Texture) var shepherd_with_attractor : Texture
 export(Texture) var shepherd_with_repeller : Texture
 export(Texture) var shepherd_with_battery : Texture
-export(bool) var item_activation_ability_enabled : bool = false
+export(bool) var equipped_activation_enabled : bool = false
+export(bool) var equipped_swapping_enabled : bool = false
 
 var velocity = Vector2.ZERO
 var move_vector : Vector2 = Vector2.ZERO setget set_move_vector
@@ -71,7 +72,7 @@ func is_battery_equipped():
 func can_toggle_equipped():
 	if is_nothing_equipped():
 		return false
-	var combined_flag : bool = retoggle_equipped_enabled and item_activation_ability_enabled
+	var combined_flag : bool = retoggle_equipped_enabled and equipped_activation_enabled
 	if is_battery_equipped():
 		return chargeable_sheep.size() > 0 and combined_flag
 	else:
@@ -181,12 +182,12 @@ func collect_part() -> bool:
 func remove_nothing_equip_state():
 	if Equipped.NOTHING in equipped_states:
 		equipped_states.erase(Equipped.NOTHING)
-		swap()
+		_force_swap()
 
 func remove_battery_equip_state():
 	if Equipped.BATTERY in equipped_states:
 		equipped_states.erase(Equipped.BATTERY)
-		swap()
+		_force_swap()
 
 func collect_item(item_id : int):
 	#remove_nothing_equip_state()
@@ -198,7 +199,6 @@ func collect_item(item_id : int):
 		_update_equipped_active()
 		_update_shepherd_texture()
 	return true
-	
 
 func collect_magnet() -> bool:
 	emit_signal("magnet_collected")
@@ -212,7 +212,10 @@ func collect_battery() -> bool:
 	emit_signal("battery_collected")
 	return collect_item(Equipped.BATTERY)
 
-func swap():
+func can_swap():
+	return equipped_swapping_enabled
+
+func _force_swap():
 	var new_equipped_state_iter = equipped_state_iter + 1
 	if new_equipped_state_iter >= equipped_states.size():
 		new_equipped_state_iter = 0
@@ -222,6 +225,11 @@ func swap():
 	equipment_active = false
 	_update_equipped_active()
 	_update_shepherd_texture()
+
+func swap():
+	if not can_swap():
+		return
+	_force_swap()
 
 func _ready():
 	_update_shepherd_texture()
