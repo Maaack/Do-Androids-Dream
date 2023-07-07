@@ -184,18 +184,24 @@ func _process(delta):
 			if pause_mouse_input:
 				return
 			elif Input.is_action_pressed("interact"):
-				$"%World".move_shepherd(get_local_mouse_position() - _get_camera_center())
+				var direction = get_local_mouse_position() - _get_camera_center()
+				if direction.length() > TOGGLE_ACTION_RADIUS:
+					$"%World".move_shepherd(direction)
+					$"%World".stop_toggling_shepherd_equipped()
+				else:
+					$"%World".move_shepherd(Vector2.ZERO)
+					$"%World".start_toggling_shepherd_equipped()
 			elif Input.is_action_just_released("interact"):
 				$"%World".move_shepherd(Vector2.ZERO)
-				return
+				$"%World".stop_toggling_shepherd_equipped()
 		InputModes.KEYBOARD:
 			var input_vector = Vector2.ZERO
 			input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 			input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 			if input_vector.length() < 0.01:
 				$"%World".move_shepherd(Vector2.ZERO)
-				return
-			$"%World".move_shepherd(input_vector)
+			else:
+				$"%World".move_shepherd(input_vector)
 	var goal_relative_position : Vector2 = $"%World".get_goal_relative_position()
 	$"%GoalArrowControl".point_to(goal_relative_position)
 	if goal_active and goal_relative_position.length() > min_goal_arrow_distance:
@@ -213,14 +219,15 @@ func _unhandled_input(event):
 			if direction.length() > TOGGLE_ACTION_RADIUS:
 				$"%World".set_shepherd_destination(event.position - _get_camera_center())
 			else:
-				$"%World".toggle_shepherd_equipped()
+				$"%World".swap_shepherd_equipped()
 		elif event.is_action_pressed("swap"):
 			$"%World".swap_shepherd_equipped()
 	elif event is InputEventKey:
 		input_mode = InputModes.KEYBOARD
 		if event.is_action_pressed("interact"):
-			$"%World".toggle_shepherd_equipped()
-
+			$"%World".start_toggling_shepherd_equipped()
+		if event.is_action_released("interact"):
+			$"%World".stop_toggling_shepherd_equipped()
 
 func _on_PauseMouseTimer_timeout():
 	pause_mouse_input = false
