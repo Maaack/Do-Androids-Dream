@@ -282,3 +282,6 @@ func set_current_goal(current_goal):
 	if goal_post_node == null:
 		return
 	self.goal_position = goal_post_node.position
+
+func _on_CatchRunawayArea2D_shepherd_entered():
+	emit_signal("shepherd_entered_area", "catch_runaway")

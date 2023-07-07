@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=2]
+[gd_scene load_steps=88 format=2]
 
 [ext_resource path="res://Scenes/World/SheepPartsTilemap.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Shepherd/Shepherd.tscn" type="PackedScene" id=2]
@@ -608,6 +608,9 @@ extents = Vector2( 16, 300 )
 [sub_resource type="RectangleShape2D" id=75]
 extents = Vector2( 16, 100 )
 
+[sub_resource type="RectangleShape2D" id=76]
+extents = Vector2( 16, 100 )
+
 [sub_resource type="RectangleShape2D" id=62]
 extents = Vector2( 20, 120 )
 
@@ -761,6 +764,10 @@ collider_shape = SubResource( 67 )
 position = Vector2( -546, 400 )
 collider_shape = SubResource( 75 )
 
+[node name="CatchRunawayArea2D" parent="." instance=ExtResource( 10 )]
+position = Vector2( -810, 400 )
+collider_shape = SubResource( 76 )
+
 [node name="FirstCampDetectorArea2D" parent="." instance=ExtResource( 10 )]
 position = Vector2( 542, 386 )
 collider_shape = SubResource( 62 )
@@ -815,6 +822,7 @@ collider_shape = SubResource( 63 )
 [connection signal="shepherd_entered" from="PowerSheepArea2D" to="." method="_on_PowerSheepArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="WatchersGateArea2D" to="." method="_on_WatchersGateArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="CrossroadsArea2D" to="." method="_on_CrossroadsArea2D_shepherd_entered"]
+[connection signal="shepherd_entered" from="CatchRunawayArea2D" to="." method="_on_CatchRunawayArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="FirstCampDetectorArea2D" to="." method="_on_FirstCampDetectorArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="WindingCircuitArea2D" to="." method="_on_WindingCircuitArea2D_shepherd_entered"]
 [connection signal="shepherd_entered" from="AlphaPastureArea2D" to="." method="_on_AlphaPastureArea2D_shepherd_entered"]
