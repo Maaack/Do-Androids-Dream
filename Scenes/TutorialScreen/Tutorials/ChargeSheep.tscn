@@ -25,7 +25,7 @@ text = "You can discharge the battery into nearby sheep here.
 
 
 
-Double click or double tap the shepherd to activate it."
+Hold the mouse over the shepherd to activate it."
 
 [node name="TextureRect" type="TextureRect" parent="Control/NinePatchRect/MarginContainer/PanelContainer/TutorialText" index="0"]
 anchor_left = 0.5

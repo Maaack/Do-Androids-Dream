@@ -135,9 +135,12 @@ func move_shepherd(direction : Vector2, manual : bool = true):
 		direction = direction.normalized()
 	$"%Shepherd".move_vector = direction
 
-func toggle_shepherd_equipped():
-	$"%Shepherd".toggle_equipped()
+func start_toggling_shepherd_equipped():
+	$"%Shepherd".start_toggling_equipped()
 
+func stop_toggling_shepherd_equipped():
+	$"%Shepherd".stop_toggling_equipped()
+	
 func swap_shepherd_equipped():
 	$"%Shepherd".swap()
 

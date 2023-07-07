@@ -107,6 +107,7 @@ func _on_World_shepherd_entered_area(area_name):
 			if not is_oneshot_completed("charge_sheep") and battery_equipped:
 				complete_oneshot("charge_sheep")
 				InGameMenuController.open_menu(charge_sheep_screen)
+				$"%World".get_shepherd().item_activation_ability_enabled = true
 				$"%World".set_current_goal(Goals.GET_MAGNET)
 				goal_active = false
 
