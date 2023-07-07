@@ -247,7 +247,10 @@ func _on_RetoggleEquippedTimer_timeout():
 	retoggle_equipped_enabled = true
 
 func start_snooze():
-	pass
+	if not $CameraAnimationPlayer.is_playing():
+		$CameraAnimationPlayer.play("ZoomIn")
 
 func start_day():
 	_update_equipped_active()
+	if not $CameraAnimationPlayer.is_playing():
+		$CameraAnimationPlayer.play("ZoomOut")
