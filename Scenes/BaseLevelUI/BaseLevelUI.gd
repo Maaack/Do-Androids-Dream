@@ -39,13 +39,19 @@ func _end_day():
 func _get_days_left():
 	return game_days - current_day
 
-func _start_day():
+func _start_day_clock():
+	$"%DayTimeContainer".show()
+	$"%Clock".start()
+	$"%World".reset_day()
+
+func _start_day(start_clock_flag : bool = true):
 	day_events.clear()
 	get_tree().paused = false
 	day_ended = false
 	day_starting_sheep_count = $"%World".get_powered_sheep_count()
-	$"%Clock".start()
-	$"%World".reset_day()
+	if start_clock_flag:
+		_start_day_clock()
+	$"%World".reset_sheep_hunger()
 	$"%DaysLeftLabel".text = "Days Left: %d" % _get_days_left()
 	if current_day >= musing_start_day:
 		$MuseTimer.start()
@@ -55,7 +61,7 @@ func reset_level() -> void:
 	$"%World".set_day_length(day_length)
 	$"%World".reset_world(starting_sheep_count)
 	$"%Clock".wait_time = day_length
-	_start_day()
+	_start_day(false)
 
 func _show_sheep_editor(sheep_list : Array):
 	if sheep_list.size() == 0:

@@ -182,6 +182,7 @@ func _on_GoalTimer_timeout():
 	InGameMenuController.open_menu(goal_explanation_screen)
 	$"%World".set_current_goal(Goals.GET_MAGNET)
 	goal_active = true
+	_start_day_clock()
 
 func _on_SwappingExplanationTimer_timeout():
 	if is_oneshot_completed("swapping_explanation"):
