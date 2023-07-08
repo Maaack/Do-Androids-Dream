@@ -20,6 +20,7 @@ var new_sheep_screen = preload("res://Scenes/TutorialScreen/Tutorials/NewSheepIn
 var swapping_explanation_screen = preload("res://Scenes/TutorialScreen/Tutorials/SwappingExplanation.tscn")
 var catch_runaway_screen = preload("res://Scenes/TutorialScreen/Tutorials/CatchRunaway.tscn")
 var glitch_in_matrix_screen = preload("res://Scenes/TutorialScreen/Tutorials/GlitchInMatrix.tscn")
+var end_of_day_screen = preload("res://Scenes/TutorialScreen/Tutorials/EndOfDay.tscn")
 
 var oneshots_completed : Array = []
 var sheep_exploded_count : int = 0
@@ -44,7 +45,6 @@ enum Goals {
 func play_welcome_screen():
 	InGameMenuController.open_menu(welcome_screen)
 	goal_active = true
-
 
 func is_oneshot_completed(oneshot : String):
 	return oneshots_completed.has(oneshot)
@@ -111,14 +111,12 @@ func _on_World_shepherd_entered_area(area_name):
 				complete_oneshot("charge_sheep")
 				InGameMenuController.open_menu(charge_sheep_screen)
 				$"%World".get_shepherd().equipped_activation_enabled = true
-				$"%World".set_current_goal(Goals.GET_MAGNET)
-				goal_active = false
 		"catch_runaway":
-			if not is_oneshot_completed("catch_runaway") and not is_oneshot_completed("charge_sheep"):
+			if not is_oneshot_completed("catch_runaway") and not is_oneshot_completed("new_sheep"):
 				complete_oneshot("catch_runaway")
 				InGameMenuController.open_menu(catch_runaway_screen)
 		"warp_back":
-			if not is_oneshot_completed("charge_sheep"):
+			if not is_oneshot_completed("new_sheep"):
 				$"%World".warp_back_shepherd()
 				InGameMenuController.open_menu(glitch_in_matrix_screen)
 
@@ -166,6 +164,7 @@ func _on_World_new_sheep(sheep_instance : Sheep):
 		return
 	complete_oneshot("new_sheep")
 	InGameMenuController.open_menu(new_sheep_screen)
+	goal_active = false
 	$GrassExplanationTimer.start()
 
 func _on_GrassExplanationTimer_timeout():
@@ -190,3 +189,17 @@ func _on_SwappingExplanationTimer_timeout():
 	complete_oneshot("swapping_explanation")
 	InGameMenuController.open_menu(swapping_explanation_screen)
 	$"%World".get_shepherd().equipped_swapping_enabled = true
+
+func _end_day():
+	._end_day()
+	if is_oneshot_completed("first_day_ended"):
+		return
+	complete_oneshot("first_day_ended")
+	InGameMenuController.open_menu(end_of_day_screen)
+
+func _on_World_battery_discharged():
+	if is_oneshot_completed("battery_discharged"):
+		return
+	complete_oneshot("battery_discharged")
+	$"%World".set_current_goal(Goals.GET_MAGNET)
+	goal_active = false

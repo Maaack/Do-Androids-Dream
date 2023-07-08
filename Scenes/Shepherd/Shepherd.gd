@@ -6,6 +6,7 @@ signal part_collected
 signal magnet_collected
 signal battery_collected
 signal repeller_collected
+signal battery_discharged
 
 enum Equipped{
 	NOTHING,
@@ -69,12 +70,18 @@ func is_repeller_active():
 func is_battery_equipped():
 	return get_equipped_state() == Equipped.BATTERY
 
+func has_unpowered_chargeable_sheep() -> bool:
+	for sheep_instance in chargeable_sheep.values():
+		if not sheep_instance.powered:
+			return true
+	return false
+
 func can_toggle_equipped():
 	if is_nothing_equipped():
 		return false
 	var combined_flag : bool = retoggle_equipped_enabled and equipped_activation_enabled
 	if is_battery_equipped():
-		return chargeable_sheep.size() > 0 and combined_flag
+		return has_unpowered_chargeable_sheep() and combined_flag
 	else:
 		return retoggle_equipped_enabled and combined_flag
 
@@ -94,7 +101,7 @@ func _update_item_animation():
 			else:
 				$ItemAnimationPlayer.play("RepellerOff")
 		Equipped.BATTERY:
-			if chargeable_sheep.size() > 0:
+			if has_unpowered_chargeable_sheep():
 				$ItemAnimationPlayer.play("BatteryOn")
 			else:
 				$ItemAnimationPlayer.play("BatteryOff")
@@ -122,17 +129,21 @@ func delay_toggle_equipped():
 	retoggle_equipped_enabled = false
 	$RetoggleEquippedTimer.start()
 
+func _discharge_battery():
+	for sheep_name in chargeable_sheep:
+		var sheep_instance = chargeable_sheep[sheep_name]
+		sheep_instance.charge()
+	chargeable_sheep.clear()
+	remove_battery_equip_state()
+	emit_signal("battery_discharged")
+
 func toggle_equipped():
 	if not can_toggle_equipped():
 		return
 	$ActivationAnimationPlayer.play("Stop")
 	delay_toggle_equipped()
-	if is_battery_equipped() and chargeable_sheep.size() > 0:
-		for sheep_name in chargeable_sheep:
-			var sheep_instance = chargeable_sheep[sheep_name]
-			sheep_instance.charge()
-		chargeable_sheep.clear()
-		remove_battery_equip_state()
+	if is_battery_equipped() and has_unpowered_chargeable_sheep():
+		_discharge_battery()
 		return
 	equipment_active = !(equipment_active)
 	_update_equipped_active()
@@ -239,3 +250,12 @@ func get_current_zoom():
 
 func _on_RetoggleEquippedTimer_timeout():
 	retoggle_equipped_enabled = true
+
+func start_snooze():
+	if not $CameraAnimationPlayer.is_playing():
+		$CameraAnimationPlayer.play("ZoomIn")
+
+func start_day():
+	_update_equipped_active()
+	if not $CameraAnimationPlayer.is_playing():
+		$CameraAnimationPlayer.play("ZoomOut")

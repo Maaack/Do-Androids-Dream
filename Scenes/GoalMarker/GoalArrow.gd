@@ -13,6 +13,7 @@ export(Directions) var direction : int = Directions.UP setget set_direction
 func set_direction(value : int):
 	direction = value
 	if is_visible_in_tree():
+		$Sprite.frame = direction
 		match(direction):
 			Directions.UP:
 				$AnimationPlayer.play("PointUp")

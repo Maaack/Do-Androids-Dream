@@ -176,6 +176,7 @@ rect_min_size = Vector2( 65, 65 )
 wait_time = 100.0
 
 [node name="EndDayButton" type="Button" parent="MarginContainer/Control/DayTimeContainer"]
+unique_name_in_owner = true
 margin_top = 81.0
 margin_right = 97.0
 margin_bottom = 101.0
@@ -289,6 +290,11 @@ pause_mode = 1
 wait_time = 0.25
 one_shot = true
 
+[node name="EndDayDelayTimer" type="Timer" parent="."]
+pause_mode = 1
+wait_time = 5.0
+one_shot = true
+
 [node name="MuseClient" parent="." instance=ExtResource( 9 )]
 
 [node name="BottomPanelAnimationPlayer" type="AnimationPlayer" parent="."]
@@ -313,4 +319,5 @@ anims/RESET = SubResource( 4 )
 [connection signal="timeout" from="NewSheepTimer" to="." method="_on_NewSheepTimer_timeout"]
 [connection signal="timeout" from="MuseTimer" to="." method="_on_MuseTimer_timeout"]
 [connection signal="timeout" from="PauseMouseTimer" to="." method="_on_PauseMouseTimer_timeout"]
+[connection signal="timeout" from="EndDayDelayTimer" to="." method="_on_EndDayDelayTimer_timeout"]
 [connection signal="musing_shared" from="MuseClient" to="." method="_on_MuseClient_musing_shared"]

@@ -15,6 +15,7 @@ export(int, 1, 12) var game_days : int = 3
 export(int, 0, 12) var musing_start_day : int = 0
 export(float, 0, 1000) var min_goal_arrow_distance : float = 300
 export(bool) var goal_active : bool = false
+export(bool) var dreaming_enabled : bool = true
 
 var day_ended : bool = false
 var destination_reached : bool = false
@@ -31,10 +32,9 @@ func _end_day():
 	if day_ended:
 		return
 	day_ended = true
-	current_day += 1
-	get_tree().paused = true
-	$"%World".starve_hungry_sheep()
-	show_scoring_screen()
+	$"%EndDayButton".disabled = true
+	$"%World".snooze_all()
+	$EndDayDelayTimer.start()
 
 func _get_days_left():
 	return game_days - current_day
@@ -51,10 +51,11 @@ func _start_day(start_clock_flag : bool = true):
 	day_starting_sheep_count = $"%World".get_powered_sheep_count()
 	if start_clock_flag:
 		_start_day_clock()
-	$"%World".reset_sheep_hunger()
+	$"%World".start_day()
 	$"%DaysLeftLabel".text = "Days Left: %d" % _get_days_left()
 	if current_day >= musing_start_day:
 		$MuseTimer.start()
+	$"%EndDayButton".disabled = false
 
 func reset_level() -> void:
 	game_events.clear()
@@ -209,11 +210,11 @@ func _process(delta):
 			else:
 				$"%World".move_shepherd(input_vector)
 	var goal_relative_position : Vector2 = $"%World".get_goal_relative_position()
-	$"%GoalArrowControl".point_to(goal_relative_position)
 	if goal_active and goal_relative_position.length() > min_goal_arrow_distance:
 		$"%GoalArrowControl".show()
 	else:
 		$"%GoalArrowControl".hide()
+	$"%GoalArrowControl".point_to(goal_relative_position)
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
@@ -237,3 +238,15 @@ func _unhandled_input(event):
 
 func _on_PauseMouseTimer_timeout():
 	pause_mouse_input = false
+
+func _start_night():
+	current_day += 1
+	get_tree().paused = true
+	$"%World".starve_hungry_sheep()
+	if dreaming_enabled:
+		show_scoring_screen()
+	else:
+		_start_day()
+
+func _on_EndDayDelayTimer_timeout():
+	_start_night()

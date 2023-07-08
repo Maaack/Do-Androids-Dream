@@ -59,6 +59,7 @@ pause_mode = 1
 one_shot = true
 
 [connection signal="battery_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_battery_collected"]
+[connection signal="battery_discharged" from="ViewportContainer/Viewport/World" to="." method="_on_World_battery_discharged"]
 [connection signal="magnet_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_magnet_collected"]
 [connection signal="repeller_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_repeller_collected"]
 [connection signal="sheep_part_collected" from="ViewportContainer/Viewport/World" to="." method="_on_World_sheep_part_collected"]

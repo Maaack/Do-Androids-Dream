@@ -2,10 +2,13 @@ extends CanvasLayer
 
 var can_close : bool = false
 
+func _force_close():
+	InGameMenuController.close_menu()
+
 func _close():
 	if not can_close:
 		return
-	InGameMenuController.close_menu()
+	_force_close()
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_cancel") or event.is_action_pressed("ui_select") or event.is_action_pressed("interact"):
@@ -13,8 +16,7 @@ func _unhandled_input(event):
 		get_tree().set_input_as_handled()
 
 func _on_ResumeButton_pressed():
-	InGameMenuController.close_menu()
+	_force_close()
 
-func _ready():
-	yield(get_tree().create_timer(0.5), "timeout")
+func _on_CloseDelayTimer_timeout():
 	can_close = true

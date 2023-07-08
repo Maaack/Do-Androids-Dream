@@ -10,6 +10,7 @@ signal sheep_starved(sheep_instance)
 signal sheep_part_collected
 signal magnet_collected
 signal battery_collected
+signal battery_discharged
 signal repeller_collected
 signal shepherd_entered_area(area_name)
 
@@ -19,6 +20,7 @@ export(float, 0, 1) var sheep_path_visible_probability : float = 0
 export(Color) var charge_color : Color
 export(Vector2) var goal_position : Vector2 setget set_goal_position
 export(Array, NodePath) var goal_posts : Array
+export(bool) var shepherd_warped : bool = false
 
 onready var shepherd_node = $YSort/Shepherd
 var sheep_scene = preload("res://Scenes/Sheep/Sheep.tscn")
@@ -47,14 +49,26 @@ func _ready():
 	extra_sheep_names = SheepConstants.NAMES.duplicate()
 	extra_sheep_names.shuffle()
 	set_current_goal(0)
+	if shepherd_warped:
+		warp_back_shepherd()
 
 func set_day_length(day_length : float):
 	$"DayNightCycle".day_length = day_length
 
 func reset_sheep_hunger():
 	for sheep in sheep_instances:
-		if is_instance_valid(sheep) and sheep.has_method("reset_hunger"):
+		if is_instance_valid(sheep):
 			sheep.reset_hunger()
+
+func wake_sheep():
+	for sheep in sheep_instances:
+		if is_instance_valid(sheep):
+			sheep.wake()
+
+func start_day():
+	reset_sheep_hunger()
+	wake_sheep()
+	$"%Shepherd".start_day()
 
 func reset_day():
 	$"DayNightCycle".enabled = true
@@ -119,6 +133,22 @@ func get_powered_sheep_count():
 	for sheep in sheep_instances:
 		powered_sheep += int(sheep.powered)
 	return powered_sheep
+
+func get_powered_sheep():
+	var powered_sheep_instances : Array = []
+	for sheep_instance in sheep_instances:
+		if sheep_instance.powered:
+			powered_sheep_instances.append(sheep_instance)
+	return powered_sheep_instances
+
+func snooze_sheep():
+	var powered_sheep_instances : Array = get_powered_sheep()
+	for powered_sheep in powered_sheep_instances:
+		powered_sheep.snooze()
+
+func snooze_all():
+	snooze_sheep()
+	$"%Shepherd".start_snooze()
 
 func get_hungry_sheep():
 	var hungry_sheep_instances : Array = []
@@ -258,6 +288,9 @@ func _on_Shepherd_magnet_collected():
 
 func _on_Shepherd_battery_collected():
 	emit_signal("battery_collected")
+
+func _on_Shepherd_battery_discharged():
+	emit_signal("battery_discharged")
 
 func _on_Shepherd_repeller_collected():
 	emit_signal("repeller_collected")
