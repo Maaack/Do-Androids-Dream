@@ -6,6 +6,7 @@ signal part_collected
 signal magnet_collected
 signal battery_collected
 signal repeller_collected
+signal battery_discharged
 
 enum Equipped{
 	NOTHING,
@@ -128,17 +129,21 @@ func delay_toggle_equipped():
 	retoggle_equipped_enabled = false
 	$RetoggleEquippedTimer.start()
 
+func _discharge_battery():
+	for sheep_name in chargeable_sheep:
+		var sheep_instance = chargeable_sheep[sheep_name]
+		sheep_instance.charge()
+	chargeable_sheep.clear()
+	remove_battery_equip_state()
+	emit_signal("battery_discharged")
+
 func toggle_equipped():
 	if not can_toggle_equipped():
 		return
 	$ActivationAnimationPlayer.play("Stop")
 	delay_toggle_equipped()
 	if is_battery_equipped() and has_unpowered_chargeable_sheep():
-		for sheep_name in chargeable_sheep:
-			var sheep_instance = chargeable_sheep[sheep_name]
-			sheep_instance.charge()
-		chargeable_sheep.clear()
-		remove_battery_equip_state()
+		_discharge_battery()
 		return
 	equipment_active = !(equipment_active)
 	_update_equipped_active()

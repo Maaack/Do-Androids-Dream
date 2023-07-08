@@ -827,6 +827,7 @@ collider_shape = SubResource( 63 )
 [connection signal="add_sheep_part" from="SheepParts" to="." method="_on_SheepParts_add_sheep_part"]
 [connection signal="add_unpowered_sheep" from="SheepParts" to="." method="_on_SheepParts_add_unpowered_sheep"]
 [connection signal="battery_collected" from="YSort/Shepherd" to="." method="_on_Shepherd_battery_collected"]
+[connection signal="battery_discharged" from="YSort/Shepherd" to="." method="_on_Shepherd_battery_discharged"]
 [connection signal="magnet_collected" from="YSort/Shepherd" to="." method="_on_Shepherd_magnet_collected"]
 [connection signal="part_collected" from="YSort/Shepherd" to="." method="_on_Shepherd_part_collected"]
 [connection signal="parts_assembled" from="YSort/Shepherd" to="." method="_on_Shepherd_parts_assembled"]

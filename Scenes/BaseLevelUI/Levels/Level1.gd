@@ -165,7 +165,6 @@ func _on_World_new_sheep(sheep_instance : Sheep):
 	complete_oneshot("new_sheep")
 	InGameMenuController.open_menu(new_sheep_screen)
 	goal_active = false
-	$"%World".set_current_goal(Goals.GET_MAGNET)
 	$GrassExplanationTimer.start()
 
 func _on_GrassExplanationTimer_timeout():
@@ -197,3 +196,10 @@ func _end_day():
 		return
 	complete_oneshot("first_day_ended")
 	InGameMenuController.open_menu(end_of_day_screen)
+
+func _on_World_battery_discharged():
+	if is_oneshot_completed("battery_discharged"):
+		return
+	complete_oneshot("battery_discharged")
+	$"%World".set_current_goal(Goals.GET_MAGNET)
+	goal_active = false

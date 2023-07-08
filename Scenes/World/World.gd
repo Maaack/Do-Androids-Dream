@@ -10,6 +10,7 @@ signal sheep_starved(sheep_instance)
 signal sheep_part_collected
 signal magnet_collected
 signal battery_collected
+signal battery_discharged
 signal repeller_collected
 signal shepherd_entered_area(area_name)
 
@@ -287,6 +288,9 @@ func _on_Shepherd_magnet_collected():
 
 func _on_Shepherd_battery_collected():
 	emit_signal("battery_collected")
+
+func _on_Shepherd_battery_discharged():
+	emit_signal("battery_discharged")
 
 func _on_Shepherd_repeller_collected():
 	emit_signal("repeller_collected")
