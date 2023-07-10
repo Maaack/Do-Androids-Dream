@@ -257,5 +257,4 @@ func start_snooze():
 
 func start_day():
 	_update_equipped_active()
-	if not $CameraAnimationPlayer.is_playing():
-		$CameraAnimationPlayer.play("ZoomOut")
+	$CameraAnimationPlayer.play("ZoomOut")
