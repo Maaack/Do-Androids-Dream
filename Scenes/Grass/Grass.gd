@@ -21,4 +21,3 @@ func _ready():
 	var frame : int = randi() % 3
 	$NormalSprite.frame = frame
 	$VolatileSprite.frame = frame
-	$ShadowSprite.frame = frame
