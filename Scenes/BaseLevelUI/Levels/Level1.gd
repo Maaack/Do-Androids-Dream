@@ -21,6 +21,7 @@ var swapping_explanation_screen = preload("res://Scenes/TutorialScreen/Tutorials
 var catch_runaway_screen = preload("res://Scenes/TutorialScreen/Tutorials/CatchRunaway.tscn")
 var glitch_in_matrix_screen = preload("res://Scenes/TutorialScreen/Tutorials/GlitchInMatrix.tscn")
 var end_of_day_screen = preload("res://Scenes/TutorialScreen/Tutorials/EndOfDay.tscn")
+var first_sheep_editor_screen = preload("res://Scenes/SheepEditor/FirstSheepEditor.tscn")
 
 var oneshots_completed : Array = []
 var sheep_exploded_count : int = 0
@@ -53,6 +54,17 @@ func complete_oneshot(oneshot : String):
 	if is_oneshot_completed(oneshot):
 		return
 	oneshots_completed.append(oneshot)
+
+func _edit_recent_new_sheep():
+	if recent_new_sheep.size() == 0:
+		return
+	if not is_oneshot_completed("first_sheep_edited"):
+		complete_oneshot("first_sheep_edited")
+		var sheep_editor = InGameMenuController.open_menu(first_sheep_editor_screen)
+		sheep_editor.sheep_list = recent_new_sheep
+		recent_new_sheep = []
+	else:
+		._edit_recent_new_sheep()
 
 func _on_World_sheep_part_collected():
 	if is_oneshot_completed("sheep_part_collected"):

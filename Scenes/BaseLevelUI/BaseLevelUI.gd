@@ -173,10 +173,14 @@ func _on_Clock_timeout():
 func _on_MuseTimer_timeout():
 	$MuseClient.request_musing()
 
+func _edit_recent_new_sheep():
+	if recent_new_sheep.size() == 0:
+		return
+	_show_sheep_editor(recent_new_sheep)
+	recent_new_sheep = []
+
 func _on_NewSheepTimer_timeout():
-	if recent_new_sheep.size() > 0:
-		_show_sheep_editor(recent_new_sheep)
-		recent_new_sheep = []
+	_edit_recent_new_sheep()
 
 func _on_MuseClient_musing_shared(musing_text):
 	add_event(EventData.EVENT_TYPES.MUSE, musing_text)
