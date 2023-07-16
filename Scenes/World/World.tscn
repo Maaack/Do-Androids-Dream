@@ -592,6 +592,20 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 1/shape_one_way_margin = 0.0
 1/shapes = [  ]
 1/z_index = 0
+2/name = "sheep_compiled_extra.png 2"
+2/texture = ExtResource( 18 )
+2/tex_offset = Vector2( -8, -8 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 0, 0, 32, 32 )
+2/tile_mode = 0
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
 
 [sub_resource type="RectangleShape2D" id=61]
 extents = Vector2( 8, 60 )
@@ -683,7 +697,7 @@ script = ExtResource( 6 )
 tile_set = SubResource( 59 )
 cell_size = Vector2( 16, 16 )
 format = 1
-tile_data = PoolIntArray( 262117, 0, 0, 393388, 1, 0, 458928, 1, 0, 524499, 0, 0, 524615, 1, 0, 721015, 1, 0, 721071, 1, 0, 786532, 0, 0, 917820, 0, 0, 1179574, 1, 0, 1114124, 1, 0, 1245229, 0, 0, 1376146, 1, 0, 1376189, 1, 0, 1310803, 1, 0, 1376450, 0, 0, 1376469, 0, 0, 1376509, 0, 0, 1376542, 1, 0, 1442024, 0, 0, 1507353, 1, 0, 1573173, 0, 0, 1638418, 1, 0, 1900479, 1, 0, 1835035, 1, 0, 1900595, 0, 0, 1900617, 0, 0, 1900852, 0, 0, 1966205, 0, 0, 1966369, 1, 0, 2228119, 1, 0, 2293688, 1, 0, 2359555, 0, 0, 2424926, 1, 0, 2425048, 0, 0, 2490474, 1, 0, 2556198, 1, 0, 2949144, 0, 0 )
+tile_data = PoolIntArray( 262117, 0, 0, 393388, 1, 0, 458928, 1, 0, 524499, 0, 0, 524615, 1, 0, 721015, 1, 0, 721071, 1, 0, 786532, 0, 0, 917820, 0, 0, 1179574, 1, 0, 1114124, 1, 0, 1245229, 0, 0, 1376146, 1, 0, 1376189, 1, 0, 1310803, 1, 0, 1441644, 2, 0, 1441652, 2, 0, 1376450, 0, 0, 1376469, 0, 0, 1376509, 0, 0, 1376542, 1, 0, 1442024, 0, 0, 1507353, 1, 0, 1573173, 0, 0, 1638418, 1, 0, 1900479, 1, 0, 1835035, 1, 0, 1965932, 2, 0, 1965940, 2, 0, 1900595, 0, 0, 1900617, 0, 0, 1900852, 0, 0, 1966205, 0, 0, 1966369, 1, 0, 2228119, 1, 0, 2293688, 1, 0, 2359555, 0, 0, 2424926, 1, 0, 2425048, 0, 0, 2490474, 1, 0, 2556198, 1, 0, 2949144, 0, 0 )
 script = ExtResource( 1 )
 
 [node name="AStarTileMap" parent="." instance=ExtResource( 12 )]
@@ -824,6 +838,7 @@ collider_shape = SubResource( 63 )
 
 [connection signal="destination_reached" from="PathManager2D" to="." method="_on_PathManager2D_destination_reached"]
 [connection signal="move" from="PathManager2D" to="." method="_on_PathManager2D_move"]
+[connection signal="add_powered_sheep" from="SheepParts" to="." method="_on_SheepParts_add_powered_sheep"]
 [connection signal="add_sheep_part" from="SheepParts" to="." method="_on_SheepParts_add_sheep_part"]
 [connection signal="add_unpowered_sheep" from="SheepParts" to="." method="_on_SheepParts_add_unpowered_sheep"]
 [connection signal="battery_collected" from="YSort/Shepherd" to="." method="_on_Shepherd_battery_collected"]

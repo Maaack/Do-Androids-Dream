@@ -103,7 +103,7 @@ func _get_random_sheep_position():
 	var spawn_range_vector = Vector2(rand_range(-spawn_range,spawn_range),rand_range(-spawn_range,spawn_range))
 	return shepherd_node.position + spawn_range_vector + spawn_offset
 
-func add_sheep(sheep_position : Vector2 = _get_random_sheep_position(), powered : bool = true) -> Node2D:
+func add_sheep(sheep_position : Vector2 = _get_random_sheep_position(), powered : bool = true, signal_powered : bool = true) -> Node2D:
 	var sheep_instance = sheep_scene.instance()
 	sheep_instance.position = sheep_position
 	sheep_instance.powered = powered
@@ -111,6 +111,8 @@ func add_sheep(sheep_position : Vector2 = _get_random_sheep_position(), powered 
 	_connect_sheep_signals(sheep_instance)
 	$YSort.call_deferred("add_child", sheep_instance)
 	sheep_instances.append(sheep_instance)
+	if powered and signal_powered:
+		emit_signal("sheep_powered", sheep_instance)
 	return sheep_instance
 
 func add_sheep_part(sheep_part_position : Vector2) -> Node2D:
@@ -120,7 +122,7 @@ func add_sheep_part(sheep_part_position : Vector2) -> Node2D:
 	return sheep_part_instance
 
 func assemble_sheep():
-	var sheep_instance = add_sheep(shepherd_node.position + Vector2(0, 20))
+	var sheep_instance = add_sheep(shepherd_node.position + Vector2(0, 16), true, false)
 	if not sheep_instance.is_visible_in_tree():
 		yield(sheep_instance, "ready")
 	sheep_instance.assemble()
@@ -306,6 +308,9 @@ func _on_SheepParts_add_sheep_part(part_position):
 
 func _on_SheepParts_add_unpowered_sheep(sheep_position):
 	add_sheep(sheep_position, false)
+
+func _on_SheepParts_add_powered_sheep(sheep_position):
+	add_sheep(sheep_position)
 
 func set_goal_position(value : Vector2):
 	goal_position = value

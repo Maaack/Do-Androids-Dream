@@ -2,6 +2,7 @@ extends TileMap
 
 signal add_sheep_part(position)
 signal add_unpowered_sheep(position)
+signal add_powered_sheep(position)
 
 var loaded_scenes = false
 
@@ -18,4 +19,7 @@ func load_scenes():
 				set_cellv(cell_position, -1)
 			1:
 				emit_signal("add_unpowered_sheep", cell_offset + map_to_world(cell_position) * scale)
+				set_cellv(cell_position, -1)
+			2:
+				emit_signal("add_powered_sheep", cell_offset + map_to_world(cell_position) * scale)
 				set_cellv(cell_position, -1)
